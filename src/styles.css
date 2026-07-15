@@ -401,6 +401,97 @@ h1 {
   margin: 0;
 }
 
+.candidate-fold-preview {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #d7c9ba;
+}
+
+.candidate-fold-preview__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.candidate-fold-preview__label {
+  margin: 0 0 0.35rem;
+  color: #795440;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.candidate-fold-preview h3 {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.candidate-fold-preview__header button {
+  flex: none;
+  padding: 0.65rem 0.9rem;
+  border: 1px solid #5d5147;
+  border-radius: 0.45rem;
+  background: #3b332d;
+  color: #fffdf8;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 750;
+}
+
+.candidate-fold-preview__header button:hover:not(:disabled) {
+  background: #564940;
+}
+
+.candidate-fold-preview__header button:disabled {
+  cursor: wait;
+  opacity: 0.68;
+}
+
+.candidate-fold-preview__boundary,
+.candidate-fold-preview__limitations {
+  max-width: 48rem;
+  margin: 0.55rem 0 0;
+  color: #6c6157;
+  font-size: 0.78rem;
+  line-height: 1.6;
+}
+
+.candidate-fold-preview__limitations {
+  color: #76503f;
+}
+
+.candidate-fold-preview__status {
+  min-height: 2.9rem;
+  margin: 0.75rem 0 0;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid #d7c9ba;
+  border-radius: 0.45rem;
+  background: rgb(255 253 248 / 75%);
+  color: #5d534b;
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+.candidate-fold-preview__json {
+  max-height: 20rem;
+  margin: 0.75rem 0 0;
+  padding: 0.9rem;
+  overflow: auto;
+  border: 1px solid #564c45;
+  border-radius: 0.45rem;
+  background: #292522;
+  color: #fffaf1;
+  font:
+    0.72rem/1.55 ui-monospace,
+    SFMono-Regular,
+    Consolas,
+    'Liberation Mono',
+    monospace;
+  white-space: pre;
+}
+
 .notice {
   padding: 1rem 1.15rem;
   border-left: 0.25rem solid #4d766a;
@@ -449,7 +540,8 @@ h1 {
 
   .diagnostic-card__header,
   .diagnostic-card__authorization,
-  .diagnostic-runner {
+  .diagnostic-runner,
+  .candidate-fold-preview__header {
     align-items: flex-start;
     flex-direction: column;
   }
@@ -476,6 +568,8 @@ h1 {
   .diagnostic-card,
   .diagnostic-card__status,
   .diagnostic-metrics div,
+  .candidate-fold-preview__status,
+  .candidate-fold-preview__json,
   .notice {
     border-color: CanvasText;
   }

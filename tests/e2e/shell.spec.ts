@@ -37,4 +37,41 @@ test('M0F candidate diagnostic remains separate and runs only its bundled input'
   await expect(runResult).toContainText('ブロック領域 10 件');
   await expect(runResult).toContainText('最終判断 not-recorded');
   await expect(runResult).toContainText('製品実装開始 未承認');
+
+  const preview = page.getByTestId('m0f-candidate-fold-preview');
+  await expect(preview).toBeVisible();
+  await expect(
+    preview.getByRole('heading', { level: 3, name: '同梱候補FOLD JSONプレビュー' }),
+  ).toBeVisible();
+  await expect(preview).toContainText('contractStatus: candidate / scientificClaim: false');
+  await expect(preview).toContainText('折り可能性、連続折り経路、衝突自由、積層順序、M0F GO');
+  await expect(preview).toContainText('保存・download・copy機能もありません');
+  await expect(page.getByTestId('m0f-candidate-fold-preview-json')).toHaveCount(0);
+
+  await preview.getByRole('button', { name: '候補JSONを表示' }).click();
+  const previewStatus = page.getByTestId('m0f-candidate-fold-preview-status');
+  await expect(previewStatus).toContainText('読み取り専用の候補JSONを表示しました');
+  const previewJson = page.getByTestId('m0f-candidate-fold-preview-json');
+  await expect(previewJson).toBeVisible();
+  await expect(previewJson).toContainText('"contractStatus":"candidate"');
+  await expect(previewJson).toContainText('"scientificClaim":false');
+  await expect(previewJson).toContainText('"file_spec":1.2');
+  await expect(previewStatus).not.toContainText('"file_spec"');
+  await expect(preview.locator('a[download]')).toHaveCount(0);
+  await expect(preview.locator('input[type="file"]')).toHaveCount(0);
+  await expect(preview.getByRole('button')).toHaveCount(1);
+});
+
+test('candidate FOLD preview fails closed if its diagnostic chunk cannot load', async ({
+  page,
+}) => {
+  await page.goto('./');
+  await page.route('**/assets/*.js', (route) => route.abort());
+
+  await page.getByRole('button', { name: '候補JSONを表示' }).click();
+  await expect(page.getByTestId('m0f-candidate-fold-preview-status')).toContainText(
+    '候補JSONを表示できませんでした',
+  );
+  await expect(page.getByTestId('m0f-candidate-fold-preview-json')).toHaveCount(0);
+  await expect(page.getByTestId('m0f-product-authorization')).toContainText('製品実装開始：未承認');
 });

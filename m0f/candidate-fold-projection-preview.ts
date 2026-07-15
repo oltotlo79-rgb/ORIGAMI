@@ -34,6 +34,35 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return prototype === Object.prototype || prototype === null;
 }
 
+function hasCandidateFlowClaimBoundary(flow: Record<string, unknown>): boolean {
+  return (
+    flow.schemaVersion === 1 &&
+    flow.recordType === FOLD_FACE_CANDIDATE_FLOW_RESULT_RECORD_TYPE &&
+    flow.contractStatus === 'candidate' &&
+    flow.scientificClaim === false &&
+    flow.outputKind === 'fold-nofaces-candidate-diagnostic-not-scientific-verification' &&
+    flow.scope === 'caller-supplied-fold-nofaces-reconstruction-and-face-complex-audit-only' &&
+    flow.canonicalFixtureRegistrationIncluded === false &&
+    flow.candidateSubgateEvaluated === false &&
+    flow.normalizedGeometryBound === true &&
+    flow.rawSourceDocumentBytesBound === false &&
+    flow.allSourceDocumentMetadataBound === false &&
+    flow.faceReconstructionExperimentCompleted === true &&
+    flow.faceComplexAuditExperimentCompleted === true &&
+    flow.separateProjectiveKernelAuditCompleted === true &&
+    flow.currentSourceSetEvidenceReauditPassed === true &&
+    flow.mutationSuiteExpectationsMet === true &&
+    flow.independentReferenceVerifierIncluded === false &&
+    flow.referenceVerifierComplete === false &&
+    flow.toleranceProfileIncluded === false &&
+    flow.foldabilityVerified === false &&
+    flow.rigidFoldPathVerified === false &&
+    flow.collisionFreedomVerified === false &&
+    flow.layerOrderVerified === false &&
+    flow.globalM0fGate === 'not-evaluated'
+  );
+}
+
 /**
  * Extracts the existing CandidateFoldProjectionV1 from one completed candidate
  * flow result and emits deterministic preview JSON. This is a read-only
@@ -55,13 +84,7 @@ export function createCandidateFoldProjectionPreviewJsonV1(
   }
 
   const flow = snapshot.value;
-  if (
-    !isRecord(flow) ||
-    flow.recordType !== FOLD_FACE_CANDIDATE_FLOW_RESULT_RECORD_TYPE ||
-    flow.contractStatus !== 'candidate' ||
-    flow.scientificClaim !== false ||
-    flow.outputKind !== 'fold-nofaces-candidate-diagnostic-not-scientific-verification'
-  ) {
+  if (!isRecord(flow) || !hasCandidateFlowClaimBoundary(flow)) {
     return failure([
       {
         stage: 'flow-result',

@@ -50,4 +50,20 @@ export const ja = {
     runUnavailable: '候補診断を実行できませんでした。',
     runUnavailableDescription: '最終判断は未記録のままで、製品実装開始も承認されません。',
   },
+  candidateFoldPreview: {
+    label: 'M0F 候補FOLD / 読み取り専用',
+    title: '同梱候補FOLD JSONプレビュー',
+    boundary:
+      '固定の同梱NOFACES入力から生成する、非永続・読み取り専用のM0F候補FOLD JSONです。製品CP/FOLD出力ではなく、保存・download・copy機能もありません。',
+    limitations:
+      'contractStatus: candidate / scientificClaim: false。折り可能性、連続折り経路、衝突自由、積層順序、M0F GO、製品機能を証明しません。artifact schemaId、artifact hash、raw入力bytes、完全metadata、製品stable ID、PathCertificateは含みません。',
+    showButton: '候補JSONを表示',
+    runningButton: '候補JSONを生成中…',
+    idle: '候補JSONはまだ表示していません。',
+    running: '固定の同梱入力を候補flowで再評価しています。',
+    complete: (vertexCount: number, edgeCount: number, faceCount: number) =>
+      `読み取り専用の候補JSONを表示しました（頂点 ${String(vertexCount)}、辺 ${String(edgeCount)}、面 ${String(faceCount)}）。`,
+    unavailable: '候補JSONを表示できませんでした。製品実装開始は未承認のままです。',
+    jsonLabel: '同梱候補FOLD JSON',
+  },
 } as const;

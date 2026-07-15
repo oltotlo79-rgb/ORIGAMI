@@ -53,6 +53,40 @@ describe('candidate FOLD projection preview JSON', () => {
     });
   });
 
+  it('fails closed for every claim-critical root-field mutation', async () => {
+    const flow = await completedFlow();
+    const mutations = [
+      ['schemaVersion', 2],
+      ['scope', 'product-export'],
+      ['canonicalFixtureRegistrationIncluded', true],
+      ['candidateSubgateEvaluated', true],
+      ['normalizedGeometryBound', false],
+      ['rawSourceDocumentBytesBound', true],
+      ['allSourceDocumentMetadataBound', true],
+      ['faceReconstructionExperimentCompleted', false],
+      ['faceComplexAuditExperimentCompleted', false],
+      ['separateProjectiveKernelAuditCompleted', false],
+      ['currentSourceSetEvidenceReauditPassed', false],
+      ['mutationSuiteExpectationsMet', false],
+      ['independentReferenceVerifierIncluded', true],
+      ['referenceVerifierComplete', true],
+      ['toleranceProfileIncluded', true],
+      ['foldabilityVerified', true],
+      ['rigidFoldPathVerified', true],
+      ['collisionFreedomVerified', true],
+      ['layerOrderVerified', true],
+      ['globalM0fGate', 'GO'],
+    ] as const;
+
+    for (const [field, value] of mutations) {
+      const mutated = structuredClone(flow) as unknown as Record<string, unknown>;
+      mutated[field] = value;
+      const result = createCandidateFoldProjectionPreviewJsonV1(mutated);
+      expect(result.ok, field).toBe(false);
+      expect(result, field).not.toHaveProperty('value');
+    }
+  });
+
   it('rejects an escalated projection before emitting JSON', async () => {
     const mutable = structuredClone(await completedFlow()) as unknown as {
       reconstructionExperiment: {

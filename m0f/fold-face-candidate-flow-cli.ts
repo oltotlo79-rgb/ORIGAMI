@@ -3,7 +3,10 @@ import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 import { evaluateFoldFaceCandidateFlowV1 } from './fold-face-candidate-flow.js';
+import { DEFAULT_FOLD_FACE_CANDIDATE_FLOW_INPUT } from './fold-face-candidate-flow-default-input.js';
 import { serializeJsonLine } from './stable-json.js';
+
+export { DEFAULT_FOLD_FACE_CANDIDATE_FLOW_INPUT } from './fold-face-candidate-flow-default-input.js';
 
 const USAGE = `Usage: npm run m0f:fold-face-candidate-flow -- [input.fold]
        npm run m0f:fold-face-candidate-flow -- --example
@@ -11,29 +14,6 @@ const USAGE = `Usage: npm run m0f:fold-face-candidate-flow -- [input.fold]
 Runs candidate face reconstruction and independent face-complex diagnostics for one
 closed NOFACES FOLD document. The output is not foldability or M0F gate evidence.
 `;
-
-export const DEFAULT_FOLD_FACE_CANDIDATE_FLOW_INPUT = Object.freeze({
-  file_spec: 1.2,
-  frame_classes: Object.freeze(['creasePattern']),
-  frame_attributes: Object.freeze(['2D']),
-  vertices_coords: Object.freeze([
-    Object.freeze([0, 0]),
-    Object.freeze([3, 0]),
-    Object.freeze([3, 1]),
-    Object.freeze([1, 1]),
-    Object.freeze([1, 3]),
-    Object.freeze([0, 3]),
-  ]),
-  edges_vertices: Object.freeze([
-    Object.freeze([0, 1]),
-    Object.freeze([1, 2]),
-    Object.freeze([2, 3]),
-    Object.freeze([3, 4]),
-    Object.freeze([4, 5]),
-    Object.freeze([5, 0]),
-  ]),
-  edges_assignment: Object.freeze(['B', 'B', 'B', 'B', 'B', 'B']),
-});
 
 export type FoldFaceCandidateFlowCliIo = Readonly<{
   cwd: string;

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { M0fCandidateFoldPreview } from './M0fCandidateFoldPreview';
 import {
   bundledM0fProductHandoffDiagnosticEvaluation,
   runBundledM0fProductHandoffDiagnostic,
@@ -112,6 +113,8 @@ export function M0fDiagnosticPanel() {
           </p>
         )}
       </div>
+
+      <M0fCandidateFoldPreview />
     </section>
   );
 }

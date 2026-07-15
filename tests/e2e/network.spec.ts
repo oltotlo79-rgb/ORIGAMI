@@ -53,6 +53,10 @@ test('production shell performs only same-origin static requests', async ({ base
   await expect(page.getByTestId('m0f-diagnostic-run-result')).toContainText(
     'ブラウザ内評価が完了しました',
   );
+  await page.getByRole('button', { name: '候補JSONを表示' }).click();
+  await expect(page.getByTestId('m0f-candidate-fold-preview-status')).toContainText(
+    '読み取り専用の候補JSONを表示しました',
+  );
   await page.waitForLoadState('networkidle');
 
   const externalRequests = requests.filter(({ url }) => new URL(url).origin !== expectedOrigin);
