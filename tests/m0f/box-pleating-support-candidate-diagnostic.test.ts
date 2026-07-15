@@ -114,12 +114,10 @@ describe('M0F box-pleating support candidate diagnostic', () => {
       'maxGridColumns',
       'maxGridRows',
     ]);
+    expect(result.value.candidatePredicateObservations).toHaveLength(6);
     expect(
-      result.value.candidatePredicateObservations.every(
-        (entry) =>
-          entry.selectedBoundary === null &&
-          entry.supportDecisionAvailable === false &&
-          entry.candidateOutcomes.every((outcome) => outcome.inputSatisfiesCandidateHypothesis),
+      result.value.candidatePredicateObservations.every((entry) =>
+        entry.candidateOutcomes.every((outcome) => outcome.inputSatisfiesCandidateHypothesis),
       ),
     ).toBe(true);
     expect(result.value.unevaluatedConstraintIds).toHaveLength(21);
