@@ -361,6 +361,26 @@ and M0F `GO` is impossible while any required value remains unresolved.
   canonical path mutations, contacts, CCD, collision freedom, and foldability
   remain open.
 - One project-authored
+  `NEG-PATH-MUTATION-BOUNDED-INTERVAL-ANGLE-BOUNDS-INVERTED` source now forms a
+  separate deterministic candidate bundle outside the canonical manifest. Its
+  accepted single-segment bounded-interpolation control declares the first
+  `e-hinge` interval angle bound `[0,pi/2]`; the negative raises only its lower
+  bound from `0` to `3*pi/4`, fixes the exact one-leaf replacement, and replays
+  the complete ordered parser oracle: parent-bound `invalid-bounds`, `lower
+  bound must not exceed upper bound`, followed by parent-map
+  `angle-outside-bound`, `interval bound for e-hinge must contain both adjacent
+  knot angles`. The parser retains the finite inverted pair in its bound map,
+  so literal containment follows the ordering failure. Tuple and outer-row
+  lengths, interval cardinality, and the crease-reference set remain unchanged,
+  and no finite, cardinality, or motion-map issue is added. This is only the
+  current parser's saved literal bound-ordering and continued adjacent-angle
+  containment boundary. Physically valid angle schedules and bounds,
+  conservative bounds, kinematic feasibility, endpoint and physical path
+  semantics, representation selection and completeness, rigidity, face
+  isometry, hinge geometry, certificate hashes and authenticity, the remaining
+  canonical path mutations, contacts, CCD, collision freedom, and foldability
+  remain open.
+- One project-authored
   `NEG-PATH-MUTATION-REPRESENTATION-STATUS-ESCALATION` source now forms a
   separate deterministic candidate bundle outside the canonical manifest. Its
   accepted bounded-interpolation control keeps

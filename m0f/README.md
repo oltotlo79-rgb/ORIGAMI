@@ -933,6 +933,29 @@ No canonical, SupportProfile, ToleranceProfile, scientific, or global-gate
 claim is made. See
 `docs/neg-path-bounded-interval-angle-bound-tuple-cardinality-candidate-bundle-v1.md`.
 
+`npm run m0f:neg-path-bounded-interval-angle-bounds-inverted-candidate`
+verifies one project-authored exact-negative artifact-contract source outside
+the canonical manifest. Its accepted single-segment bounded-interpolation
+control declares the first `e-hinge` interval angle bound `[0,pi/2]`. The
+negative raises only its lower bound from `0` to `3*pi/4`, fixing one exact
+leaf replacement and the complete ordered issues: parent-bound
+`invalid-bounds`, `lower bound must not exceed upper bound`, followed by
+parent-map `angle-outside-bound`, `interval bound for e-hinge must contain both
+adjacent knot angles`. The parser retains the finite inverted pair in its bound
+map and therefore performs literal containment after reporting the ordering
+failure. Tuple and outer-row lengths, interval cardinality, and the crease ID
+set stay unchanged, so no finite, cardinality, or motion-map issue is added.
+This is only the current parser's saved literal bound-ordering and continued
+adjacent-angle containment boundary. It does not establish physically valid
+angle schedules or bounds, conservative bounds, kinematic feasibility,
+endpoint or physical path semantics, representation selection, crease-map
+completeness, polynomial semantics, rigidity, face isometry, hinge geometry,
+certificate hashes or authenticity, contacts, CCD, collision freedom,
+foldability, or completeness of the canonical path-mutation family. No
+canonical, SupportProfile, ToleranceProfile, scientific, or global-gate claim
+is made. See
+`docs/neg-path-bounded-interval-angle-bounds-inverted-candidate-bundle-v1.md`.
+
 `npm run m0f:neg-path-non-monotonic-knot-time-candidate` verifies one
 project-authored exact-negative artifact-contract source outside the canonical
 manifest. Its accepted single-segment bounded-interpolation control declares
