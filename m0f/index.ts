@@ -1,4 +1,5 @@
 export * from './benchmark.js';
+export * from './bounded-path-candidate-flow.js';
 export * from './box-pleating/branch-grid-allocation.js';
 export * from './box-pleating/box-pleating-candidate-flow.js';
 export * from './box-pleating/euclidean-necessary-filter.js';
