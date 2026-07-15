@@ -121,6 +121,7 @@ export * from './reference-verifier/static-rational-triangle-overlap-census-audi
 export * from './reference-verifier/static-rational-triangle-overlap-census-evidence.js';
 export * from './reference-verifier/static-rational-triangle-nonadjacent-crossing-audit.js';
 export * from './stable-json.js';
+export * from './static-exact-3d-candidate-flow.js';
 export * from './workers/affine-origin-rotation-swept-aabb-census-worker-protocol.js';
 export * from './workers/affine-origin-rotation-swept-aabb-census-worker-handler.js';
 export * from './workers/affine-origin-rotation-swept-aabb-census-worker-runner.js';
