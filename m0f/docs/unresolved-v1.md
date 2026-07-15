@@ -341,6 +341,26 @@ and M0F `GO` is impossible while any required value remains unresolved.
   hashes and authenticity, the remaining canonical path mutations, contacts,
   CCD, collision freedom, and foldability remain open.
 - One project-authored
+  `NEG-PATH-MUTATION-BOUNDED-INTERVAL-ANGLE-BOUND-TUPLE-CARDINALITY-MISMATCH`
+  source now forms a separate deterministic candidate bundle outside the
+  canonical manifest. Its accepted single-segment bounded-interpolation
+  control declares one `e-hinge` interval-angle-bound row
+  `[[0,pi/2],[pi/2,pi]]`; the negative appends the finite third coordinate
+  `pi` at index 2 of the first bound tuple, fixes the exact one-path addition,
+  and replays the sole parent-row `invalid-tuple` issue, `must contain exactly
+  2 finite numbers`. Outer bound-row length, interval count, and the
+  crease-reference set remain unchanged, and failed tuple-cardinality
+  validation prevents finite-coordinate, bound-map, and containment inference,
+  so none produces a secondary issue. This is only the current parser's
+  exact-size-two boundary for an inner bound tuple. Value finiteness, angle and
+  knot handling, outer bound and knot-interval cardinality, ordering,
+  containment, radian conventions, physical angle schedules and bounds,
+  conservative bounds, kinematic feasibility, endpoint and physical path
+  semantics, representation selection and completeness, rigidity, face
+  isometry, hinge geometry, certificate hashes and authenticity, the remaining
+  canonical path mutations, contacts, CCD, collision freedom, and foldability
+  remain open.
+- One project-authored
   `NEG-PATH-MUTATION-REPRESENTATION-STATUS-ESCALATION` source now forms a
   separate deterministic candidate bundle outside the canonical manifest. Its
   accepted bounded-interpolation control keeps

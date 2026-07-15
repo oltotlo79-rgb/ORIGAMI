@@ -911,6 +911,28 @@ the canonical path-mutation family. No canonical, SupportProfile,
 ToleranceProfile, scientific, or global-gate claim is made. See
 `docs/neg-path-bounded-finite-interval-angle-bounds-candidate-bundle-v1.md`.
 
+`npm run m0f:neg-path-bounded-interval-angle-bound-tuple-cardinality-candidate`
+verifies one project-authored exact-negative artifact-contract source outside
+the canonical manifest. Its accepted single-segment bounded-interpolation
+control declares one `e-hinge` interval-angle-bound row
+`[[0,pi/2],[pi/2,pi]]`. The negative appends the finite third coordinate `pi`
+at index 2 of the first bound tuple, fixing one exact added path and the sole
+parent-row `invalid-tuple` issue, `must contain exactly 2 finite numbers`.
+Outer bound-row length, interval count, and the crease-reference set stay
+unchanged, and failed tuple-cardinality validation prevents finite-coordinate,
+bound-map, and containment inference, so none emits a secondary issue. This is
+only the current parser's exact-size-two boundary for an inner bound tuple. It
+does not establish value finiteness, angle or knot handling, outer bound or
+knot-interval cardinality, ordering, containment, a radian convention,
+physical angle schedules or bounds, conservative bounds, kinematic
+feasibility, endpoint or physical path semantics, representation selection,
+crease-map completeness, polynomial semantics, rigidity, face isometry, hinge
+geometry, certificate hashes or authenticity, contacts, CCD, collision
+freedom, foldability, or completeness of the canonical path-mutation family.
+No canonical, SupportProfile, ToleranceProfile, scientific, or global-gate
+claim is made. See
+`docs/neg-path-bounded-interval-angle-bound-tuple-cardinality-candidate-bundle-v1.md`.
+
 `npm run m0f:neg-path-non-monotonic-knot-time-candidate` verifies one
 project-authored exact-negative artifact-contract source outside the canonical
 manifest. Its accepted single-segment bounded-interpolation control declares
