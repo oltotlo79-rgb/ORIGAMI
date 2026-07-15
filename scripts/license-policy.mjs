@@ -12,8 +12,14 @@ const FORBIDDEN_COPYLEFT_PATTERN = /\b(?:AGPL|GPL|LGPL)-[0-9]/iu;
 const SPDX_IDENTIFIER_PATTERN = /^[A-Za-z0-9][A-Za-z0-9.-]*$/u;
 const SPDX_TOKEN_PATTERN = /\(|\)|AND|OR|[A-Za-z0-9][A-Za-z0-9.-]*/gu;
 
-function failure(reason, identifiers = []) {
-  return { allowed: false, identifiers, reason };
+function failure(reasonCode, identifiers = [], rejectedIdentifiers = []) {
+  return {
+    allowed: false,
+    identifiers,
+    rejectedIdentifiers,
+    reasonCode,
+    reason: reasonCode,
+  };
 }
 
 /**
@@ -87,8 +93,14 @@ export function evaluateLicense(rawLicense) {
 
   const rejected = identifiers.filter((identifier) => !ALLOWED_LICENSE_SET.has(identifier));
   if (rejected.length > 0) {
-    return failure(`license-not-allowlisted:${rejected.join(',')}`, identifiers);
+    return failure('license-not-allowlisted', identifiers, rejected);
   }
 
-  return { allowed: true, identifiers, reason: 'allowlisted' };
+  return {
+    allowed: true,
+    identifiers,
+    rejectedIdentifiers: [],
+    reasonCode: 'allowlisted',
+    reason: 'allowlisted',
+  };
 }

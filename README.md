@@ -126,6 +126,7 @@ Viteは通常`@vitejs/plugin-react-swc`を使用します。OS policyなどでSW
 | `npm run m0f:smoke`                                                           | M0F ハーネスの smoke 検証                       |
 | `npm run m0f:catalog-gate`                                                    | 必須 fixture ID 群の完備性検査                  |
 | `npm run m0f:gate`                                                            | 最終 M0F 証拠ゲート（完成まで失敗終了）         |
+| `npm run m0f:readiness-report`                                                | fail-closed候補readiness reportを生成           |
 | `npm run m0f:bench`                                                           | M0F 試作のベンチマーク                          |
 | `npm run m0f:box-grid-candidates`                                             | 箱ひだ正方形grid量子化候補を列挙                |
 | `npm run m0f:box-grid-lattice`                                                | 候補からexactな4方向格子基盤を生成              |

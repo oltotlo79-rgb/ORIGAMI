@@ -106,7 +106,7 @@ function assertFailClosedDiagnostic(
   if (!isRecord(diagnostic)) {
     throw new TypeError('readiness report input must remain a fail-closed handoff diagnostic');
   }
-  const candidate = diagnostic as Record<string, unknown>;
+  const candidate = diagnostic;
   if (
     candidate.schemaVersion !== 1 ||
     candidate.recordType !== M0F_PRODUCT_HANDOFF_DIAGNOSTIC_RESULT_RECORD_TYPE ||
