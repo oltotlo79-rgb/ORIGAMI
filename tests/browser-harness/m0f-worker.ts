@@ -119,6 +119,7 @@ type PackingMeasurement = Readonly<{
 
 type WitnessMeasurement = Readonly<{
   mode: 'witness-success' | 'witness-cancel' | 'witness-pre-abort';
+  elapsedMs: number;
   searchWorkerFactoryCallCount: number;
   validationWorkerFactoryCallCount: number;
   contractStatus: EuclideanNecessaryWitnessTwoStageWorkerRunResultV1['contractStatus'];
@@ -464,6 +465,7 @@ async function measureWitness(mode: WitnessMeasurement['mode']): Promise<Witness
   if (mode === 'witness-pre-abort') controller.abort();
   let searchWorkerFactoryCallCount = 0;
   let validationWorkerFactoryCallCount = 0;
+  const started = performance.now();
   const pending = runEuclideanNecessaryWitnessSearchWorkerV1({
     jobId: `browser-measurement:${mode}`,
     input: WITNESS_SEARCH_INPUT,
@@ -482,6 +484,7 @@ async function measureWitness(mode: WitnessMeasurement['mode']): Promise<Witness
   const completed = result.outcome === 'completed' ? result.result : null;
   return {
     mode,
+    elapsedMs: performance.now() - started,
     searchWorkerFactoryCallCount,
     validationWorkerFactoryCallCount,
     contractStatus: result.contractStatus,
