@@ -1,0 +1,160 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oridesign.local/schemas/m0f/experiment-result-v1.schema.json",
+  "title": "OriDesign M0F candidate experiment result v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "schemaId",
+    "recordType",
+    "contractStatus",
+    "scientificClaim",
+    "runnerVersion",
+    "experimentId",
+    "engineVersion",
+    "parameterHash",
+    "inputHash",
+    "seed",
+    "repetition",
+    "outcome",
+    "reasonCode",
+    "result",
+    "semanticHash"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "schemaId": {
+      "const": "https://oridesign.local/schemas/m0f/experiment-result-v1.schema.json"
+    },
+    "recordType": { "const": "m0f-experiment-result" },
+    "contractStatus": { "const": "candidate" },
+    "scientificClaim": { "const": false },
+    "runnerVersion": {
+      "const": "oridesign-m0f-experiment-runner/1.0.0-candidate"
+    },
+    "experimentId": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-z][a-z0-9]*(?:[.-][a-z0-9]+)*$"
+        },
+        { "type": "null" }
+      ]
+    },
+    "engineVersion": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._/+\\-]*$"
+        },
+        { "type": "null" }
+      ]
+    },
+    "parameterHash": { "$ref": "#/$defs/nullableSha256" },
+    "inputHash": { "$ref": "#/$defs/nullableSha256" },
+    "seed": {
+      "anyOf": [{ "type": "integer", "minimum": 0, "maximum": 4294967295 }, { "type": "null" }]
+    },
+    "repetition": {
+      "anyOf": [
+        { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+        { "type": "null" }
+      ]
+    },
+    "outcome": { "enum": ["completed", "failed"] },
+    "reasonCode": {
+      "anyOf": [{ "$ref": "#/$defs/reasonCode" }, { "type": "null" }]
+    },
+    "result": { "$ref": "#/$defs/candidateJsonValue" },
+    "semanticHash": { "$ref": "#/$defs/sha256" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "outcome": { "const": "completed" } } },
+      "then": {
+        "properties": {
+          "experimentId": { "type": "string" },
+          "engineVersion": { "type": "string" },
+          "parameterHash": { "$ref": "#/$defs/sha256" },
+          "inputHash": { "$ref": "#/$defs/sha256" },
+          "seed": { "type": "integer" },
+          "repetition": { "type": "integer" },
+          "reasonCode": { "type": "null" },
+          "result": { "not": { "type": "null" } }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "outcome": { "const": "failed" } } },
+      "then": {
+        "properties": { "reasonCode": { "$ref": "#/$defs/reasonCode" } }
+      }
+    }
+  ],
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "nullableSha256": {
+      "anyOf": [{ "$ref": "#/$defs/sha256" }, { "type": "null" }]
+    },
+    "candidateJsonValue": {
+      "anyOf": [
+        { "type": "null" },
+        { "type": "boolean" },
+        { "type": "number" },
+        {
+          "type": "string",
+          "not": { "enum": ["verified", "no-solution-certified"] }
+        },
+        {
+          "type": "array",
+          "items": { "$ref": "#/$defs/candidateJsonValue" }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "contractStatus": { "const": "candidate" },
+            "scientificClaim": { "const": false }
+          },
+          "additionalProperties": { "$ref": "#/$defs/candidateJsonValue" }
+        }
+      ]
+    },
+    "reasonCode": {
+      "enum": [
+        "experiment.request.invalid-id",
+        "experiment.request.invalid-engine-version",
+        "experiment.request.invalid-seed",
+        "experiment.request.invalid-repetition",
+        "experiment.request.non-finite-number",
+        "experiment.request.invalid-json",
+        "experiment.unknown-id",
+        "experiment.engine-version-mismatch",
+        "experiment.execution.cancelled",
+        "experiment.execution.exception",
+        "experiment.result.non-finite-number",
+        "experiment.result.invalid-json",
+        "experiment.result.claim-boundary",
+        "experiment.numeric-kernel.invalid-parameters",
+        "experiment.numeric-kernel.invalid-input",
+        "experiment.numeric-kernel.oracle-mismatch",
+        "experiment.face-reconstruction.invalid-parameters",
+        "experiment.face-reconstruction.invalid-input",
+        "experiment.face-reconstruction.topology-rejected",
+        "experiment.face-reconstruction.invariant-failed",
+        "experiment.face-complex-audit.invalid-parameters",
+        "experiment.face-complex-audit.invalid-contract",
+        "experiment.face-complex-audit.inconsistent",
+        "experiment.square-grid-quantization.invalid-parameters",
+        "experiment.square-grid-quantization.invalid-input"
+      ]
+    }
+  }
+}

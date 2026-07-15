@@ -1,0 +1,507 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oridesign.local/schemas/m0f/neg-path-time-coverage-candidate-bundle-ledger-v1.schema.json",
+  "title": "NEG-PATH-MUTATION-COVERAGE exact-negative candidate bundle ledger v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "schemaId",
+    "recordType",
+    "contractStatus",
+    "scientificClaim",
+    "vectorSetId",
+    "scope",
+    "declaredPathTimeCoverageParserOnly",
+    "canonicalManifestPath",
+    "canonicalManifestRegistration",
+    "canonicalPromotionClaimed",
+    "canonicalPathMutationFamilyComplete",
+    "endpointContinuityEstablished",
+    "piecewisePolynomialCoverageIncluded",
+    "supportProfileIncluded",
+    "toleranceProfileIncluded",
+    "physicalPathContinuityEstablished",
+    "creaseMapCompletenessEstablished",
+    "rigidityEstablished",
+    "faceIsometryEstablished",
+    "hingeGeometryEstablished",
+    "certificateHashVerificationIncluded",
+    "contactAnalysisIncluded",
+    "continuousCollisionDetectionIncluded",
+    "collisionDetectionIncluded",
+    "collisionFreedomEstablished",
+    "foldabilityEstablished",
+    "scientificVerificationClaimed",
+    "globalM0fGate",
+    "caseCount",
+    "artifactCount",
+    "generator",
+    "provenance",
+    "cases",
+    "artifacts"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "schemaId": {
+      "const": "https://oridesign.local/schemas/m0f/neg-path-time-coverage-candidate-bundle-ledger-v1.schema.json"
+    },
+    "recordType": {
+      "const": "m0f-neg-path-time-coverage-candidate-bundle-ledger"
+    },
+    "contractStatus": {
+      "const": "candidate"
+    },
+    "scientificClaim": {
+      "const": false
+    },
+    "vectorSetId": {
+      "const": "NEG-PATH-MUTATION-COVERAGE-V1"
+    },
+    "scope": {
+      "const": "project-authored-exact-negative-artifact-contract-path-time-coverage-parser-replay-only"
+    },
+    "declaredPathTimeCoverageParserOnly": {
+      "const": true
+    },
+    "canonicalManifestPath": {
+      "const": "tests/fixtures/manifest.json"
+    },
+    "canonicalManifestRegistration": {
+      "const": "not-registered"
+    },
+    "canonicalPromotionClaimed": {
+      "const": false
+    },
+    "canonicalPathMutationFamilyComplete": {
+      "const": false
+    },
+    "endpointContinuityEstablished": {
+      "const": false
+    },
+    "piecewisePolynomialCoverageIncluded": {
+      "const": false
+    },
+    "supportProfileIncluded": {
+      "const": false
+    },
+    "toleranceProfileIncluded": {
+      "const": false
+    },
+    "physicalPathContinuityEstablished": {
+      "const": false
+    },
+    "creaseMapCompletenessEstablished": {
+      "const": false
+    },
+    "rigidityEstablished": {
+      "const": false
+    },
+    "faceIsometryEstablished": {
+      "const": false
+    },
+    "hingeGeometryEstablished": {
+      "const": false
+    },
+    "certificateHashVerificationIncluded": {
+      "const": false
+    },
+    "contactAnalysisIncluded": {
+      "const": false
+    },
+    "continuousCollisionDetectionIncluded": {
+      "const": false
+    },
+    "collisionDetectionIncluded": {
+      "const": false
+    },
+    "collisionFreedomEstablished": {
+      "const": false
+    },
+    "foldabilityEstablished": {
+      "const": false
+    },
+    "scientificVerificationClaimed": {
+      "const": false
+    },
+    "globalM0fGate": {
+      "const": "not-evaluated"
+    },
+    "caseCount": {
+      "const": 4
+    },
+    "artifactCount": {
+      "const": 6
+    },
+    "generator": {
+      "const": {
+        "generatorId": "oridesign-neg-path-time-coverage-candidate-bundle",
+        "generatorVersion": "1.0.0-candidate",
+        "serialization": "stable-json-utf8-lf-v1",
+        "detector": "parseArtifactContractV1",
+        "detectorSourcePath": "m0f/artifacts/contract.ts"
+      }
+    },
+    "provenance": {
+      "const": {
+        "sourceReferenceId": "oridesign-neg-path-time-coverage-candidate-v1",
+        "sourceKind": "project-authored",
+        "title": "NEG-PATH-MUTATION-COVERAGE project-authored path-time coverage parser vectors",
+        "authors": ["OriDesign contributors"],
+        "redistribution": "allowed",
+        "licenseSpdx": "MIT"
+      }
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "prefixItems": [
+        {
+          "const": {
+            "caseIndex": 0,
+            "caseId": "NEG-PATH-MUTATION-COVERAGE-START-GAP",
+            "controlArtifactId": "control-fold",
+            "mutationKind": "move-path-start-and-first-bounded-knot-forward",
+            "changedPaths": [
+              "$.pathCandidate.segments[0].motion.knotTimes[0]",
+              "$.pathCandidate.segments[0].t0"
+            ],
+            "sourceArtifactId": "source-path-coverage-start-gap",
+            "sourcePath": "path-coverage-start-gap.json",
+            "expectedOutcome": "rejected",
+            "expectedIssues": [
+              {
+                "path": "$.pathCandidate.segments[0].t0",
+                "code": "incomplete-time-coverage"
+              }
+            ]
+          }
+        },
+        {
+          "const": {
+            "caseIndex": 1,
+            "caseId": "NEG-PATH-MUTATION-COVERAGE-INTERNAL-GAP",
+            "controlArtifactId": "control-fold",
+            "mutationKind": "move-second-segment-start-and-first-bounded-knot-forward",
+            "changedPaths": [
+              "$.pathCandidate.segments[1].motion.knotTimes[0]",
+              "$.pathCandidate.segments[1].t0"
+            ],
+            "sourceArtifactId": "source-path-coverage-internal-gap",
+            "sourcePath": "path-coverage-internal-gap.json",
+            "expectedOutcome": "rejected",
+            "expectedIssues": [
+              {
+                "path": "$.pathCandidate.segments[1].t0",
+                "code": "incomplete-time-coverage"
+              }
+            ]
+          }
+        },
+        {
+          "const": {
+            "caseIndex": 2,
+            "caseId": "NEG-PATH-MUTATION-COVERAGE-TERMINAL-GAP",
+            "controlArtifactId": "control-fold",
+            "mutationKind": "move-path-end-and-last-bounded-knot-backward",
+            "changedPaths": [
+              "$.pathCandidate.segments[1].motion.knotTimes[1]",
+              "$.pathCandidate.segments[1].t1"
+            ],
+            "sourceArtifactId": "source-path-coverage-terminal-gap",
+            "sourcePath": "path-coverage-terminal-gap.json",
+            "expectedOutcome": "rejected",
+            "expectedIssues": [
+              {
+                "path": "$.pathCandidate.segments",
+                "code": "incomplete-time-coverage"
+              }
+            ]
+          }
+        },
+        {
+          "const": {
+            "caseIndex": 3,
+            "caseId": "NEG-PATH-MUTATION-COVERAGE-KNOT-GAP",
+            "controlArtifactId": "control-fold",
+            "mutationKind": "move-second-bounded-first-knot-forward-only",
+            "changedPaths": ["$.pathCandidate.segments[1].motion.knotTimes[0]"],
+            "sourceArtifactId": "source-path-coverage-knot-gap",
+            "sourcePath": "path-coverage-knot-gap.json",
+            "expectedOutcome": "rejected",
+            "expectedIssues": [
+              {
+                "path": "$.pathCandidate.segments[1].motion.knotTimes",
+                "code": "incomplete-time-coverage"
+              }
+            ]
+          }
+        }
+      ],
+      "items": false
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "prefixItems": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "artifactId",
+            "role",
+            "path",
+            "mediaType",
+            "sha256",
+            "licenseSpdx",
+            "provenance"
+          ],
+          "properties": {
+            "artifactId": {
+              "const": "bundle-readme"
+            },
+            "role": {
+              "const": "readme"
+            },
+            "path": {
+              "const": "README.md"
+            },
+            "mediaType": {
+              "const": "text/markdown; charset=utf-8"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            },
+            "licenseSpdx": {
+              "const": "MIT"
+            },
+            "provenance": {
+              "const": {
+                "sourceReferenceId": "oridesign-neg-path-time-coverage-candidate-v1",
+                "sourceUse": "project-authored",
+                "derivation": "authored",
+                "dependsOnArtifactIds": []
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "artifactId",
+            "role",
+            "path",
+            "mediaType",
+            "sha256",
+            "licenseSpdx",
+            "provenance"
+          ],
+          "properties": {
+            "artifactId": {
+              "const": "control-fold"
+            },
+            "role": {
+              "const": "accepted-control"
+            },
+            "path": {
+              "const": "control-fold.json"
+            },
+            "mediaType": {
+              "const": "application/json"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            },
+            "licenseSpdx": {
+              "const": "MIT"
+            },
+            "provenance": {
+              "const": {
+                "sourceReferenceId": "oridesign-neg-path-time-coverage-candidate-v1",
+                "sourceUse": "project-authored",
+                "derivation": "authored",
+                "dependsOnArtifactIds": []
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "artifactId",
+            "role",
+            "path",
+            "mediaType",
+            "sha256",
+            "licenseSpdx",
+            "provenance"
+          ],
+          "properties": {
+            "artifactId": {
+              "const": "source-path-coverage-start-gap"
+            },
+            "role": {
+              "const": "negative-source"
+            },
+            "path": {
+              "const": "path-coverage-start-gap.json"
+            },
+            "mediaType": {
+              "const": "application/json"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            },
+            "licenseSpdx": {
+              "const": "MIT"
+            },
+            "provenance": {
+              "const": {
+                "sourceReferenceId": "oridesign-neg-path-time-coverage-candidate-v1",
+                "sourceUse": "project-authored",
+                "derivation": "mutated-from-control",
+                "dependsOnArtifactIds": ["control-fold"]
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "artifactId",
+            "role",
+            "path",
+            "mediaType",
+            "sha256",
+            "licenseSpdx",
+            "provenance"
+          ],
+          "properties": {
+            "artifactId": {
+              "const": "source-path-coverage-internal-gap"
+            },
+            "role": {
+              "const": "negative-source"
+            },
+            "path": {
+              "const": "path-coverage-internal-gap.json"
+            },
+            "mediaType": {
+              "const": "application/json"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            },
+            "licenseSpdx": {
+              "const": "MIT"
+            },
+            "provenance": {
+              "const": {
+                "sourceReferenceId": "oridesign-neg-path-time-coverage-candidate-v1",
+                "sourceUse": "project-authored",
+                "derivation": "mutated-from-control",
+                "dependsOnArtifactIds": ["control-fold"]
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "artifactId",
+            "role",
+            "path",
+            "mediaType",
+            "sha256",
+            "licenseSpdx",
+            "provenance"
+          ],
+          "properties": {
+            "artifactId": {
+              "const": "source-path-coverage-terminal-gap"
+            },
+            "role": {
+              "const": "negative-source"
+            },
+            "path": {
+              "const": "path-coverage-terminal-gap.json"
+            },
+            "mediaType": {
+              "const": "application/json"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            },
+            "licenseSpdx": {
+              "const": "MIT"
+            },
+            "provenance": {
+              "const": {
+                "sourceReferenceId": "oridesign-neg-path-time-coverage-candidate-v1",
+                "sourceUse": "project-authored",
+                "derivation": "mutated-from-control",
+                "dependsOnArtifactIds": ["control-fold"]
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "artifactId",
+            "role",
+            "path",
+            "mediaType",
+            "sha256",
+            "licenseSpdx",
+            "provenance"
+          ],
+          "properties": {
+            "artifactId": {
+              "const": "source-path-coverage-knot-gap"
+            },
+            "role": {
+              "const": "negative-source"
+            },
+            "path": {
+              "const": "path-coverage-knot-gap.json"
+            },
+            "mediaType": {
+              "const": "application/json"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            },
+            "licenseSpdx": {
+              "const": "MIT"
+            },
+            "provenance": {
+              "const": {
+                "sourceReferenceId": "oridesign-neg-path-time-coverage-candidate-v1",
+                "sourceUse": "project-authored",
+                "derivation": "mutated-from-control",
+                "dependsOnArtifactIds": ["control-fold"]
+              }
+            }
+          }
+        }
+      ],
+      "items": false
+    }
+  }
+}

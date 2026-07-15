@@ -1,0 +1,146 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oridesign.local/schemas/m0f/reference-model-v1.schema.json",
+  "title": "OriDesign M0F convention reference model v1",
+  "description": "A conventions-only vector. It is not a foldability certificate or scientific fixture.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "schemaId",
+    "conventionsId",
+    "canonicalizationVersion",
+    "id",
+    "scope",
+    "scientificClaim",
+    "paper",
+    "vertices",
+    "edges",
+    "faces",
+    "hingeSamples",
+    "overlapRegions"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "schemaId": { "const": "https://oridesign.local/schemas/m0f/reference-model-v1.schema.json" },
+    "conventionsId": { "const": "oridesign-m0f-conventions-v1" },
+    "canonicalizationVersion": { "const": "oridesign-canonical-v1" },
+    "id": { "$ref": "#/$defs/id" },
+    "scope": { "const": "conventions-only" },
+    "scientificClaim": { "const": false },
+    "paper": { "$ref": "#/$defs/paper" },
+    "vertices": {
+      "type": "array",
+      "minItems": 3,
+      "items": { "$ref": "#/$defs/vertex" }
+    },
+    "edges": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/edge" }
+    },
+    "faces": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/face" }
+    },
+    "hingeSamples": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/hingeSample" }
+    },
+    "overlapRegions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/overlapRegion" }
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9._:-]{0,127}$"
+    },
+    "finiteNumber": {
+      "type": "number"
+    },
+    "idPair": {
+      "type": "array",
+      "prefixItems": [{ "$ref": "#/$defs/id" }, { "$ref": "#/$defs/id" }],
+      "items": false,
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "paper": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["width", "height", "normalizedShortSide"],
+      "properties": {
+        "width": { "type": "number", "exclusiveMinimum": 0 },
+        "height": { "type": "number", "exclusiveMinimum": 0 },
+        "normalizedShortSide": { "const": 1 }
+      },
+      "$comment": "The runtime parser additionally requires min(width, height) === 1."
+    },
+    "vertex": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "x", "y"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "x": { "$ref": "#/$defs/finiteNumber" },
+        "y": { "$ref": "#/$defs/finiteNumber" }
+      }
+    },
+    "edge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "vertices", "assignment", "leftFaceId", "rightFaceId"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "vertices": { "$ref": "#/$defs/idPair" },
+        "assignment": { "enum": ["M", "V", "B", "F", "U"] },
+        "leftFaceId": { "anyOf": [{ "$ref": "#/$defs/id" }, { "type": "null" }] },
+        "rightFaceId": { "anyOf": [{ "$ref": "#/$defs/id" }, { "type": "null" }] }
+      },
+      "$comment": "Reference integrity and boundary/interior incidence are checked by parseReferenceModelV1."
+    },
+    "face": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "vertices"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "vertices": {
+          "type": "array",
+          "minItems": 3,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/id" }
+        }
+      },
+      "$comment": "Exact nonzero area and canonical winding are runtime convention checks."
+    },
+    "hingeSample": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["edgeId", "foldAngleRadians"],
+      "properties": {
+        "edgeId": { "$ref": "#/$defs/id" },
+        "foldAngleRadians": {
+          "type": "number",
+          "minimum": -3.141592653589793,
+          "maximum": 3.141592653589793
+        }
+      }
+    },
+    "overlapRegion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "faceIds", "aboveFaceId", "belowFaceId"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "faceIds": { "$ref": "#/$defs/idPair" },
+        "aboveFaceId": { "$ref": "#/$defs/id" },
+        "belowFaceId": { "$ref": "#/$defs/id" }
+      },
+      "$comment": "Pair membership and acyclicity are runtime convention checks."
+    }
+  }
+}

@@ -1,0 +1,9 @@
+# NEG-PATH-MUTATION-ANGLE-KNOT-CARDINALITY-MISMATCH exact-negative candidate vector
+
+This closed directory contains one saved project-authored single-segment bounded-interpolation FOLD control and one exact-negative mutation for the current `parseArtifactContractV1` angle/knot cardinality check. The accepted control declares three knot times, three angles for `e-hinge`, and two interval bounds. The mutation deletes only the terminal angle at index 2, leaving two angles for three knots. It fixes the sole `parallel-array-mismatch` issue and produces no `motion-map-mismatch`, `angle-outside-bound`, `incomplete-time-coverage`, `path-endpoint-map-mismatch`, or `path-endpoint-discontinuity` secondary issue.
+
+The bundle is intentionally outside `tests/fixtures/manifest.json`; `NEG-PATH-MUTATION-ANGLE-KNOT-CARDINALITY-MISMATCH` is not canonically registered or promoted. Exact-negative means only that the current artifact-contract parser rejects these saved bytes with the complete ordered issue signature fixed in the ledger.
+
+This replay establishes only the declared bounded-interpolation angle-row cardinality check against the local knot array. It does not establish bound/knot-interval cardinality, crease-map or path-representation completeness, piecewise-polynomial semantics, a radian convention, physical angle schedules or bounds, conservative bounds, kinematic feasibility, physical or endpoint path continuity, rigidity, face isometry, hinge geometry, contact analysis, CCD, collision detection or freedom, foldability, certificate-hash verification, cryptographic authenticity, canonical path-mutation-family completeness, SupportProfile, ToleranceProfile, scientific verification, or M0F GO. Local SHA-256 rows detect saved-byte drift only and are not signatures.
+
+Verify with `npx tsx m0f/neg-path-angle-knot-cardinality-candidate-bundle-cli.ts --verify`. Regenerate with `npx tsx m0f/neg-path-angle-knot-cardinality-candidate-bundle-cli.ts --write`.

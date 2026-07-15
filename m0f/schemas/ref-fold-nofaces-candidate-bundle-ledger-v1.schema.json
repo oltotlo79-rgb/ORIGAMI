@@ -1,0 +1,445 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oridesign.local/schemas/m0f/ref-fold-nofaces-candidate-bundle-ledger-v1.schema.json",
+  "title": "REF-FOLD-NOFACES candidate bundle ledger v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "schemaId",
+    "recordType",
+    "contractStatus",
+    "scientificClaim",
+    "fixtureId",
+    "scope",
+    "canonicalManifestPath",
+    "canonicalManifestRegistration",
+    "canonicalPromotionClaimed",
+    "toleranceProfileIncluded",
+    "scientificVerificationClaimed",
+    "globalM0fGate",
+    "artifactCount",
+    "generator",
+    "provenance",
+    "artifacts"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "schemaId": {
+      "const": "https://oridesign.local/schemas/m0f/ref-fold-nofaces-candidate-bundle-ledger-v1.schema.json"
+    },
+    "recordType": { "const": "m0f-ref-fold-nofaces-candidate-bundle-ledger" },
+    "contractStatus": { "const": "candidate" },
+    "scientificClaim": { "const": false },
+    "fixtureId": { "const": "REF-FOLD-NOFACES" },
+    "scope": {
+      "const": "project-authored-face-reconstruction-audit-and-mutation-reproducibility-only"
+    },
+    "canonicalManifestPath": { "const": "tests/fixtures/manifest.json" },
+    "canonicalManifestRegistration": { "const": "not-registered" },
+    "canonicalPromotionClaimed": { "const": false },
+    "toleranceProfileIncluded": { "const": false },
+    "scientificVerificationClaimed": { "const": false },
+    "globalM0fGate": { "const": "not-evaluated" },
+    "artifactCount": { "const": 8 },
+    "generator": { "$ref": "#/$defs/generator" },
+    "provenance": { "$ref": "#/$defs/sourceProvenance" },
+    "artifacts": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "prefixItems": [
+        { "$ref": "#/$defs/sourceInputArtifact" },
+        { "$ref": "#/$defs/readmeArtifact" },
+        { "$ref": "#/$defs/evidenceIndexArtifact" },
+        { "$ref": "#/$defs/reconstructionRecordArtifact" },
+        { "$ref": "#/$defs/auditRecordArtifact" },
+        { "$ref": "#/$defs/auditEvidenceArtifact" },
+        { "$ref": "#/$defs/mutationSuiteArtifact" },
+        { "$ref": "#/$defs/mutationResultArtifact" }
+      ],
+      "items": false
+    }
+  },
+  "$defs": {
+    "generator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "generatorId",
+        "generatorVersion",
+        "serialization",
+        "reconstructionSeed",
+        "reconstructionRepetition",
+        "auditSeed",
+        "auditRepetition"
+      ],
+      "properties": {
+        "generatorId": { "const": "oridesign-ref-fold-nofaces-candidate-bundle" },
+        "generatorVersion": { "const": "1.0.0-candidate" },
+        "serialization": { "const": "stable-json-utf8-lf-v1" },
+        "reconstructionSeed": { "const": 41 },
+        "reconstructionRepetition": { "const": 0 },
+        "auditSeed": { "const": 42 },
+        "auditRepetition": { "const": 0 }
+      }
+    },
+    "sourceProvenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sourceReferenceId",
+        "sourceKind",
+        "title",
+        "authors",
+        "redistribution",
+        "licenseSpdx"
+      ],
+      "properties": {
+        "sourceReferenceId": { "const": "oridesign-ref-fold-nofaces-candidate-v1" },
+        "sourceKind": { "const": "project-authored" },
+        "title": { "const": "REF-FOLD-NOFACES project-authored candidate vector" },
+        "authors": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "prefixItems": [{ "const": "OriDesign contributors" }],
+          "items": false
+        },
+        "redistribution": { "const": "allowed" },
+        "licenseSpdx": { "const": "MIT" }
+      }
+    },
+    "artifactProvenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceReferenceId", "sourceUse", "derivation", "dependsOnArtifactIds"],
+      "properties": {
+        "sourceReferenceId": { "const": "oridesign-ref-fold-nofaces-candidate-v1" },
+        "sourceUse": { "enum": ["project-authored", "generated"] },
+        "derivation": { "enum": ["authored", "deterministically-generated"] },
+        "dependsOnArtifactIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifactId",
+        "role",
+        "path",
+        "mediaType",
+        "sha256",
+        "licenseSpdx",
+        "provenance"
+      ],
+      "properties": {
+        "artifactId": {
+          "enum": [
+            "fold-source",
+            "fixture-readme",
+            "face-evidence-index",
+            "face-reconstruction-record",
+            "face-audit-record",
+            "face-audit-evidence",
+            "face-mutation-suite",
+            "face-mutation-result"
+          ]
+        },
+        "role": {
+          "enum": [
+            "source-input",
+            "readme",
+            "evidence-index",
+            "reconstruction-record",
+            "audit-record",
+            "audit-evidence",
+            "mutation-suite",
+            "mutation-result"
+          ]
+        },
+        "path": {
+          "enum": [
+            "input.fold",
+            "README.md",
+            "face-evidence-index.json",
+            "face-reconstruction-record.json",
+            "face-audit-record.json",
+            "face-audit-evidence.json",
+            "face-mutation-suite.json",
+            "face-mutation-result.json"
+          ]
+        },
+        "mediaType": {
+          "enum": ["application/vnd.fold+json", "text/markdown; charset=utf-8", "application/json"]
+        },
+        "sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+        "licenseSpdx": { "const": "MIT" },
+        "provenance": { "$ref": "#/$defs/artifactProvenance" }
+      }
+    },
+    "sourceInputArtifact": {
+      "allOf": [
+        { "$ref": "#/$defs/artifact" },
+        {
+          "type": "object",
+          "properties": {
+            "artifactId": { "const": "fold-source" },
+            "role": { "const": "source-input" },
+            "path": { "const": "input.fold" },
+            "mediaType": { "const": "application/vnd.fold+json" },
+            "provenance": {
+              "allOf": [
+                { "$ref": "#/$defs/artifactProvenance" },
+                {
+                  "type": "object",
+                  "properties": {
+                    "sourceUse": { "const": "project-authored" },
+                    "derivation": { "const": "authored" },
+                    "dependsOnArtifactIds": { "type": "array", "maxItems": 0 }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "readmeArtifact": {
+      "allOf": [
+        { "$ref": "#/$defs/artifact" },
+        {
+          "type": "object",
+          "properties": {
+            "artifactId": { "const": "fixture-readme" },
+            "role": { "const": "readme" },
+            "path": { "const": "README.md" },
+            "mediaType": { "const": "text/markdown; charset=utf-8" },
+            "provenance": {
+              "allOf": [
+                { "$ref": "#/$defs/artifactProvenance" },
+                {
+                  "type": "object",
+                  "properties": {
+                    "sourceUse": { "const": "project-authored" },
+                    "derivation": { "const": "authored" },
+                    "dependsOnArtifactIds": { "type": "array", "maxItems": 0 }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "evidenceIndexArtifact": {
+      "allOf": [
+        { "$ref": "#/$defs/artifact" },
+        {
+          "type": "object",
+          "properties": {
+            "artifactId": { "const": "face-evidence-index" },
+            "role": { "const": "evidence-index" },
+            "path": { "const": "face-evidence-index.json" },
+            "mediaType": { "const": "application/json" },
+            "provenance": {
+              "allOf": [
+                { "$ref": "#/$defs/artifactProvenance" },
+                {
+                  "type": "object",
+                  "properties": {
+                    "sourceUse": { "const": "generated" },
+                    "derivation": { "const": "deterministically-generated" },
+                    "dependsOnArtifactIds": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 1,
+                      "prefixItems": [{ "const": "fold-source" }],
+                      "items": false
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "reconstructionRecordArtifact": {
+      "allOf": [
+        { "$ref": "#/$defs/artifact" },
+        {
+          "type": "object",
+          "properties": {
+            "artifactId": { "const": "face-reconstruction-record" },
+            "role": { "const": "reconstruction-record" },
+            "path": { "const": "face-reconstruction-record.json" },
+            "mediaType": { "const": "application/json" },
+            "provenance": {
+              "allOf": [
+                { "$ref": "#/$defs/artifactProvenance" },
+                {
+                  "type": "object",
+                  "properties": {
+                    "sourceUse": { "const": "generated" },
+                    "derivation": { "const": "deterministically-generated" },
+                    "dependsOnArtifactIds": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 1,
+                      "prefixItems": [{ "const": "fold-source" }],
+                      "items": false
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "auditRecordArtifact": {
+      "allOf": [
+        { "$ref": "#/$defs/artifact" },
+        {
+          "type": "object",
+          "properties": {
+            "artifactId": { "const": "face-audit-record" },
+            "role": { "const": "audit-record" },
+            "path": { "const": "face-audit-record.json" },
+            "mediaType": { "const": "application/json" },
+            "provenance": {
+              "allOf": [
+                { "$ref": "#/$defs/artifactProvenance" },
+                {
+                  "type": "object",
+                  "properties": {
+                    "sourceUse": { "const": "generated" },
+                    "derivation": { "const": "deterministically-generated" },
+                    "dependsOnArtifactIds": {
+                      "type": "array",
+                      "minItems": 2,
+                      "maxItems": 2,
+                      "prefixItems": [
+                        { "const": "fold-source" },
+                        { "const": "face-reconstruction-record" }
+                      ],
+                      "items": false
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "auditEvidenceArtifact": {
+      "allOf": [
+        { "$ref": "#/$defs/artifact" },
+        {
+          "type": "object",
+          "properties": {
+            "artifactId": { "const": "face-audit-evidence" },
+            "role": { "const": "audit-evidence" },
+            "path": { "const": "face-audit-evidence.json" },
+            "mediaType": { "const": "application/json" },
+            "provenance": {
+              "allOf": [
+                { "$ref": "#/$defs/artifactProvenance" },
+                {
+                  "type": "object",
+                  "properties": {
+                    "sourceUse": { "const": "generated" },
+                    "derivation": { "const": "deterministically-generated" },
+                    "dependsOnArtifactIds": {
+                      "type": "array",
+                      "minItems": 2,
+                      "maxItems": 2,
+                      "prefixItems": [
+                        { "const": "fold-source" },
+                        { "const": "face-reconstruction-record" }
+                      ],
+                      "items": false
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "mutationSuiteArtifact": {
+      "allOf": [
+        { "$ref": "#/$defs/artifact" },
+        {
+          "type": "object",
+          "properties": {
+            "artifactId": { "const": "face-mutation-suite" },
+            "role": { "const": "mutation-suite" },
+            "path": { "const": "face-mutation-suite.json" },
+            "mediaType": { "const": "application/json" },
+            "provenance": {
+              "allOf": [
+                { "$ref": "#/$defs/artifactProvenance" },
+                {
+                  "type": "object",
+                  "properties": {
+                    "sourceUse": { "const": "project-authored" },
+                    "derivation": { "const": "authored" },
+                    "dependsOnArtifactIds": { "type": "array", "maxItems": 0 }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "mutationResultArtifact": {
+      "allOf": [
+        { "$ref": "#/$defs/artifact" },
+        {
+          "type": "object",
+          "properties": {
+            "artifactId": { "const": "face-mutation-result" },
+            "role": { "const": "mutation-result" },
+            "path": { "const": "face-mutation-result.json" },
+            "mediaType": { "const": "application/json" },
+            "provenance": {
+              "allOf": [
+                { "$ref": "#/$defs/artifactProvenance" },
+                {
+                  "type": "object",
+                  "properties": {
+                    "sourceUse": { "const": "generated" },
+                    "derivation": { "const": "deterministically-generated" },
+                    "dependsOnArtifactIds": {
+                      "type": "array",
+                      "minItems": 3,
+                      "maxItems": 3,
+                      "prefixItems": [
+                        { "const": "fold-source" },
+                        { "const": "face-reconstruction-record" },
+                        { "const": "face-mutation-suite" }
+                      ],
+                      "items": false
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}

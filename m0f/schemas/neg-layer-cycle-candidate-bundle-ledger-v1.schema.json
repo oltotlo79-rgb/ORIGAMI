@@ -1,0 +1,203 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oridesign.local/schemas/m0f/neg-layer-cycle-candidate-bundle-ledger-v1.schema.json",
+  "title": "NEG-LAYER-CYCLE exact-negative candidate bundle ledger v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "schemaId",
+    "recordType",
+    "contractStatus",
+    "scientificClaim",
+    "vectorSetId",
+    "scope",
+    "canonicalManifestPath",
+    "canonicalManifestRegistration",
+    "canonicalPromotionClaimed",
+    "supportProfileIncluded",
+    "toleranceProfileIncluded",
+    "physicalLayerOrderEstablished",
+    "orderReversalDetectionIncluded",
+    "contactLegalityEstablished",
+    "pathContinuityEstablished",
+    "collisionDetectionIncluded",
+    "foldabilityEstablished",
+    "scientificVerificationClaimed",
+    "globalM0fGate",
+    "caseCount",
+    "artifactCount",
+    "generator",
+    "provenance",
+    "cases",
+    "artifacts"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "schemaId": {
+      "const": "https://oridesign.local/schemas/m0f/neg-layer-cycle-candidate-bundle-ledger-v1.schema.json"
+    },
+    "recordType": { "const": "m0f-neg-layer-cycle-candidate-bundle-ledger" },
+    "contractStatus": { "const": "candidate" },
+    "scientificClaim": { "const": false },
+    "vectorSetId": { "const": "NEG-LAYER-CYCLE-V1" },
+    "scope": {
+      "const": "project-authored-exact-negative-artifact-contract-layer-cycle-parser-replay-only"
+    },
+    "canonicalManifestPath": { "const": "tests/fixtures/manifest.json" },
+    "canonicalManifestRegistration": { "const": "not-registered" },
+    "canonicalPromotionClaimed": { "const": false },
+    "supportProfileIncluded": { "const": false },
+    "toleranceProfileIncluded": { "const": false },
+    "physicalLayerOrderEstablished": { "const": false },
+    "orderReversalDetectionIncluded": { "const": false },
+    "contactLegalityEstablished": { "const": false },
+    "pathContinuityEstablished": { "const": false },
+    "collisionDetectionIncluded": { "const": false },
+    "foldabilityEstablished": { "const": false },
+    "scientificVerificationClaimed": { "const": false },
+    "globalM0fGate": { "const": "not-evaluated" },
+    "caseCount": { "const": 1 },
+    "artifactCount": { "const": 3 },
+    "generator": {
+      "const": {
+        "generatorId": "oridesign-neg-layer-cycle-candidate-bundle",
+        "generatorVersion": "1.0.0-candidate",
+        "serialization": "stable-json-utf8-lf-v1",
+        "detector": "parseArtifactContractV1",
+        "detectorSourcePath": "m0f/artifacts/contract.ts"
+      }
+    },
+    "provenance": {
+      "const": {
+        "sourceReferenceId": "oridesign-neg-layer-cycle-candidate-v1",
+        "sourceKind": "project-authored",
+        "title": "NEG-LAYER-CYCLE project-authored artifact-contract temporal layer-DAG vector",
+        "authors": ["OriDesign contributors"],
+        "redistribution": "allowed",
+        "licenseSpdx": "MIT"
+      }
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1,
+      "prefixItems": [
+        {
+          "const": {
+            "caseIndex": 0,
+            "caseId": "NEG-LAYER-CYCLE",
+            "controlArtifactId": "control-fold",
+            "mutationKind": "append-reverse-terminal-layer-relation",
+            "changedPaths": ["$.layerEvents[1]"],
+            "sourceArtifactId": "source-layer-cycle",
+            "sourcePath": "layer-cycle.json",
+            "expectedOutcome": "rejected",
+            "expectedIssues": [{ "path": "$.layerEvents", "code": "layer-cycle" }]
+          }
+        }
+      ],
+      "items": false
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "prefixItems": [
+        { "$ref": "#/$defs/readmeArtifact" },
+        { "$ref": "#/$defs/controlArtifact" },
+        { "$ref": "#/$defs/sourceArtifact" }
+      ],
+      "items": false
+    }
+  },
+  "$defs": {
+    "readmeArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifactId",
+        "role",
+        "path",
+        "mediaType",
+        "sha256",
+        "licenseSpdx",
+        "provenance"
+      ],
+      "properties": {
+        "artifactId": { "const": "bundle-readme" },
+        "role": { "const": "readme" },
+        "path": { "const": "README.md" },
+        "mediaType": { "const": "text/markdown; charset=utf-8" },
+        "sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+        "licenseSpdx": { "const": "MIT" },
+        "provenance": {
+          "const": {
+            "sourceReferenceId": "oridesign-neg-layer-cycle-candidate-v1",
+            "sourceUse": "project-authored",
+            "derivation": "authored",
+            "dependsOnArtifactIds": []
+          }
+        }
+      }
+    },
+    "controlArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifactId",
+        "role",
+        "path",
+        "mediaType",
+        "sha256",
+        "licenseSpdx",
+        "provenance"
+      ],
+      "properties": {
+        "artifactId": { "const": "control-fold" },
+        "role": { "const": "accepted-control" },
+        "path": { "const": "control-fold.json" },
+        "mediaType": { "const": "application/json" },
+        "sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+        "licenseSpdx": { "const": "MIT" },
+        "provenance": {
+          "const": {
+            "sourceReferenceId": "oridesign-neg-layer-cycle-candidate-v1",
+            "sourceUse": "project-authored",
+            "derivation": "authored",
+            "dependsOnArtifactIds": []
+          }
+        }
+      }
+    },
+    "sourceArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifactId",
+        "role",
+        "path",
+        "mediaType",
+        "sha256",
+        "licenseSpdx",
+        "provenance"
+      ],
+      "properties": {
+        "artifactId": { "const": "source-layer-cycle" },
+        "role": { "const": "negative-source" },
+        "path": { "const": "layer-cycle.json" },
+        "mediaType": { "const": "application/json" },
+        "sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+        "licenseSpdx": { "const": "MIT" },
+        "provenance": {
+          "const": {
+            "sourceReferenceId": "oridesign-neg-layer-cycle-candidate-v1",
+            "sourceUse": "project-authored",
+            "derivation": "mutated-from-control",
+            "dependsOnArtifactIds": ["control-fold"]
+          }
+        }
+      }
+    }
+  }
+}

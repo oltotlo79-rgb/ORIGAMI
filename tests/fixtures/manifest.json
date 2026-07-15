@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 2,
+  "fixtureSetId": "m0f-v2",
+  "completeness": "harness",
+  "fixtures": [
+    {
+      "id": "_harness-smoke",
+      "title": "Harness plumbing smoke fixture",
+      "purpose": "Exercise runtime manifest validation, hashes, deterministic JSONL, and CLI plumbing without making an origami claim.",
+      "workflow": "harness",
+      "polarity": "harness",
+      "leafCount": null,
+      "coverageTags": [
+        "harness:manifest-runtime",
+        "harness:hashes",
+        "harness:jsonl",
+        "harness:cli"
+      ],
+      "input": {
+        "artifactId": "smoke-input",
+        "normalizedSha256": "sha256:3d67dc314f6b639f40d56811e95bf58ff2c54fb150ef1704a3f220516e44758f"
+      },
+      "readme": {
+        "artifactId": "smoke-readme"
+      },
+      "expectedOutcome": {
+        "kind": "harness-only",
+        "checks": [
+          "manifest-runtime-validation",
+          "raw-and-normalized-hashes",
+          "deterministic-jsonl-serialization",
+          "cli-routing"
+        ]
+      },
+      "sourceReferences": [
+        {
+          "sourceId": "oridesign-harness",
+          "sourceKind": "project-authored",
+          "title": "OriDesign M0F harness smoke data",
+          "authors": ["OriDesign contributors"],
+          "rights": { "redistribution": "allowed", "licenseSpdx": "MIT" }
+        }
+      ],
+      "distributedArtifacts": [
+        {
+          "artifactId": "smoke-input",
+          "artifactKind": "input",
+          "path": "_harness-smoke/input.json",
+          "sha256": "sha256:da2132f55c13a4103b0a765ee4a183ad41e430b150ad242498301d1a3ed1007d",
+          "licenseSpdx": "MIT",
+          "sourceReferenceId": "oridesign-harness",
+          "sourceUse": "project-authored"
+        },
+        {
+          "artifactId": "smoke-readme",
+          "artifactKind": "readme",
+          "path": "_harness-smoke/README.md",
+          "sha256": "sha256:4b5f61d47706e5369e2de547269404b01d2634336b64801b81927c40b63a96ce",
+          "licenseSpdx": "MIT",
+          "sourceReferenceId": "oridesign-harness",
+          "sourceUse": "project-authored"
+        },
+        {
+          "artifactId": "smoke-benchmark-record",
+          "artifactKind": "benchmark-record",
+          "path": "_harness-smoke/benchmark-record.json",
+          "sha256": "sha256:850e5b2476562763cc7a24595531b38cc88ffb62f4d88b70e72704143fe731a0",
+          "licenseSpdx": "MIT",
+          "sourceReferenceId": "oridesign-harness",
+          "sourceUse": "project-authored"
+        },
+        {
+          "artifactId": "smoke-benchmark-jsonl",
+          "artifactKind": "benchmark-golden-jsonl",
+          "path": "_harness-smoke/benchmark-record.jsonl",
+          "sha256": "sha256:b1fec44bf08a83d636badbcc29c8f1a29679abc2408265d9b697b01a4e66392b",
+          "licenseSpdx": "MIT",
+          "sourceReferenceId": "oridesign-harness",
+          "sourceUse": "project-authored"
+        }
+      ],
+      "randomness": null,
+      "toleranceProfileId": null,
+      "knownArtifacts": [],
+      "benchmark": {
+        "recordArtifactId": "smoke-benchmark-record",
+        "goldenJsonlArtifactId": "smoke-benchmark-jsonl"
+      }
+    }
+  ]
+}

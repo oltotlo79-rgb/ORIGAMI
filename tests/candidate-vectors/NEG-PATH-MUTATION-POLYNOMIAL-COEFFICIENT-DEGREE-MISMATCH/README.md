@@ -1,0 +1,9 @@
+# NEG-PATH-MUTATION-POLYNOMIAL-COEFFICIENT-DEGREE-MISMATCH exact-negative candidate vector
+
+This closed directory contains one saved project-authored single-segment piecewise-polynomial design control and one exact-negative mutation for the current `parseArtifactContractV1` coefficient-row/degree cardinality check. The accepted control declares degree 1 and the sole `e-hinge` coefficient row `[0,pi]`. The mutation deletes only the terminal coefficient at row index 1, leaving one coefficient where degree plus one requires two. It produces exactly the sole `coefficient-degree-mismatch` issue and no `motion-map-mismatch` or other path secondary issue.
+
+The bundle is intentionally outside `tests/fixtures/manifest.json`; `NEG-PATH-MUTATION-POLYNOMIAL-COEFFICIENT-DEGREE-MISMATCH` is not canonically registered or promoted. Exact-negative means only that the current artifact-contract parser rejects these saved bytes with the complete ordered issue signature fixed in the ledger.
+
+This replay establishes only the declared coefficient-row length check against the declared polynomial degree. It does not select a path representation, freeze a polynomial basis, establish coefficient ordering or semantics, associate coefficient rows with time intervals, establish derivative semantics or validation, infer polynomial endpoints, establish physical angle or path semantics, prove crease-map completeness, rigidity, face isometry, hinge geometry, contact analysis, CCD, collision detection or freedom, foldability, certificate-hash verification, cryptographic authenticity, canonical path-mutation-family completeness, SupportProfile, ToleranceProfile, scientific verification, or M0F GO. Local SHA-256 rows detect saved-byte drift only and are not signatures.
+
+Verify with `npx tsx m0f/neg-path-polynomial-coefficient-degree-candidate-bundle-cli.ts --verify`. Regenerate with `npx tsx m0f/neg-path-polynomial-coefficient-degree-candidate-bundle-cli.ts --write`.

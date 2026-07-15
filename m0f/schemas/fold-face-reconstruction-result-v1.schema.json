@@ -1,0 +1,363 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oridesign.local/schemas/m0f/fold-face-reconstruction-result-v1.schema.json",
+  "title": "OriDesign M0F candidate FOLD face reconstruction result v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "schemaId",
+    "recordType",
+    "contractStatus",
+    "implementationRole",
+    "scientificClaim",
+    "conventionsId",
+    "inputSpecVersion",
+    "exactCoordinateEncoding",
+    "vertices",
+    "edges",
+    "exteriorBoundary",
+    "faces",
+    "topology",
+    "foldProjection",
+    "limitations"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "schemaId": {
+      "const": "https://oridesign.local/schemas/m0f/fold-face-reconstruction-result-v1.schema.json"
+    },
+    "recordType": { "const": "m0f-fold-face-reconstruction" },
+    "contractStatus": { "const": "candidate" },
+    "implementationRole": { "const": "reference" },
+    "scientificClaim": { "const": false },
+    "conventionsId": { "const": "oridesign-m0f-conventions-v1" },
+    "inputSpecVersion": { "enum": ["1.1", "1.2"] },
+    "exactCoordinateEncoding": { "const": "oridesign-exact-rational-json-v1" },
+    "vertices": {
+      "type": "array",
+      "minItems": 3,
+      "items": { "$ref": "#/$defs/vertex" }
+    },
+    "edges": {
+      "type": "array",
+      "minItems": 3,
+      "items": { "$ref": "#/$defs/edge" }
+    },
+    "exteriorBoundary": { "$ref": "#/$defs/exteriorBoundary" },
+    "faces": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/face" }
+    },
+    "topology": { "$ref": "#/$defs/topology" },
+    "foldProjection": { "$ref": "#/$defs/foldProjection" },
+    "limitations": {
+      "const": [
+        "candidate-reference-o-n-squared",
+        "single-connected-disk-no-holes-or-bridges",
+        "no-vertex-merge-tolerance-applied",
+        "display-coordinates-are-not-topology-evidence",
+        "candidate-stable-ids-not-frozen-for-product"
+      ]
+    }
+  },
+  "$defs": {
+    "stableId": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9._:-]{0,127}$"
+    },
+    "triangleId": { "type": "string", "minLength": 1, "maxLength": 2048 },
+    "nonNegativeInteger": { "type": "integer", "minimum": 0 },
+    "idArray": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/stableId" }
+    },
+    "rational": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["numerator", "denominator"],
+      "properties": {
+        "numerator": { "type": "string", "pattern": "^(?:0|-?[1-9][0-9]*)$" },
+        "denominator": { "type": "string", "pattern": "^[1-9][0-9]*$" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "numerator": { "const": "0" } } },
+          "then": { "properties": { "denominator": { "const": "1" } } }
+        }
+      ]
+    },
+    "exactPoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["x", "y"],
+      "properties": {
+        "x": { "$ref": "#/$defs/rational" },
+        "y": { "$ref": "#/$defs/rational" }
+      }
+    },
+    "displayPoint": {
+      "type": "array",
+      "prefixItems": [{ "type": "number" }, { "type": "number" }],
+      "items": false,
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "vertex": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "exactCoordinate", "displayCoordinate", "sourceVertexIndex"],
+      "properties": {
+        "id": { "$ref": "#/$defs/stableId" },
+        "exactCoordinate": { "$ref": "#/$defs/exactPoint" },
+        "displayCoordinate": { "$ref": "#/$defs/displayPoint" },
+        "sourceVertexIndex": {
+          "anyOf": [{ "$ref": "#/$defs/nonNegativeInteger" }, { "type": "null" }]
+        }
+      }
+    },
+    "assignment": { "enum": ["M", "V", "B", "F", "U"] },
+    "idPair": {
+      "type": "array",
+      "prefixItems": [{ "$ref": "#/$defs/stableId" }, { "$ref": "#/$defs/stableId" }],
+      "items": false,
+      "minItems": 2,
+      "maxItems": 2,
+      "uniqueItems": true
+    },
+    "sourceEdge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "sourceEdgeIndex", "assignment"],
+      "properties": {
+        "id": { "$ref": "#/$defs/stableId" },
+        "sourceEdgeIndex": { "$ref": "#/$defs/nonNegativeInteger" },
+        "assignment": { "$ref": "#/$defs/assignment" }
+      }
+    },
+    "edge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "vertexIds", "assignment", "sourceEdges"],
+      "properties": {
+        "id": { "$ref": "#/$defs/stableId" },
+        "vertexIds": { "$ref": "#/$defs/idPair" },
+        "assignment": { "$ref": "#/$defs/assignment" },
+        "sourceEdges": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/sourceEdge" }
+        }
+      }
+    },
+    "exteriorBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "vertexIds", "edgeIds", "areaSign"],
+      "properties": {
+        "id": { "$ref": "#/$defs/stableId" },
+        "vertexIds": { "$ref": "#/$defs/idArray" },
+        "edgeIds": { "$ref": "#/$defs/idArray" },
+        "areaSign": { "const": 1 }
+      }
+    },
+    "stringTriple": {
+      "type": "array",
+      "prefixItems": [
+        { "$ref": "#/$defs/stableId" },
+        { "$ref": "#/$defs/stableId" },
+        { "$ref": "#/$defs/stableId" }
+      ],
+      "items": false,
+      "minItems": 3,
+      "maxItems": 3,
+      "uniqueItems": true
+    },
+    "triangle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "faceId", "vertexIds", "semanticVertexIds"],
+      "properties": {
+        "id": { "$ref": "#/$defs/triangleId" },
+        "faceId": { "$ref": "#/$defs/stableId" },
+        "vertexIds": { "$ref": "#/$defs/stringTriple" },
+        "semanticVertexIds": { "$ref": "#/$defs/stringTriple" }
+      }
+    },
+    "face": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "vertexIds", "edgeIds", "areaSign", "triangles"],
+      "properties": {
+        "id": { "$ref": "#/$defs/stableId" },
+        "vertexIds": { "$ref": "#/$defs/idArray" },
+        "edgeIds": { "$ref": "#/$defs/idArray" },
+        "areaSign": { "const": -1 },
+        "triangles": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/triangle" }
+        }
+      }
+    },
+    "topology": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sourceVertexCount",
+        "sourceEdgeCount",
+        "planarVertexCount",
+        "planarEdgeCount",
+        "boundedFaceCount",
+        "triangleCount",
+        "createdIntersectionVertexCount",
+        "nonDyadicVertexCount",
+        "eulerValue"
+      ],
+      "properties": {
+        "sourceVertexCount": { "$ref": "#/$defs/nonNegativeInteger" },
+        "sourceEdgeCount": { "$ref": "#/$defs/nonNegativeInteger" },
+        "planarVertexCount": { "$ref": "#/$defs/nonNegativeInteger" },
+        "planarEdgeCount": { "$ref": "#/$defs/nonNegativeInteger" },
+        "boundedFaceCount": { "$ref": "#/$defs/nonNegativeInteger" },
+        "triangleCount": { "$ref": "#/$defs/nonNegativeInteger" },
+        "createdIntersectionVertexCount": { "$ref": "#/$defs/nonNegativeInteger" },
+        "nonDyadicVertexCount": { "$ref": "#/$defs/nonNegativeInteger" },
+        "eulerValue": { "const": 1 }
+      }
+    },
+    "indexPair": {
+      "type": "array",
+      "prefixItems": [
+        { "$ref": "#/$defs/nonNegativeInteger" },
+        { "$ref": "#/$defs/nonNegativeInteger" }
+      ],
+      "items": false,
+      "minItems": 2,
+      "maxItems": 2,
+      "uniqueItems": true
+    },
+    "indexTriple": {
+      "type": "array",
+      "prefixItems": [
+        { "$ref": "#/$defs/nonNegativeInteger" },
+        { "$ref": "#/$defs/nonNegativeInteger" },
+        { "$ref": "#/$defs/nonNegativeInteger" }
+      ],
+      "items": false,
+      "minItems": 3,
+      "maxItems": 3,
+      "uniqueItems": true
+    },
+    "indexFace": {
+      "type": "array",
+      "minItems": 3,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/nonNegativeInteger" }
+    },
+    "trianglesByFace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["faceId", "triangleIds", "trianglesVertices"],
+      "properties": {
+        "faceId": { "$ref": "#/$defs/stableId" },
+        "triangleIds": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/triangleId" }
+        },
+        "trianglesVertices": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/indexTriple" }
+        }
+      }
+    },
+    "candidateMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "contractStatus",
+        "scientificClaim",
+        "conventionsId",
+        "exactCoordinateEncoding",
+        "vertexIds",
+        "edgeIds",
+        "faceIds",
+        "exactVerticesCoords",
+        "sourceEdgeIdsByEdge",
+        "trianglesVerticesByFace"
+      ],
+      "properties": {
+        "schemaVersion": { "const": 1 },
+        "contractStatus": { "const": "candidate" },
+        "scientificClaim": { "const": false },
+        "conventionsId": { "const": "oridesign-m0f-conventions-v1" },
+        "exactCoordinateEncoding": { "const": "oridesign-exact-rational-json-v1" },
+        "vertexIds": { "$ref": "#/$defs/idArray" },
+        "edgeIds": { "$ref": "#/$defs/idArray" },
+        "faceIds": { "$ref": "#/$defs/idArray" },
+        "exactVerticesCoords": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "$ref": "#/$defs/exactPoint" }
+        },
+        "sourceEdgeIdsByEdge": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "$ref": "#/$defs/idArray" }
+        },
+        "trianglesVerticesByFace": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/trianglesByFace" }
+        }
+      }
+    },
+    "foldProjection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "file_spec",
+        "file_creator",
+        "frame_classes",
+        "vertices_coords",
+        "edges_vertices",
+        "edges_assignment",
+        "faces_vertices",
+        "_oridesign_m0f_candidate"
+      ],
+      "properties": {
+        "file_spec": { "enum": [1.1, 1.2] },
+        "file_creator": { "const": "OriDesign M0F candidate reference" },
+        "frame_classes": { "const": ["creasePattern"] },
+        "vertices_coords": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "$ref": "#/$defs/displayPoint" }
+        },
+        "edges_vertices": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "$ref": "#/$defs/indexPair" }
+        },
+        "edges_assignment": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "$ref": "#/$defs/assignment" }
+        },
+        "faces_vertices": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/indexFace" }
+        },
+        "_oridesign_m0f_candidate": { "$ref": "#/$defs/candidateMetadata" }
+      }
+    }
+  }
+}

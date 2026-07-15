@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "schemaId": "https://oridesign.local/schemas/m0f/artifact-contract-v1.schema.json",
+  "contractId": "CONTRACT-FOLD-TWO-FACE-V1",
+  "conventionsId": "oridesign-m0f-conventions-v1",
+  "contractStatus": "candidate",
+  "scientificClaim": false,
+  "input": {
+    "kind": "fold-verification",
+    "specVersion": "1.2",
+    "frameCount": 1,
+    "frameClasses": ["creasePattern"],
+    "verticesCoords": [[0, 0], [0.5, 0], [1, 0], [1, 1], [0.5, 1], [0, 1]],
+    "edgesVertices": [[0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 0], [1, 4]],
+    "edgesAssignment": ["B", "B", "B", "B", "B", "B", "V"],
+    "facesVertices": [[0, 5, 4, 1], [1, 4, 3, 2]]
+  },
+  "creaseMesh": {
+    "vertices": [
+      { "id": "v-tl", "x": 0, "y": 0 },
+      { "id": "v-tm", "x": 0.5, "y": 0 },
+      { "id": "v-tr", "x": 1, "y": 0 },
+      { "id": "v-br", "x": 1, "y": 1 },
+      { "id": "v-bm", "x": 0.5, "y": 1 },
+      { "id": "v-bl", "x": 0, "y": 1 }
+    ],
+    "edges": [
+      { "id": "e-top-left", "vertices": ["v-tl", "v-tm"], "assignment": "B", "role": "boundary", "sourceTreeEdgeIds": [], "generationKey": "boundary:top-left" },
+      { "id": "e-top-right", "vertices": ["v-tm", "v-tr"], "assignment": "B", "role": "boundary", "sourceTreeEdgeIds": [], "generationKey": "boundary:top-right" },
+      { "id": "e-right", "vertices": ["v-tr", "v-br"], "assignment": "B", "role": "boundary", "sourceTreeEdgeIds": [], "generationKey": "boundary:right" },
+      { "id": "e-bottom-right", "vertices": ["v-br", "v-bm"], "assignment": "B", "role": "boundary", "sourceTreeEdgeIds": [], "generationKey": "boundary:bottom-right" },
+      { "id": "e-bottom-left", "vertices": ["v-bm", "v-bl"], "assignment": "B", "role": "boundary", "sourceTreeEdgeIds": [], "generationKey": "boundary:bottom-left" },
+      { "id": "e-left", "vertices": ["v-bl", "v-tl"], "assignment": "B", "role": "boundary", "sourceTreeEdgeIds": [], "generationKey": "boundary:left" },
+      { "id": "e-hinge", "vertices": ["v-tm", "v-bm"], "assignment": "V", "role": "hinge", "sourceTreeEdgeIds": [], "generationKey": "fold:hinge" }
+    ],
+    "faces": [
+      { "id": "f-left", "vertices": ["v-tl", "v-bl", "v-bm", "v-tm"] },
+      { "id": "f-right", "vertices": ["v-tm", "v-bm", "v-br", "v-tr"] }
+    ],
+    "meshJoinEdges": []
+  },
+  "target": {
+    "schemaVersion": 1,
+    "kind": "flat-folded-cp",
+    "faceTransforms": [
+      { "faceId": "f-left", "quaternion": [0, 0, 0, 1], "translation": [0, 0, 0] },
+      { "faceId": "f-right", "quaternion": [0, 0, 1, 0], "translation": [1, 0, 0] }
+    ],
+    "goalFaceOrders": [["f-right", "f-left", 1]],
+    "overlapRegionIds": ["overlap-final"],
+    "assignmentPolicy": "respect-mv-solve-u",
+    "resolvedInteriorAssignments": [{ "edgeId": "e-hinge", "assignment": "V" }]
+  },
+  "pathCandidate": {
+    "representationVersion": 1,
+    "representationStatus": "candidate",
+    "segments": [
+      {
+        "t0": 0,
+        "t1": 1,
+        "motion": {
+          "kind": "bounded-interpolation",
+          "knotTimes": [0, 1],
+          "anglesByCrease": [{ "edgeId": "e-hinge", "angles": [0, 3.141592653589793] }],
+          "intervalAngleBoundsByCrease": [{ "edgeId": "e-hinge", "bounds": [[0, 3.141592653589793]] }]
+        }
+      }
+    ]
+  },
+  "overlapRegions": [{ "id": "overlap-final", "faceIds": ["f-left", "f-right"] }],
+  "contacts": [
+    { "id": "contact-final", "interval": [1, 1], "faceIds": ["f-left", "f-right"], "overlapRegionId": "overlap-final", "classification": "coplanar-overlap" }
+  ],
+  "layerEvents": [
+    { "id": "layer-final", "interval": [1, 1], "overlapRegionId": "overlap-final", "aboveFaceId": "f-right", "belowFaceId": "f-left" }
+  ]
+}

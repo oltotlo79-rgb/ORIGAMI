@@ -1,0 +1,218 @@
+{
+  "schemaVersion": 1,
+  "schemaId": "https://oridesign.local/schemas/m0f/support-profile-candidates-v1.schema.json",
+  "catalogId": "oridesign-support-profile-v1-candidates",
+  "status": "candidate",
+  "profiles": [
+    {
+      "profileId": "oridesign-generation-tree-method-v1-candidates",
+      "kind": "design-generation",
+      "method": "treeMethod",
+      "profileHash": null,
+      "constraintsSchemaId": "https://oridesign.local/schemas/m0f/support-profile-tree-method-constraints-v1",
+      "constraints": {
+        "leafCountMinimum": { "candidates": [2], "selected": null },
+        "leafCountMaximum": { "candidates": [4, 8, 20], "selected": null },
+        "maxTreeDegree": { "candidates": [3, 4, 6, 10, 20], "selected": null },
+        "maxTreeEdges": { "candidates": [7, 19, 39], "selected": null },
+        "degreeSequencePolicy": {
+          "candidates": ["bounded-explicit-sequence"],
+          "selected": null
+        },
+        "cyclicOrderPolicy": { "candidates": ["required-explicit"], "selected": null },
+        "maxInputDecimalDigits": { "candidates": [8, 12, 15], "selected": null },
+        "minNormalizedBranchLength": {
+          "candidates": [1e-8, 0.000001, 0.0001],
+          "selected": null
+        },
+        "maxNormalizedLengthRatio": {
+          "candidates": [100, 1000, 10000],
+          "selected": null
+        },
+        "maxWidthToLengthRatio": { "candidates": [0.1, 0.25, 0.5, 1], "selected": null },
+        "branchWidthAccommodationPolicy": {
+          "candidates": ["all-branches-including-internal"],
+          "selected": null
+        },
+        "maxPaperAspectRatio": { "candidates": [1, 2, 4], "selected": null },
+        "minNormalizedPaperFeature": {
+          "candidates": [1e-8, 0.000001, 0.0001],
+          "selected": null
+        },
+        "minNormalizedBoundaryMargin": {
+          "candidates": [0.000001, 0.0001, 0.001],
+          "selected": null
+        },
+        "packingCondition": {
+          "candidates": ["strict-circle-river-clearance", "certified-tangency"],
+          "selected": null
+        },
+        "moleculeFamily": {
+          "candidates": ["finite-certified-gadget-library", "universal-molecule-subset"],
+          "selected": null
+        },
+        "minNormalizedSingularityDistance": {
+          "candidates": [1e-8, 0.000001, 0.0001],
+          "selected": null
+        },
+        "pathCompositionPolicy": {
+          "candidates": ["constructive-gadget-schedule", "certified-continuation"],
+          "selected": null
+        },
+        "maxPathDegreesOfFreedom": { "candidates": [4, 8, 16], "selected": null },
+        "maxClosedLoopConditionNumber": {
+          "candidates": [1000, 10000, 1000000],
+          "selected": null
+        },
+        "layerPatternPolicy": {
+          "candidates": ["finite-certified-pattern-library"],
+          "selected": null
+        },
+        "terminationModel": {
+          "candidates": ["finite-enumeration", "total-constructive"],
+          "selected": null
+        }
+      },
+      "evidence": { "status": "pending", "ref": null }
+    },
+    {
+      "profileId": "oridesign-generation-box-pleating-v1-candidates",
+      "kind": "design-generation",
+      "method": "boxPleating",
+      "profileHash": null,
+      "constraintsSchemaId": "https://oridesign.local/schemas/m0f/support-profile-box-pleating-constraints-v1",
+      "constraints": {
+        "leafCountMinimum": { "candidates": [2], "selected": null },
+        "leafCountMaximum": { "candidates": [4, 8, 20], "selected": null },
+        "maxTreeDegree": { "candidates": [3, 4, 6, 10, 20], "selected": null },
+        "maxTreeEdges": { "candidates": [7, 19, 39], "selected": null },
+        "degreeSequencePolicy": {
+          "candidates": ["bounded-explicit-sequence"],
+          "selected": null
+        },
+        "cyclicOrderPolicy": { "candidates": ["required-explicit"], "selected": null },
+        "maxInputDecimalDigits": { "candidates": [8, 12, 15], "selected": null },
+        "minNormalizedBranchLength": {
+          "candidates": [1e-8, 0.000001, 0.0001],
+          "selected": null
+        },
+        "maxNormalizedLengthRatio": {
+          "candidates": [100, 1000, 10000],
+          "selected": null
+        },
+        "maxWidthToLengthRatio": { "candidates": [0.1, 0.25, 0.5, 1], "selected": null },
+        "branchWidthAccommodationPolicy": {
+          "candidates": ["all-branches-including-internal"],
+          "selected": null
+        },
+        "maxPaperAspectRatio": { "candidates": [1, 2, 4], "selected": null },
+        "minNormalizedPaperFeature": {
+          "candidates": [1e-8, 0.000001, 0.0001],
+          "selected": null
+        },
+        "minNormalizedBoundaryMargin": {
+          "candidates": [0.000001, 0.0001, 0.001],
+          "selected": null
+        },
+        "maxGridColumns": { "candidates": [16, 32, 64, 128], "selected": null },
+        "maxGridRows": { "candidates": [16, 32, 64, 128], "selected": null },
+        "cellGeometryPolicy": { "candidates": ["square-cells-only"], "selected": null },
+        "gridAspectPolicy": {
+          "candidates": ["independent-nx-ny-rectangular-sheet"],
+          "selected": null
+        },
+        "directionFamilyPolicy": {
+          "candidates": ["orthogonal-axial-n"],
+          "selected": null
+        },
+        "maxNormalizedQuantizationError": {
+          "candidates": [1e-8, 0.000001, 0.0001, 0.01],
+          "selected": null
+        },
+        "junctionGadgetFamily": {
+          "candidates": ["finite-certified-junction-library"],
+          "selected": null
+        },
+        "elevationRoutingPolicy": {
+          "candidates": ["integer-axial-plus-n"],
+          "selected": null
+        },
+        "pathCompositionPolicy": {
+          "candidates": ["constructive-gadget-schedule"],
+          "selected": null
+        },
+        "maxPathDegreesOfFreedom": { "candidates": [4, 8, 16], "selected": null },
+        "maxClosedLoopConditionNumber": {
+          "candidates": [1000, 10000, 1000000],
+          "selected": null
+        },
+        "layerPatternPolicy": {
+          "candidates": ["finite-certified-pattern-library"],
+          "selected": null
+        },
+        "terminationModel": {
+          "candidates": ["finite-enumeration", "total-constructive"],
+          "selected": null
+        }
+      },
+      "evidence": { "status": "pending", "ref": null }
+    },
+    {
+      "profileId": "oridesign-fold-verification-v1-candidates",
+      "kind": "fold-verification",
+      "profileHash": null,
+      "constraintsSchemaId": "https://oridesign.local/schemas/m0f/support-profile-fold-verification-constraints-v1",
+      "constraints": {
+        "formatVersionPolicy": {
+          "candidates": ["fold-1.1-1.2-top-level-keyframe"],
+          "selected": null
+        },
+        "dimensionPolicy": { "candidates": ["two-dimensional-cp"], "selected": null },
+        "fileFramesPolicy": { "candidates": ["absent-or-empty"], "selected": null },
+        "maxVertices": { "candidates": [100, 1000, 10000], "selected": null },
+        "maxEdges": { "candidates": [200, 2000, 20000], "selected": null },
+        "maxFaces": { "candidates": [100, 1000, 10000], "selected": null },
+        "assignmentPolicy": { "candidates": ["mvbfu-only"], "selected": null },
+        "facesPolicy": { "candidates": ["present-or-reconstruct"], "selected": null },
+        "planarityPolicy": { "candidates": ["certified-planar"], "selected": null },
+        "manifoldPolicy": {
+          "candidates": ["two-manifold-with-boundary"],
+          "selected": null
+        },
+        "minNormalizedFeature": {
+          "candidates": [1e-8, 0.000001, 0.0001],
+          "selected": null
+        },
+        "maxPaperAspectRatio": { "candidates": [1, 2, 4], "selected": null },
+        "maxVertexDegree": { "candidates": [4, 8, 16], "selected": null },
+        "faceAdjacencyPolicy": {
+          "candidates": ["consistent-two-sided-incidence"],
+          "selected": null
+        },
+        "treeDependencyPolicy": { "candidates": ["none"], "selected": null },
+        "targetPolicy": {
+          "candidates": ["cp-mv-consistent-complete-flat"],
+          "selected": null
+        },
+        "pathCompositionPolicy": {
+          "candidates": ["certified-continuation"],
+          "selected": null
+        },
+        "maxPathDegreesOfFreedom": { "candidates": [4, 8, 16], "selected": null },
+        "maxClosedLoopConditionNumber": {
+          "candidates": [1000, 10000, 1000000],
+          "selected": null
+        },
+        "layerPatternPolicy": {
+          "candidates": ["finite-certified-pattern-library"],
+          "selected": null
+        },
+        "terminationModel": {
+          "candidates": ["finite-enumeration", "total-constructive"],
+          "selected": null
+        }
+      },
+      "evidence": { "status": "pending", "ref": null }
+    }
+  ]
+}

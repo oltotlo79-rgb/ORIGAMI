@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "recordType": "m0f-benchmark",
+  "scope": "harness-smoke",
+  "fixtureId": "_harness-smoke",
+  "runId": "golden-serialization-only",
+  "phase": "harness",
+  "outcome": "harness-only",
+  "scientificClaim": false,
+  "startedAt": "1970-01-01T00:00:00.000Z",
+  "durationMs": 0,
+  "seed": null,
+  "versions": {
+    "harnessVersion": "1.0.0",
+    "buildHash": "fixture-not-a-build",
+    "supportProfileId": null,
+    "toleranceProfileId": null,
+    "verifierVersion": null
+  },
+  "environment": {
+    "os": "not-measured",
+    "arch": "not-measured",
+    "cpu": "not-measured",
+    "logicalCores": 0,
+    "memoryBytes": 0,
+    "runtime": "golden-fixture",
+    "runtimeVersion": "1",
+    "browser": null
+  },
+  "measurements": {
+    "phaseDurationsMs": {
+      "serialization": 0
+    },
+    "counts": {
+      "serializedRecords": 1
+    },
+    "peakMemoryBytes": 0,
+    "maxResiduals": {}
+  },
+  "hashes": {
+    "input": "sha256:da2132f55c13a4103b0a765ee4a183ad41e430b150ad242498301d1a3ed1007d",
+    "output": null,
+    "certificate": null
+  }
+}

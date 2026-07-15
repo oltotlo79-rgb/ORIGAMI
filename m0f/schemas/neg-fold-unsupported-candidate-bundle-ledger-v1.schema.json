@@ -1,0 +1,684 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oridesign.local/schemas/m0f/neg-fold-unsupported-candidate-bundle-ledger-v1.schema.json",
+  "title": "NEG-FOLD-UNSUPPORTED exact-negative candidate bundle ledger v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "schemaId",
+    "recordType",
+    "contractStatus",
+    "scientificClaim",
+    "vectorSetId",
+    "scope",
+    "canonicalManifestPath",
+    "canonicalManifestRegistration",
+    "canonicalPromotionClaimed",
+    "toleranceProfileIncluded",
+    "scientificVerificationClaimed",
+    "globalM0fGate",
+    "caseCount",
+    "artifactCount",
+    "generator",
+    "provenance",
+    "cases",
+    "artifacts"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "schemaId": {
+      "const": "https://oridesign.local/schemas/m0f/neg-fold-unsupported-candidate-bundle-ledger-v1.schema.json"
+    },
+    "recordType": { "const": "m0f-neg-fold-unsupported-candidate-bundle-ledger" },
+    "contractStatus": { "const": "candidate" },
+    "scientificClaim": { "const": false },
+    "vectorSetId": { "const": "NEG-FOLD-UNSUPPORTED-V1" },
+    "scope": {
+      "const": "project-authored-exact-negative-fold-document-face-adapter-replay-only"
+    },
+    "canonicalManifestPath": { "const": "tests/fixtures/manifest.json" },
+    "canonicalManifestRegistration": { "const": "not-registered" },
+    "canonicalPromotionClaimed": { "const": false },
+    "toleranceProfileIncluded": { "const": false },
+    "scientificVerificationClaimed": { "const": false },
+    "globalM0fGate": { "const": "not-evaluated" },
+    "caseCount": { "const": 10 },
+    "artifactCount": { "const": 11 },
+    "generator": { "$ref": "#/$defs/generator" },
+    "provenance": { "$ref": "#/$defs/sourceProvenance" },
+    "cases": {
+      "type": "array",
+      "minItems": 10,
+      "maxItems": 10,
+      "prefixItems": [
+        { "$ref": "#/$defs/caseMultiFrame" },
+        { "$ref": "#/$defs/case3d" },
+        { "$ref": "#/$defs/caseNonplanar" },
+        { "$ref": "#/$defs/caseNonManifold" },
+        { "$ref": "#/$defs/caseNonOrientable" },
+        { "$ref": "#/$defs/caseSelfIntersecting" },
+        { "$ref": "#/$defs/caseCuts" },
+        { "$ref": "#/$defs/caseJoins" },
+        { "$ref": "#/$defs/caseAssignmentC" },
+        { "$ref": "#/$defs/caseAssignmentJ" }
+      ],
+      "items": false
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 11,
+      "maxItems": 11,
+      "prefixItems": [
+        {
+          "$ref": "#/$defs/readmeArtifact"
+        },
+        {
+          "$ref": "#/$defs/sourceMultiFrameArtifact"
+        },
+        {
+          "$ref": "#/$defs/source3dArtifact"
+        },
+        {
+          "$ref": "#/$defs/sourceNonplanarArtifact"
+        },
+        {
+          "$ref": "#/$defs/sourceNonManifoldArtifact"
+        },
+        {
+          "$ref": "#/$defs/sourceNonOrientableArtifact"
+        },
+        {
+          "$ref": "#/$defs/sourceSelfIntersectingArtifact"
+        },
+        {
+          "$ref": "#/$defs/sourceCutsArtifact"
+        },
+        {
+          "$ref": "#/$defs/sourceJoinsArtifact"
+        },
+        {
+          "$ref": "#/$defs/sourceAssignmentCArtifact"
+        },
+        {
+          "$ref": "#/$defs/sourceAssignmentJArtifact"
+        }
+      ],
+      "items": false
+    }
+  },
+  "$defs": {
+    "generator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "generatorId",
+        "generatorVersion",
+        "serialization",
+        "detector",
+        "detectorSourcePath"
+      ],
+      "properties": {
+        "generatorId": { "const": "oridesign-neg-fold-unsupported-candidate-bundle" },
+        "generatorVersion": { "const": "1.0.0-candidate" },
+        "serialization": { "const": "stable-json-utf8-lf-v1" },
+        "detector": { "const": "adaptFoldDocumentToFaceReconstructionInputV1" },
+        "detectorSourcePath": { "const": "m0f/geometry/fold-document-face-adapter.ts" }
+      }
+    },
+    "sourceProvenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sourceReferenceId",
+        "sourceKind",
+        "title",
+        "authors",
+        "redistribution",
+        "licenseSpdx"
+      ],
+      "properties": {
+        "sourceReferenceId": { "const": "oridesign-neg-fold-unsupported-candidates-v1" },
+        "sourceKind": { "const": "project-authored" },
+        "title": {
+          "const": "NEG-FOLD-UNSUPPORTED project-authored exact-negative candidate vectors"
+        },
+        "authors": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "prefixItems": [{ "const": "OriDesign contributors" }],
+          "items": false
+        },
+        "redistribution": { "const": "allowed" },
+        "licenseSpdx": { "const": "MIT" }
+      }
+    },
+    "authoredArtifactProvenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceReferenceId", "sourceUse", "derivation", "dependsOnArtifactIds"],
+      "properties": {
+        "sourceReferenceId": { "const": "oridesign-neg-fold-unsupported-candidates-v1" },
+        "sourceUse": { "const": "project-authored" },
+        "derivation": { "const": "authored" },
+        "dependsOnArtifactIds": { "type": "array", "maxItems": 0 }
+      }
+    },
+    "case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "caseIndex",
+        "caseId",
+        "sourceArtifactId",
+        "sourcePath",
+        "expectedOutcome",
+        "expectedIssues"
+      ],
+      "properties": {
+        "caseIndex": { "type": "integer", "minimum": 0, "maximum": 9 },
+        "caseId": { "type": "string", "pattern": "^NEG-FOLD-UNSUPPORTED-[A-Z0-9-]+$" },
+        "sourceArtifactId": { "type": "string", "pattern": "^source-[a-z0-9-]+$" },
+        "sourcePath": { "type": "string", "pattern": "^[a-z0-9-]+\\.fold$" },
+        "expectedOutcome": { "const": "rejected" },
+        "expectedIssues": { "type": "array", "minItems": 1 }
+      }
+    },
+    "issueFileFrames": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "code"],
+      "properties": {
+        "path": { "const": "$.file_frames" },
+        "code": { "const": "unsupported-file-frames" }
+      }
+    },
+    "issueFrameAttributesRoot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "code"],
+      "properties": {
+        "path": { "const": "$.frame_attributes" },
+        "code": { "const": "unsupported-frame-attribute" }
+      }
+    },
+    "issueFrameAttribute0": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "code"],
+      "properties": {
+        "path": { "const": "$.frame_attributes[0]" },
+        "code": { "const": "unsupported-frame-attribute" }
+      }
+    },
+    "issueFrameAttribute1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "code"],
+      "properties": {
+        "path": { "const": "$.frame_attributes[1]" },
+        "code": { "const": "unsupported-frame-attribute" }
+      }
+    },
+    "issueVertex0": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "code"],
+      "properties": {
+        "path": { "const": "$.vertices_coords[0]" },
+        "code": { "const": "invalid-coordinate" }
+      }
+    },
+    "issueVertex1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "code"],
+      "properties": {
+        "path": { "const": "$.vertices_coords[1]" },
+        "code": { "const": "invalid-coordinate" }
+      }
+    },
+    "issueVertex2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "code"],
+      "properties": {
+        "path": { "const": "$.vertices_coords[2]" },
+        "code": { "const": "invalid-coordinate" }
+      }
+    },
+    "issueVertex3": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "code"],
+      "properties": {
+        "path": { "const": "$.vertices_coords[3]" },
+        "code": { "const": "invalid-coordinate" }
+      }
+    },
+    "issueAssignment0": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "code"],
+      "properties": {
+        "path": { "const": "$.edges_assignment[0]" },
+        "code": { "const": "unsupported-assignment" }
+      }
+    },
+    "caseMultiFrame": {
+      "allOf": [
+        { "$ref": "#/$defs/case" },
+        {
+          "type": "object",
+          "properties": {
+            "caseIndex": { "const": 0 },
+            "caseId": { "const": "NEG-FOLD-UNSUPPORTED-MULTI-FRAME" },
+            "sourceArtifactId": { "const": "source-multi-frame" },
+            "sourcePath": { "const": "multi-frame.fold" },
+            "expectedIssues": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [{ "$ref": "#/$defs/issueFileFrames" }],
+              "items": false
+            }
+          }
+        }
+      ]
+    },
+    "case3d": {
+      "allOf": [
+        { "$ref": "#/$defs/case" },
+        {
+          "type": "object",
+          "properties": {
+            "caseIndex": { "const": 1 },
+            "caseId": { "const": "NEG-FOLD-UNSUPPORTED-3D" },
+            "sourceArtifactId": { "const": "source-3d" },
+            "sourcePath": { "const": "frame-attribute-3d.fold" },
+            "expectedIssues": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "prefixItems": [
+                { "$ref": "#/$defs/issueFrameAttributesRoot" },
+                { "$ref": "#/$defs/issueFrameAttribute0" }
+              ],
+              "items": false
+            }
+          }
+        }
+      ]
+    },
+    "caseNonplanar": {
+      "allOf": [
+        { "$ref": "#/$defs/case" },
+        {
+          "type": "object",
+          "properties": {
+            "caseIndex": { "const": 2 },
+            "caseId": { "const": "NEG-FOLD-UNSUPPORTED-NONPLANAR-3D-COORDINATE" },
+            "sourceArtifactId": { "const": "source-nonplanar-3d-coordinate" },
+            "sourcePath": { "const": "nonplanar-3d-coordinate.fold" },
+            "expectedIssues": {
+              "type": "array",
+              "minItems": 4,
+              "maxItems": 4,
+              "prefixItems": [
+                { "$ref": "#/$defs/issueVertex0" },
+                { "$ref": "#/$defs/issueVertex1" },
+                { "$ref": "#/$defs/issueVertex2" },
+                { "$ref": "#/$defs/issueVertex3" }
+              ],
+              "items": false
+            }
+          }
+        }
+      ]
+    },
+    "caseNonManifold": {
+      "$ref": "#/$defs/caseAttribute1NonManifold"
+    },
+    "caseNonOrientable": {
+      "$ref": "#/$defs/caseAttribute1NonOrientable"
+    },
+    "caseSelfIntersecting": {
+      "$ref": "#/$defs/caseAttribute1SelfIntersecting"
+    },
+    "caseCuts": {
+      "$ref": "#/$defs/caseAttribute1Cuts"
+    },
+    "caseJoins": {
+      "$ref": "#/$defs/caseAttribute1Joins"
+    },
+    "caseAttribute1NonManifold": {
+      "allOf": [
+        { "$ref": "#/$defs/case" },
+        {
+          "type": "object",
+          "properties": {
+            "caseIndex": { "const": 3 },
+            "caseId": { "const": "NEG-FOLD-UNSUPPORTED-NON-MANIFOLD" },
+            "sourceArtifactId": { "const": "source-non-manifold" },
+            "sourcePath": { "const": "frame-attribute-non-manifold.fold" },
+            "expectedIssues": { "$ref": "#/$defs/singleFrameAttribute1Issue" }
+          }
+        }
+      ]
+    },
+    "caseAttribute1NonOrientable": {
+      "allOf": [
+        { "$ref": "#/$defs/case" },
+        {
+          "type": "object",
+          "properties": {
+            "caseIndex": { "const": 4 },
+            "caseId": { "const": "NEG-FOLD-UNSUPPORTED-NON-ORIENTABLE" },
+            "sourceArtifactId": { "const": "source-non-orientable" },
+            "sourcePath": { "const": "frame-attribute-non-orientable.fold" },
+            "expectedIssues": { "$ref": "#/$defs/singleFrameAttribute1Issue" }
+          }
+        }
+      ]
+    },
+    "caseAttribute1SelfIntersecting": {
+      "allOf": [
+        { "$ref": "#/$defs/case" },
+        {
+          "type": "object",
+          "properties": {
+            "caseIndex": { "const": 5 },
+            "caseId": { "const": "NEG-FOLD-UNSUPPORTED-SELF-INTERSECTING" },
+            "sourceArtifactId": { "const": "source-self-intersecting" },
+            "sourcePath": { "const": "frame-attribute-self-intersecting.fold" },
+            "expectedIssues": { "$ref": "#/$defs/singleFrameAttribute1Issue" }
+          }
+        }
+      ]
+    },
+    "caseAttribute1Cuts": {
+      "allOf": [
+        { "$ref": "#/$defs/case" },
+        {
+          "type": "object",
+          "properties": {
+            "caseIndex": { "const": 6 },
+            "caseId": { "const": "NEG-FOLD-UNSUPPORTED-CUTS" },
+            "sourceArtifactId": { "const": "source-cuts" },
+            "sourcePath": { "const": "frame-attribute-cuts.fold" },
+            "expectedIssues": { "$ref": "#/$defs/singleFrameAttribute1Issue" }
+          }
+        }
+      ]
+    },
+    "caseAttribute1Joins": {
+      "allOf": [
+        { "$ref": "#/$defs/case" },
+        {
+          "type": "object",
+          "properties": {
+            "caseIndex": { "const": 7 },
+            "caseId": { "const": "NEG-FOLD-UNSUPPORTED-JOINS" },
+            "sourceArtifactId": { "const": "source-joins" },
+            "sourcePath": { "const": "frame-attribute-joins.fold" },
+            "expectedIssues": { "$ref": "#/$defs/singleFrameAttribute1Issue" }
+          }
+        }
+      ]
+    },
+    "singleFrameAttribute1Issue": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1,
+      "prefixItems": [{ "$ref": "#/$defs/issueFrameAttribute1" }],
+      "items": false
+    },
+    "caseAssignmentC": {
+      "$ref": "#/$defs/caseAssignmentCExact"
+    },
+    "caseAssignmentJ": {
+      "$ref": "#/$defs/caseAssignmentJExact"
+    },
+    "caseAssignmentCExact": {
+      "allOf": [
+        { "$ref": "#/$defs/case" },
+        {
+          "type": "object",
+          "properties": {
+            "caseIndex": { "const": 8 },
+            "caseId": { "const": "NEG-FOLD-UNSUPPORTED-ASSIGNMENT-C" },
+            "sourceArtifactId": { "const": "source-assignment-c" },
+            "sourcePath": { "const": "assignment-c.fold" },
+            "expectedIssues": { "$ref": "#/$defs/singleAssignmentIssue" }
+          }
+        }
+      ]
+    },
+    "caseAssignmentJExact": {
+      "allOf": [
+        { "$ref": "#/$defs/case" },
+        {
+          "type": "object",
+          "properties": {
+            "caseIndex": { "const": 9 },
+            "caseId": { "const": "NEG-FOLD-UNSUPPORTED-ASSIGNMENT-J" },
+            "sourceArtifactId": { "const": "source-assignment-j" },
+            "sourcePath": { "const": "assignment-j.fold" },
+            "expectedIssues": { "$ref": "#/$defs/singleAssignmentIssue" }
+          }
+        }
+      ]
+    },
+    "singleAssignmentIssue": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1,
+      "prefixItems": [{ "$ref": "#/$defs/issueAssignment0" }],
+      "items": false
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifactId",
+        "role",
+        "path",
+        "mediaType",
+        "sha256",
+        "licenseSpdx",
+        "provenance"
+      ],
+      "properties": {
+        "artifactId": { "type": "string" },
+        "role": { "enum": ["readme", "negative-source"] },
+        "path": { "type": "string" },
+        "mediaType": {
+          "enum": ["text/markdown; charset=utf-8", "application/vnd.fold+json"]
+        },
+        "sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+        "licenseSpdx": { "const": "MIT" },
+        "provenance": { "$ref": "#/$defs/authoredArtifactProvenance" }
+      }
+    },
+    "readmeArtifact": {
+      "$ref": "#/$defs/artifactReadmeExact"
+    },
+    "artifactReadmeExact": {
+      "allOf": [
+        { "$ref": "#/$defs/artifact" },
+        {
+          "type": "object",
+          "properties": {
+            "artifactId": { "const": "bundle-readme" },
+            "role": { "const": "readme" },
+            "path": { "const": "README.md" },
+            "mediaType": { "const": "text/markdown; charset=utf-8" }
+          }
+        }
+      ]
+    },
+    "sourceMultiFrameArtifact": {
+      "$ref": "#/$defs/artifactSourceMultiFrameExact"
+    },
+    "source3dArtifact": { "$ref": "#/$defs/artifactSource3dExact" },
+    "sourceNonplanarArtifact": { "$ref": "#/$defs/artifactSourceNonplanarExact" },
+    "sourceNonManifoldArtifact": {
+      "$ref": "#/$defs/artifactSourceNonManifoldExact"
+    },
+    "sourceNonOrientableArtifact": {
+      "$ref": "#/$defs/artifactSourceNonOrientableExact"
+    },
+    "sourceSelfIntersectingArtifact": {
+      "$ref": "#/$defs/artifactSourceSelfIntersectingExact"
+    },
+    "sourceCutsArtifact": { "$ref": "#/$defs/artifactSourceCutsExact" },
+    "sourceJoinsArtifact": { "$ref": "#/$defs/artifactSourceJoinsExact" },
+    "sourceAssignmentCArtifact": {
+      "$ref": "#/$defs/artifactSourceAssignmentCExact"
+    },
+    "sourceAssignmentJArtifact": {
+      "$ref": "#/$defs/artifactSourceAssignmentJExact"
+    },
+    "artifactSourceMultiFrameExact": {
+      "allOf": [
+        { "$ref": "#/$defs/artifact" },
+        {
+          "type": "object",
+          "properties": {
+            "artifactId": { "const": "source-multi-frame" },
+            "role": { "const": "negative-source" },
+            "path": { "const": "multi-frame.fold" },
+            "mediaType": { "const": "application/vnd.fold+json" }
+          }
+        }
+      ]
+    },
+    "artifactSource3dExact": {
+      "allOf": [
+        { "$ref": "#/$defs/artifact" },
+        {
+          "type": "object",
+          "properties": {
+            "artifactId": { "const": "source-3d" },
+            "role": { "const": "negative-source" },
+            "path": { "const": "frame-attribute-3d.fold" },
+            "mediaType": { "const": "application/vnd.fold+json" }
+          }
+        }
+      ]
+    },
+    "artifactSourceNonplanarExact": {
+      "allOf": [
+        { "$ref": "#/$defs/artifact" },
+        {
+          "type": "object",
+          "properties": {
+            "artifactId": { "const": "source-nonplanar-3d-coordinate" },
+            "role": { "const": "negative-source" },
+            "path": { "const": "nonplanar-3d-coordinate.fold" },
+            "mediaType": { "const": "application/vnd.fold+json" }
+          }
+        }
+      ]
+    },
+    "artifactSourceNonManifoldExact": {
+      "allOf": [
+        { "$ref": "#/$defs/artifact" },
+        {
+          "type": "object",
+          "properties": {
+            "artifactId": { "const": "source-non-manifold" },
+            "role": { "const": "negative-source" },
+            "path": { "const": "frame-attribute-non-manifold.fold" },
+            "mediaType": { "const": "application/vnd.fold+json" }
+          }
+        }
+      ]
+    },
+    "artifactSourceNonOrientableExact": {
+      "allOf": [
+        { "$ref": "#/$defs/artifact" },
+        {
+          "type": "object",
+          "properties": {
+            "artifactId": { "const": "source-non-orientable" },
+            "role": { "const": "negative-source" },
+            "path": { "const": "frame-attribute-non-orientable.fold" },
+            "mediaType": { "const": "application/vnd.fold+json" }
+          }
+        }
+      ]
+    },
+    "artifactSourceSelfIntersectingExact": {
+      "allOf": [
+        { "$ref": "#/$defs/artifact" },
+        {
+          "type": "object",
+          "properties": {
+            "artifactId": { "const": "source-self-intersecting" },
+            "role": { "const": "negative-source" },
+            "path": { "const": "frame-attribute-self-intersecting.fold" },
+            "mediaType": { "const": "application/vnd.fold+json" }
+          }
+        }
+      ]
+    },
+    "artifactSourceCutsExact": {
+      "allOf": [
+        { "$ref": "#/$defs/artifact" },
+        {
+          "type": "object",
+          "properties": {
+            "artifactId": { "const": "source-cuts" },
+            "role": { "const": "negative-source" },
+            "path": { "const": "frame-attribute-cuts.fold" },
+            "mediaType": { "const": "application/vnd.fold+json" }
+          }
+        }
+      ]
+    },
+    "artifactSourceJoinsExact": {
+      "allOf": [
+        { "$ref": "#/$defs/artifact" },
+        {
+          "type": "object",
+          "properties": {
+            "artifactId": { "const": "source-joins" },
+            "role": { "const": "negative-source" },
+            "path": { "const": "frame-attribute-joins.fold" },
+            "mediaType": { "const": "application/vnd.fold+json" }
+          }
+        }
+      ]
+    },
+    "artifactSourceAssignmentCExact": {
+      "allOf": [
+        { "$ref": "#/$defs/artifact" },
+        {
+          "type": "object",
+          "properties": {
+            "artifactId": { "const": "source-assignment-c" },
+            "role": { "const": "negative-source" },
+            "path": { "const": "assignment-c.fold" },
+            "mediaType": { "const": "application/vnd.fold+json" }
+          }
+        }
+      ]
+    },
+    "artifactSourceAssignmentJExact": {
+      "allOf": [
+        { "$ref": "#/$defs/artifact" },
+        {
+          "type": "object",
+          "properties": {
+            "artifactId": { "const": "source-assignment-j" },
+            "role": { "const": "negative-source" },
+            "path": { "const": "assignment-j.fold" },
+            "mediaType": { "const": "application/vnd.fold+json" }
+          }
+        }
+      ]
+    }
+  }
+}

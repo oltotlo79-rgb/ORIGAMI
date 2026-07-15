@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>M0F Worker measurement harness</title>
+  </head>
+  <body>
+    <main>
+      <h1>M0F Worker measurement harness</h1>
+      <p>This test-only page is not part of the product build.</p>
+      <button type="button" data-testid="run-success">Run transferred reconstruction</button>
+      <button type="button" data-testid="run-cancel">Run immediate cancellation</button>
+      <button type="button" data-testid="run-pre-abort">Run pre-aborted request</button>
+      <button type="button" data-testid="run-grid-success">Run grid quantization</button>
+      <button type="button" data-testid="run-grid-cancel">Cancel grid quantization</button>
+      <button type="button" data-testid="run-grid-pre-abort">Run pre-aborted grid request</button>
+      <button type="button" data-testid="run-packing-success">Run packing problem</button>
+      <button type="button" data-testid="run-packing-cancel">Cancel packing problem</button>
+      <button type="button" data-testid="run-packing-pre-abort">
+        Run pre-aborted packing problem
+      </button>
+      <button type="button" data-testid="run-witness-success">
+        Run necessary-filter witness search and replay
+      </button>
+      <button type="button" data-testid="run-witness-cancel">
+        Cancel necessary-filter witness search
+      </button>
+      <button type="button" data-testid="run-witness-pre-abort">
+        Run pre-aborted necessary-filter witness search
+      </button>
+      <button type="button" data-testid="run-swept-census-success">Run swept-AABB census</button>
+      <button type="button" data-testid="run-swept-census-cancel">Cancel swept-AABB census</button>
+      <button type="button" data-testid="run-swept-census-pre-abort">
+        Run pre-aborted swept-AABB census
+      </button>
+      <pre data-testid="measurement" aria-live="polite">idle</pre>
+    </main>
+    <script type="module" src="./m0f-worker.ts"></script>
+  </body>
+</html>

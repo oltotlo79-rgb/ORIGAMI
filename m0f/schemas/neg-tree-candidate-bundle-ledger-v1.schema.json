@@ -1,0 +1,527 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oridesign.local/schemas/m0f/neg-tree-candidate-bundle-ledger-v1.schema.json",
+  "title": "NEG-TREE exact-negative candidate bundle ledger v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "schemaId",
+    "recordType",
+    "contractStatus",
+    "scientificClaim",
+    "vectorSetId",
+    "scope",
+    "canonicalManifestPath",
+    "canonicalManifestRegistration",
+    "canonicalPromotionClaimed",
+    "toleranceProfileIncluded",
+    "scientificVerificationClaimed",
+    "globalM0fGate",
+    "caseCount",
+    "artifactCount",
+    "generator",
+    "provenance",
+    "cases",
+    "artifacts"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "schemaId": {
+      "const": "https://oridesign.local/schemas/m0f/neg-tree-candidate-bundle-ledger-v1.schema.json"
+    },
+    "recordType": { "const": "m0f-neg-tree-candidate-bundle-ledger" },
+    "contractStatus": { "const": "candidate" },
+    "scientificClaim": { "const": false },
+    "vectorSetId": { "const": "NEG-TREE-V1" },
+    "scope": {
+      "const": "project-authored-exact-negative-ordered-tree-input-parser-replay-only"
+    },
+    "canonicalManifestPath": { "const": "tests/fixtures/manifest.json" },
+    "canonicalManifestRegistration": { "const": "not-registered" },
+    "canonicalPromotionClaimed": { "const": false },
+    "toleranceProfileIncluded": { "const": false },
+    "scientificVerificationClaimed": { "const": false },
+    "globalM0fGate": { "const": "not-evaluated" },
+    "caseCount": { "const": 12 },
+    "artifactCount": { "const": 13 },
+    "generator": {
+      "const": {
+        "generatorId": "oridesign-neg-tree-candidate-bundle",
+        "generatorVersion": "1.0.0-candidate",
+        "serialization": "stable-json-utf8-lf-v1",
+        "detector": "parseOrderedTreeInputV1",
+        "detectorSourcePath": "m0f/box-pleating/ordered-tree-input.ts"
+      }
+    },
+    "provenance": {
+      "const": {
+        "sourceReferenceId": "oridesign-neg-tree-candidates-v1",
+        "sourceKind": "project-authored",
+        "title": "NEG-TREE project-authored exact-negative candidate vectors",
+        "authors": ["OriDesign contributors"],
+        "redistribution": "allowed",
+        "licenseSpdx": "MIT"
+      }
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 12,
+      "maxItems": 12,
+      "prefixItems": [
+        {
+          "const": {
+            "caseIndex": 0,
+            "caseId": "NEG-TREE-DUPLICATE-NODE-ID",
+            "controlId": "primary-star-four-leaf-control-v1",
+            "mutationKind": "replace-node-id-with-existing-node-id",
+            "changedPaths": ["$.nodes[1].id"],
+            "sourceArtifactId": "source-duplicate-node-id",
+            "sourcePath": "duplicate-node-id.json",
+            "expectedOutcome": "rejected",
+            "expectedIssues": [
+              { "path": "$.nodes[1].id", "code": "duplicate-id" },
+              { "path": "$.edges", "code": "edge-count-mismatch" },
+              { "path": "$.edges[1].to", "code": "missing-reference" },
+              { "path": "$.rotation[1].nodeId", "code": "missing-reference" },
+              {
+                "path": "$.rotation[2].edgeIds",
+                "code": "rotation-incidence-mismatch"
+              },
+              { "path": "$.rotation", "code": "rotation-coverage-mismatch" }
+            ]
+          }
+        },
+        {
+          "const": {
+            "caseIndex": 1,
+            "caseId": "NEG-TREE-DUPLICATE-EDGE-ID",
+            "controlId": "primary-star-four-leaf-control-v1",
+            "mutationKind": "replace-edge-id-with-existing-edge-id",
+            "changedPaths": ["$.edges[1].id"],
+            "sourceArtifactId": "source-duplicate-edge-id",
+            "sourcePath": "duplicate-edge-id.json",
+            "expectedOutcome": "rejected",
+            "expectedIssues": [
+              { "path": "$.edges[1].id", "code": "duplicate-id" },
+              { "path": "$.edges", "code": "edge-count-mismatch" },
+              { "path": "$", "code": "tree-disconnected" },
+              { "path": "$.rotation[1].edgeIds[0]", "code": "missing-reference" },
+              {
+                "path": "$.rotation[1].edgeIds",
+                "code": "rotation-incidence-mismatch"
+              },
+              { "path": "$.rotation[2].edgeIds[1]", "code": "missing-reference" },
+              {
+                "path": "$.rotation[2].edgeIds",
+                "code": "rotation-incidence-mismatch"
+              }
+            ]
+          }
+        },
+        {
+          "const": {
+            "caseIndex": 2,
+            "caseId": "NEG-TREE-DUPLICATE-ID-NAMESPACE",
+            "controlId": "primary-star-four-leaf-control-v1",
+            "mutationKind": "replace-edge-id-with-existing-node-id",
+            "changedPaths": ["$.edges[0].id"],
+            "sourceArtifactId": "source-duplicate-id-namespace",
+            "sourcePath": "duplicate-id-namespace.json",
+            "expectedOutcome": "rejected",
+            "expectedIssues": [
+              { "path": "$.edges[0].id", "code": "duplicate-id" },
+              { "path": "$.edges", "code": "edge-count-mismatch" },
+              { "path": "$", "code": "tree-disconnected" },
+              { "path": "$.rotation[0].edgeIds[0]", "code": "missing-reference" },
+              {
+                "path": "$.rotation[0].edgeIds",
+                "code": "rotation-incidence-mismatch"
+              },
+              { "path": "$.rotation[2].edgeIds[0]", "code": "missing-reference" },
+              {
+                "path": "$.rotation[2].edgeIds",
+                "code": "rotation-incidence-mismatch"
+              }
+            ]
+          }
+        },
+        {
+          "const": {
+            "caseIndex": 3,
+            "caseId": "NEG-TREE-SELF-LOOP",
+            "controlId": "primary-star-four-leaf-control-v1",
+            "mutationKind": "append-self-loop-edge",
+            "changedPaths": ["$.edges[4]"],
+            "sourceArtifactId": "source-self-loop",
+            "sourcePath": "self-loop.json",
+            "expectedOutcome": "rejected",
+            "expectedIssues": [
+              { "path": "$.edges", "code": "edge-count-mismatch" },
+              { "path": "$.edges[4]", "code": "tree-self-loop" }
+            ]
+          }
+        },
+        {
+          "const": {
+            "caseIndex": 4,
+            "caseId": "NEG-TREE-PARALLEL-EDGE",
+            "controlId": "primary-star-four-leaf-control-v1",
+            "mutationKind": "append-parallel-edge-and-incidence",
+            "changedPaths": ["$.edges[4]", "$.rotation[0].edgeIds[1]", "$.rotation[2].edgeIds[4]"],
+            "sourceArtifactId": "source-parallel-edge",
+            "sourcePath": "parallel-edge.json",
+            "expectedOutcome": "rejected",
+            "expectedIssues": [
+              { "path": "$.edges", "code": "edge-count-mismatch" },
+              { "path": "$.edges[4]", "code": "tree-parallel-edge" },
+              { "path": "$.edges[4]", "code": "tree-cycle" }
+            ]
+          }
+        },
+        {
+          "const": {
+            "caseIndex": 5,
+            "caseId": "NEG-TREE-CYCLE",
+            "controlId": "primary-star-four-leaf-control-v1",
+            "mutationKind": "append-cycle-closing-edge-and-incidence",
+            "changedPaths": ["$.edges[4]", "$.rotation[0].edgeIds[1]", "$.rotation[1].edgeIds[1]"],
+            "sourceArtifactId": "source-cycle",
+            "sourcePath": "cycle.json",
+            "expectedOutcome": "rejected",
+            "expectedIssues": [
+              { "path": "$.edges", "code": "edge-count-mismatch" },
+              { "path": "$.edges[4]", "code": "tree-cycle" }
+            ]
+          }
+        },
+        {
+          "const": {
+            "caseIndex": 6,
+            "caseId": "NEG-TREE-DISCONNECTED",
+            "controlId": "primary-star-four-leaf-control-v1",
+            "mutationKind": "remove-terminal-edge-and-incidence",
+            "changedPaths": ["$.edges[3]", "$.rotation[2].edgeIds[3]", "$.rotation[4].edgeIds[0]"],
+            "sourceArtifactId": "source-disconnected",
+            "sourcePath": "disconnected.json",
+            "expectedOutcome": "rejected",
+            "expectedIssues": [
+              { "path": "$.edges", "code": "edge-count-mismatch" },
+              { "path": "$", "code": "tree-disconnected" }
+            ]
+          }
+        },
+        {
+          "const": {
+            "caseIndex": 7,
+            "caseId": "NEG-TREE-NONPOSITIVE-LENGTH",
+            "controlId": "primary-star-four-leaf-control-v1",
+            "mutationKind": "replace-length-with-zero",
+            "changedPaths": ["$.edges[0].length"],
+            "sourceArtifactId": "source-nonpositive-length",
+            "sourcePath": "nonpositive-length.json",
+            "expectedOutcome": "rejected",
+            "expectedIssues": [
+              { "path": "$.edges[0].length", "code": "invalid-bound" },
+              { "path": "$.edges", "code": "edge-count-mismatch" },
+              { "path": "$", "code": "tree-disconnected" },
+              { "path": "$.rotation[0].edgeIds[0]", "code": "missing-reference" },
+              {
+                "path": "$.rotation[0].edgeIds",
+                "code": "rotation-incidence-mismatch"
+              },
+              { "path": "$.rotation[2].edgeIds[0]", "code": "missing-reference" },
+              {
+                "path": "$.rotation[2].edgeIds",
+                "code": "rotation-incidence-mismatch"
+              }
+            ]
+          }
+        },
+        {
+          "const": {
+            "caseIndex": 8,
+            "caseId": "NEG-TREE-NEGATIVE-WIDTH",
+            "controlId": "primary-star-four-leaf-control-v1",
+            "mutationKind": "replace-width-with-negative-value",
+            "changedPaths": ["$.edges[0].width"],
+            "sourceArtifactId": "source-negative-width",
+            "sourcePath": "negative-width.json",
+            "expectedOutcome": "rejected",
+            "expectedIssues": [
+              { "path": "$.edges[0].width", "code": "invalid-bound" },
+              { "path": "$.edges", "code": "edge-count-mismatch" },
+              { "path": "$", "code": "tree-disconnected" },
+              { "path": "$.rotation[0].edgeIds[0]", "code": "missing-reference" },
+              {
+                "path": "$.rotation[0].edgeIds",
+                "code": "rotation-incidence-mismatch"
+              },
+              { "path": "$.rotation[2].edgeIds[0]", "code": "missing-reference" },
+              {
+                "path": "$.rotation[2].edgeIds",
+                "code": "rotation-incidence-mismatch"
+              }
+            ]
+          }
+        },
+        {
+          "const": {
+            "caseIndex": 9,
+            "caseId": "NEG-TREE-ROTATION-COVERAGE-MISSING",
+            "controlId": "primary-star-four-leaf-control-v1",
+            "mutationKind": "remove-one-rotation-row",
+            "changedPaths": ["$.rotation[4]"],
+            "sourceArtifactId": "source-rotation-coverage-missing",
+            "sourcePath": "rotation-coverage-missing.json",
+            "expectedOutcome": "rejected",
+            "expectedIssues": [{ "path": "$.rotation", "code": "rotation-coverage-mismatch" }]
+          }
+        },
+        {
+          "const": {
+            "caseIndex": 10,
+            "caseId": "NEG-TREE-ROTATION-INCIDENCE-MISMATCH",
+            "controlId": "primary-star-four-leaf-control-v1",
+            "mutationKind": "replace-incident-edge-with-nonincident-edge",
+            "changedPaths": ["$.rotation[0].edgeIds[0]"],
+            "sourceArtifactId": "source-rotation-incidence-mismatch",
+            "sourcePath": "rotation-incidence-mismatch.json",
+            "expectedOutcome": "rejected",
+            "expectedIssues": [
+              {
+                "path": "$.rotation[0].edgeIds",
+                "code": "rotation-incidence-mismatch"
+              }
+            ]
+          }
+        },
+        {
+          "const": {
+            "caseIndex": 11,
+            "caseId": "NEG-TREE-LEAF-COUNT-OUT-OF-RANGE",
+            "controlId": "two-center-twenty-leaf-control-v1",
+            "mutationKind": "append-twenty-first-leaf-with-edge-and-rotation",
+            "changedPaths": [
+              "$.nodes[22]",
+              "$.edges[21]",
+              "$.rotation[0].edgeIds[11]",
+              "$.rotation[22]"
+            ],
+            "sourceArtifactId": "source-leaf-count-out-of-range",
+            "sourcePath": "leaf-count-out-of-range.json",
+            "expectedOutcome": "rejected",
+            "expectedIssues": [{ "path": "$.nodes", "code": "leaf-count-out-of-range" }]
+          }
+        }
+      ],
+      "items": false
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 13,
+      "maxItems": 13,
+      "prefixItems": [
+        {
+          "allOf": [
+            { "$ref": "#/$defs/artifact" },
+            {
+              "type": "object",
+              "properties": {
+                "artifactId": { "const": "bundle-readme" },
+                "role": { "const": "readme" },
+                "path": { "const": "README.md" },
+                "mediaType": { "const": "text/markdown; charset=utf-8" }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [{ "$ref": "#/$defs/artifact" }, { "$ref": "#/$defs/sourceDuplicateNodeId" }]
+        },
+        {
+          "allOf": [{ "$ref": "#/$defs/artifact" }, { "$ref": "#/$defs/sourceDuplicateEdgeId" }]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/artifact" },
+            { "$ref": "#/$defs/sourceDuplicateIdNamespace" }
+          ]
+        },
+        {
+          "allOf": [{ "$ref": "#/$defs/artifact" }, { "$ref": "#/$defs/sourceSelfLoop" }]
+        },
+        {
+          "allOf": [{ "$ref": "#/$defs/artifact" }, { "$ref": "#/$defs/sourceParallelEdge" }]
+        },
+        {
+          "allOf": [{ "$ref": "#/$defs/artifact" }, { "$ref": "#/$defs/sourceCycle" }]
+        },
+        {
+          "allOf": [{ "$ref": "#/$defs/artifact" }, { "$ref": "#/$defs/sourceDisconnected" }]
+        },
+        {
+          "allOf": [{ "$ref": "#/$defs/artifact" }, { "$ref": "#/$defs/sourceNonpositiveLength" }]
+        },
+        {
+          "allOf": [{ "$ref": "#/$defs/artifact" }, { "$ref": "#/$defs/sourceNegativeWidth" }]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/artifact" },
+            { "$ref": "#/$defs/sourceRotationCoverageMissing" }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/artifact" },
+            { "$ref": "#/$defs/sourceRotationIncidenceMismatch" }
+          ]
+        },
+        {
+          "allOf": [{ "$ref": "#/$defs/artifact" }, { "$ref": "#/$defs/sourceLeafCountOutOfRange" }]
+        }
+      ],
+      "items": false
+    }
+  },
+  "$defs": {
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifactId",
+        "role",
+        "path",
+        "mediaType",
+        "sha256",
+        "licenseSpdx",
+        "provenance"
+      ],
+      "properties": {
+        "artifactId": { "type": "string" },
+        "role": { "enum": ["readme", "negative-source"] },
+        "path": { "type": "string" },
+        "mediaType": { "enum": ["text/markdown; charset=utf-8", "application/json"] },
+        "sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+        "licenseSpdx": { "const": "MIT" },
+        "provenance": {
+          "const": {
+            "sourceReferenceId": "oridesign-neg-tree-candidates-v1",
+            "sourceUse": "project-authored",
+            "derivation": "authored",
+            "dependsOnArtifactIds": []
+          }
+        }
+      }
+    },
+    "sourceDuplicateNodeId": {
+      "type": "object",
+      "properties": {
+        "artifactId": { "const": "source-duplicate-node-id" },
+        "role": { "const": "negative-source" },
+        "path": { "const": "duplicate-node-id.json" },
+        "mediaType": { "const": "application/json" }
+      }
+    },
+    "sourceDuplicateEdgeId": {
+      "type": "object",
+      "properties": {
+        "artifactId": { "const": "source-duplicate-edge-id" },
+        "role": { "const": "negative-source" },
+        "path": { "const": "duplicate-edge-id.json" },
+        "mediaType": { "const": "application/json" }
+      }
+    },
+    "sourceDuplicateIdNamespace": {
+      "type": "object",
+      "properties": {
+        "artifactId": { "const": "source-duplicate-id-namespace" },
+        "role": { "const": "negative-source" },
+        "path": { "const": "duplicate-id-namespace.json" },
+        "mediaType": { "const": "application/json" }
+      }
+    },
+    "sourceSelfLoop": {
+      "type": "object",
+      "properties": {
+        "artifactId": { "const": "source-self-loop" },
+        "role": { "const": "negative-source" },
+        "path": { "const": "self-loop.json" },
+        "mediaType": { "const": "application/json" }
+      }
+    },
+    "sourceParallelEdge": {
+      "type": "object",
+      "properties": {
+        "artifactId": { "const": "source-parallel-edge" },
+        "role": { "const": "negative-source" },
+        "path": { "const": "parallel-edge.json" },
+        "mediaType": { "const": "application/json" }
+      }
+    },
+    "sourceCycle": {
+      "type": "object",
+      "properties": {
+        "artifactId": { "const": "source-cycle" },
+        "role": { "const": "negative-source" },
+        "path": { "const": "cycle.json" },
+        "mediaType": { "const": "application/json" }
+      }
+    },
+    "sourceDisconnected": {
+      "type": "object",
+      "properties": {
+        "artifactId": { "const": "source-disconnected" },
+        "role": { "const": "negative-source" },
+        "path": { "const": "disconnected.json" },
+        "mediaType": { "const": "application/json" }
+      }
+    },
+    "sourceNonpositiveLength": {
+      "type": "object",
+      "properties": {
+        "artifactId": { "const": "source-nonpositive-length" },
+        "role": { "const": "negative-source" },
+        "path": { "const": "nonpositive-length.json" },
+        "mediaType": { "const": "application/json" }
+      }
+    },
+    "sourceNegativeWidth": {
+      "type": "object",
+      "properties": {
+        "artifactId": { "const": "source-negative-width" },
+        "role": { "const": "negative-source" },
+        "path": { "const": "negative-width.json" },
+        "mediaType": { "const": "application/json" }
+      }
+    },
+    "sourceRotationCoverageMissing": {
+      "type": "object",
+      "properties": {
+        "artifactId": { "const": "source-rotation-coverage-missing" },
+        "role": { "const": "negative-source" },
+        "path": { "const": "rotation-coverage-missing.json" },
+        "mediaType": { "const": "application/json" }
+      }
+    },
+    "sourceRotationIncidenceMismatch": {
+      "type": "object",
+      "properties": {
+        "artifactId": { "const": "source-rotation-incidence-mismatch" },
+        "role": { "const": "negative-source" },
+        "path": { "const": "rotation-incidence-mismatch.json" },
+        "mediaType": { "const": "application/json" }
+      }
+    },
+    "sourceLeafCountOutOfRange": {
+      "type": "object",
+      "properties": {
+        "artifactId": { "const": "source-leaf-count-out-of-range" },
+        "role": { "const": "negative-source" },
+        "path": { "const": "leaf-count-out-of-range.json" },
+        "mediaType": { "const": "application/json" }
+      }
+    }
+  }
+}

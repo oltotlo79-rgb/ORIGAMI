@@ -1,0 +1,497 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oridesign.local/schemas/m0f/neg-support-catalog-candidate-bundle-ledger-v1.schema.json",
+  "title": "NEG-SUPPORT-CATALOG exact-negative candidate bundle ledger v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "schemaId",
+    "recordType",
+    "contractStatus",
+    "scientificClaim",
+    "vectorSetId",
+    "scope",
+    "candidateCatalogOnly",
+    "canonicalManifestPath",
+    "canonicalManifestRegistration",
+    "canonicalPromotionClaimed",
+    "canonicalSupportBoundaryFamilyClaimed",
+    "frozenSupportProfileIncluded",
+    "supportProfileIncluded",
+    "checkSupportIncluded",
+    "actualInputSupportDecisionIncluded",
+    "terminationGuaranteeEstablished",
+    "toleranceProfileIncluded",
+    "scientificVerificationClaimed",
+    "globalM0fGate",
+    "caseCount",
+    "artifactCount",
+    "generator",
+    "provenance",
+    "cases",
+    "artifacts"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "schemaId": {
+      "const": "https://oridesign.local/schemas/m0f/neg-support-catalog-candidate-bundle-ledger-v1.schema.json"
+    },
+    "recordType": { "const": "m0f-neg-support-catalog-candidate-bundle-ledger" },
+    "contractStatus": { "const": "candidate" },
+    "scientificClaim": { "const": false },
+    "vectorSetId": { "const": "NEG-SUPPORT-CATALOG-V1" },
+    "scope": {
+      "const": "project-authored-exact-negative-support-profile-candidate-catalog-parser-replay-only"
+    },
+    "candidateCatalogOnly": { "const": true },
+    "canonicalManifestPath": { "const": "tests/fixtures/manifest.json" },
+    "canonicalManifestRegistration": { "const": "not-registered" },
+    "canonicalPromotionClaimed": { "const": false },
+    "canonicalSupportBoundaryFamilyClaimed": { "const": false },
+    "frozenSupportProfileIncluded": { "const": false },
+    "supportProfileIncluded": { "const": false },
+    "checkSupportIncluded": { "const": false },
+    "actualInputSupportDecisionIncluded": { "const": false },
+    "terminationGuaranteeEstablished": { "const": false },
+    "toleranceProfileIncluded": { "const": false },
+    "scientificVerificationClaimed": { "const": false },
+    "globalM0fGate": { "const": "not-evaluated" },
+    "caseCount": { "const": 12 },
+    "artifactCount": { "const": 14 },
+    "generator": {
+      "const": {
+        "generatorId": "oridesign-neg-support-catalog-candidate-bundle",
+        "generatorVersion": "1.0.0-candidate",
+        "serialization": "stable-json-utf8-lf-v1",
+        "detector": "parseSupportProfileCandidatesV1",
+        "detectorSourcePath": "m0f/profiles/support-profiles.ts"
+      }
+    },
+    "provenance": {
+      "const": {
+        "sourceReferenceId": "oridesign-neg-support-catalog-candidates-v1",
+        "sourceKind": "project-authored",
+        "title": "NEG-SUPPORT-CATALOG project-authored candidate-catalog parser vectors",
+        "authors": ["OriDesign contributors"],
+        "redistribution": "allowed",
+        "licenseSpdx": "MIT"
+      }
+    },
+    "cases": {
+      "const": [
+        {
+          "caseIndex": 0,
+          "caseId": "NEG-SUPPORT-CATALOG-PREMATURE-FROZEN",
+          "controlArtifactId": "control-support-profile-candidate-catalog",
+          "mutationKind": "replace-candidate-status-with-frozen",
+          "changedPaths": ["$.status"],
+          "sourceArtifactId": "source-premature-frozen",
+          "sourcePath": "premature-frozen.json",
+          "expectedOutcome": "rejected",
+          "expectedIssues": [{ "path": "$.status", "code": "premature-frozen-profile" }]
+        },
+        {
+          "caseIndex": 1,
+          "caseId": "NEG-SUPPORT-CATALOG-PREMATURE-PROFILE-HASH",
+          "controlArtifactId": "control-support-profile-candidate-catalog",
+          "mutationKind": "attach-profile-hash-before-evidence",
+          "changedPaths": ["$.profiles[0].profileHash"],
+          "sourceArtifactId": "source-premature-profile-hash",
+          "sourcePath": "premature-profile-hash.json",
+          "expectedOutcome": "rejected",
+          "expectedIssues": [
+            { "path": "$.profiles[0].profileHash", "code": "premature-profile-hash" }
+          ]
+        },
+        {
+          "caseIndex": 2,
+          "caseId": "NEG-SUPPORT-CATALOG-SELECT-TREE-MAX-DEGREE",
+          "controlArtifactId": "control-support-profile-candidate-catalog",
+          "mutationKind": "select-tree-max-degree-candidate",
+          "changedPaths": ["$.profiles[0].constraints.maxTreeDegree.selected"],
+          "sourceArtifactId": "source-select-tree-max-degree",
+          "sourcePath": "select-tree-max-degree.json",
+          "expectedOutcome": "rejected",
+          "expectedIssues": [
+            {
+              "path": "$.profiles[0].constraints.maxTreeDegree.selected",
+              "code": "premature-selection"
+            }
+          ]
+        },
+        {
+          "caseIndex": 3,
+          "caseId": "NEG-SUPPORT-CATALOG-SELECT-TREE-DECIMAL-DIGITS",
+          "controlArtifactId": "control-support-profile-candidate-catalog",
+          "mutationKind": "select-tree-decimal-digit-candidate",
+          "changedPaths": ["$.profiles[0].constraints.maxInputDecimalDigits.selected"],
+          "sourceArtifactId": "source-select-tree-decimal-digits",
+          "sourcePath": "select-tree-decimal-digits.json",
+          "expectedOutcome": "rejected",
+          "expectedIssues": [
+            {
+              "path": "$.profiles[0].constraints.maxInputDecimalDigits.selected",
+              "code": "premature-selection"
+            }
+          ]
+        },
+        {
+          "caseIndex": 4,
+          "caseId": "NEG-SUPPORT-CATALOG-SELECT-TREE-LENGTH-RATIO",
+          "controlArtifactId": "control-support-profile-candidate-catalog",
+          "mutationKind": "select-tree-length-ratio-candidate",
+          "changedPaths": ["$.profiles[0].constraints.maxNormalizedLengthRatio.selected"],
+          "sourceArtifactId": "source-select-tree-length-ratio",
+          "sourcePath": "select-tree-length-ratio.json",
+          "expectedOutcome": "rejected",
+          "expectedIssues": [
+            {
+              "path": "$.profiles[0].constraints.maxNormalizedLengthRatio.selected",
+              "code": "premature-selection"
+            }
+          ]
+        },
+        {
+          "caseIndex": 5,
+          "caseId": "NEG-SUPPORT-CATALOG-SELECT-GRID-COLUMNS",
+          "controlArtifactId": "control-support-profile-candidate-catalog",
+          "mutationKind": "select-box-grid-column-candidate",
+          "changedPaths": ["$.profiles[1].constraints.maxGridColumns.selected"],
+          "sourceArtifactId": "source-select-grid-columns",
+          "sourcePath": "select-grid-columns.json",
+          "expectedOutcome": "rejected",
+          "expectedIssues": [
+            {
+              "path": "$.profiles[1].constraints.maxGridColumns.selected",
+              "code": "premature-selection"
+            }
+          ]
+        },
+        {
+          "caseIndex": 6,
+          "caseId": "NEG-SUPPORT-CATALOG-SELECT-GRID-QUANTIZATION-ERROR",
+          "controlArtifactId": "control-support-profile-candidate-catalog",
+          "mutationKind": "select-box-grid-quantization-error-candidate",
+          "changedPaths": ["$.profiles[1].constraints.maxNormalizedQuantizationError.selected"],
+          "sourceArtifactId": "source-select-grid-quantization-error",
+          "sourcePath": "select-grid-quantization-error.json",
+          "expectedOutcome": "rejected",
+          "expectedIssues": [
+            {
+              "path": "$.profiles[1].constraints.maxNormalizedQuantizationError.selected",
+              "code": "premature-selection"
+            }
+          ]
+        },
+        {
+          "caseIndex": 7,
+          "caseId": "NEG-SUPPORT-CATALOG-SELECT-FOLD-MAX-VERTICES",
+          "controlArtifactId": "control-support-profile-candidate-catalog",
+          "mutationKind": "select-fold-max-vertices-candidate",
+          "changedPaths": ["$.profiles[2].constraints.maxVertices.selected"],
+          "sourceArtifactId": "source-select-fold-max-vertices",
+          "sourcePath": "select-fold-max-vertices.json",
+          "expectedOutcome": "rejected",
+          "expectedIssues": [
+            {
+              "path": "$.profiles[2].constraints.maxVertices.selected",
+              "code": "premature-selection"
+            }
+          ]
+        },
+        {
+          "caseIndex": 8,
+          "caseId": "NEG-SUPPORT-CATALOG-PREMATURE-EVIDENCE",
+          "controlArtifactId": "control-support-profile-candidate-catalog",
+          "mutationKind": "replace-pending-evidence-status",
+          "changedPaths": ["$.profiles[2].evidence.status"],
+          "sourceArtifactId": "source-premature-evidence",
+          "sourcePath": "premature-evidence.json",
+          "expectedOutcome": "rejected",
+          "expectedIssues": [{ "path": "$.profiles[2].evidence", "code": "premature-evidence" }]
+        },
+        {
+          "caseIndex": 9,
+          "caseId": "NEG-SUPPORT-CATALOG-METHOD-MISMATCH",
+          "controlArtifactId": "control-support-profile-candidate-catalog",
+          "mutationKind": "replace-tree-method-with-box-pleating",
+          "changedPaths": ["$.profiles[0].method"],
+          "sourceArtifactId": "source-method-mismatch",
+          "sourcePath": "method-mismatch.json",
+          "expectedOutcome": "rejected",
+          "expectedIssues": [{ "path": "$.profiles[0].method", "code": "profile-method-mismatch" }]
+        },
+        {
+          "caseIndex": 10,
+          "caseId": "NEG-SUPPORT-CATALOG-UNKNOWN-SOLVER-KEY",
+          "controlArtifactId": "control-support-profile-candidate-catalog",
+          "mutationKind": "append-undeclared-solver-constraint",
+          "changedPaths": ["$.profiles[0].constraints.solverSucceeded"],
+          "sourceArtifactId": "source-unknown-solver-key",
+          "sourcePath": "unknown-solver-key.json",
+          "expectedOutcome": "rejected",
+          "expectedIssues": [
+            {
+              "path": "$.profiles[0].constraints.solverSucceeded",
+              "code": "unknown-key"
+            }
+          ]
+        },
+        {
+          "caseIndex": 11,
+          "caseId": "NEG-SUPPORT-CATALOG-UNSORTED-CANDIDATES",
+          "controlArtifactId": "control-support-profile-candidate-catalog",
+          "mutationKind": "replace-one-candidate-with-descending-value",
+          "changedPaths": ["$.profiles[0].constraints.leafCountMaximum.candidates[1]"],
+          "sourceArtifactId": "source-unsorted-candidates",
+          "sourcePath": "unsorted-candidates.json",
+          "expectedOutcome": "rejected",
+          "expectedIssues": [
+            {
+              "path": "$.profiles[0].constraints.leafCountMaximum.candidates[1]",
+              "code": "invalid-candidates"
+            }
+          ]
+        }
+      ]
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 14,
+      "maxItems": 14,
+      "prefixItems": [
+        { "$ref": "#/$defs/readmeArtifact" },
+        { "$ref": "#/$defs/controlArtifact" },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/negativeArtifactTemplate" },
+            {
+              "type": "object",
+              "properties": {
+                "artifactId": { "const": "source-premature-frozen" },
+                "path": { "const": "premature-frozen.json" }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/negativeArtifactTemplate" },
+            {
+              "type": "object",
+              "properties": {
+                "artifactId": { "const": "source-premature-profile-hash" },
+                "path": { "const": "premature-profile-hash.json" }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/negativeArtifactTemplate" },
+            {
+              "type": "object",
+              "properties": {
+                "artifactId": { "const": "source-select-tree-max-degree" },
+                "path": { "const": "select-tree-max-degree.json" }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/negativeArtifactTemplate" },
+            {
+              "type": "object",
+              "properties": {
+                "artifactId": { "const": "source-select-tree-decimal-digits" },
+                "path": { "const": "select-tree-decimal-digits.json" }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/negativeArtifactTemplate" },
+            {
+              "type": "object",
+              "properties": {
+                "artifactId": { "const": "source-select-tree-length-ratio" },
+                "path": { "const": "select-tree-length-ratio.json" }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/negativeArtifactTemplate" },
+            {
+              "type": "object",
+              "properties": {
+                "artifactId": { "const": "source-select-grid-columns" },
+                "path": { "const": "select-grid-columns.json" }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/negativeArtifactTemplate" },
+            {
+              "type": "object",
+              "properties": {
+                "artifactId": { "const": "source-select-grid-quantization-error" },
+                "path": { "const": "select-grid-quantization-error.json" }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/negativeArtifactTemplate" },
+            {
+              "type": "object",
+              "properties": {
+                "artifactId": { "const": "source-select-fold-max-vertices" },
+                "path": { "const": "select-fold-max-vertices.json" }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/negativeArtifactTemplate" },
+            {
+              "type": "object",
+              "properties": {
+                "artifactId": { "const": "source-premature-evidence" },
+                "path": { "const": "premature-evidence.json" }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/negativeArtifactTemplate" },
+            {
+              "type": "object",
+              "properties": {
+                "artifactId": { "const": "source-method-mismatch" },
+                "path": { "const": "method-mismatch.json" }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/negativeArtifactTemplate" },
+            {
+              "type": "object",
+              "properties": {
+                "artifactId": { "const": "source-unknown-solver-key" },
+                "path": { "const": "unknown-solver-key.json" }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/negativeArtifactTemplate" },
+            {
+              "type": "object",
+              "properties": {
+                "artifactId": { "const": "source-unsorted-candidates" },
+                "path": { "const": "unsorted-candidates.json" }
+              }
+            }
+          ]
+        }
+      ],
+      "items": false
+    }
+  },
+  "$defs": {
+    "artifactBase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifactId",
+        "role",
+        "path",
+        "mediaType",
+        "sha256",
+        "licenseSpdx",
+        "provenance"
+      ],
+      "properties": {
+        "artifactId": { "type": "string" },
+        "role": { "type": "string" },
+        "path": { "type": "string" },
+        "mediaType": { "type": "string" },
+        "sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+        "licenseSpdx": { "const": "MIT" },
+        "provenance": { "type": "object" }
+      }
+    },
+    "authoredProvenance": {
+      "const": {
+        "sourceReferenceId": "oridesign-neg-support-catalog-candidates-v1",
+        "sourceUse": "project-authored",
+        "derivation": "authored",
+        "dependsOnArtifactIds": []
+      }
+    },
+    "mutationProvenance": {
+      "const": {
+        "sourceReferenceId": "oridesign-neg-support-catalog-candidates-v1",
+        "sourceUse": "project-authored",
+        "derivation": "mutated-from-control",
+        "dependsOnArtifactIds": ["control-support-profile-candidate-catalog"]
+      }
+    },
+    "readmeArtifact": {
+      "allOf": [
+        { "$ref": "#/$defs/artifactBase" },
+        {
+          "type": "object",
+          "properties": {
+            "artifactId": { "const": "bundle-readme" },
+            "role": { "const": "readme" },
+            "path": { "const": "README.md" },
+            "mediaType": { "const": "text/markdown; charset=utf-8" },
+            "provenance": { "$ref": "#/$defs/authoredProvenance" }
+          }
+        }
+      ]
+    },
+    "controlArtifact": {
+      "allOf": [
+        { "$ref": "#/$defs/artifactBase" },
+        {
+          "type": "object",
+          "properties": {
+            "artifactId": { "const": "control-support-profile-candidate-catalog" },
+            "role": { "const": "accepted-control" },
+            "path": { "const": "control-support-profile-candidate-catalog.json" },
+            "mediaType": { "const": "application/json" },
+            "provenance": { "$ref": "#/$defs/authoredProvenance" }
+          }
+        }
+      ]
+    },
+    "negativeArtifactTemplate": {
+      "allOf": [
+        { "$ref": "#/$defs/artifactBase" },
+        {
+          "type": "object",
+          "properties": {
+            "role": { "const": "negative-source" },
+            "mediaType": { "const": "application/json" },
+            "provenance": { "$ref": "#/$defs/mutationProvenance" }
+          }
+        }
+      ]
+    }
+  }
+}

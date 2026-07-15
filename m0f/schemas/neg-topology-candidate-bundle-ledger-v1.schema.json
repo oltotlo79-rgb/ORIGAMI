@@ -1,0 +1,385 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oridesign.local/schemas/m0f/neg-topology-candidate-bundle-ledger-v1.schema.json",
+  "title": "NEG-TOPOLOGY exact-negative candidate bundle ledger v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "schemaId",
+    "recordType",
+    "contractStatus",
+    "scientificClaim",
+    "vectorSetId",
+    "scope",
+    "canonicalManifestPath",
+    "canonicalManifestRegistration",
+    "canonicalPromotionClaimed",
+    "supportProfileIncluded",
+    "toleranceProfileIncluded",
+    "scientificVerificationClaimed",
+    "globalM0fGate",
+    "caseCount",
+    "artifactCount",
+    "generator",
+    "provenance",
+    "cases",
+    "artifacts"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "schemaId": {
+      "const": "https://oridesign.local/schemas/m0f/neg-topology-candidate-bundle-ledger-v1.schema.json"
+    },
+    "recordType": { "const": "m0f-neg-topology-candidate-bundle-ledger" },
+    "contractStatus": { "const": "candidate" },
+    "scientificClaim": { "const": false },
+    "vectorSetId": { "const": "NEG-TOPOLOGY-V1" },
+    "scope": {
+      "const": "project-authored-exact-negative-artifact-contract-topology-parser-replay-only"
+    },
+    "canonicalManifestPath": { "const": "tests/fixtures/manifest.json" },
+    "canonicalManifestRegistration": { "const": "not-registered" },
+    "canonicalPromotionClaimed": { "const": false },
+    "supportProfileIncluded": { "const": false },
+    "toleranceProfileIncluded": { "const": false },
+    "scientificVerificationClaimed": { "const": false },
+    "globalM0fGate": { "const": "not-evaluated" },
+    "caseCount": { "const": 5 },
+    "artifactCount": { "const": 8 },
+    "generator": {
+      "const": {
+        "generatorId": "oridesign-neg-topology-candidate-bundle",
+        "generatorVersion": "1.0.0-candidate",
+        "serialization": "stable-json-utf8-lf-v1",
+        "detector": "parseArtifactContractV1",
+        "detectorSourcePath": "m0f/artifacts/contract.ts"
+      }
+    },
+    "provenance": {
+      "const": {
+        "sourceReferenceId": "oridesign-neg-topology-candidates-v1",
+        "sourceKind": "project-authored",
+        "title": "NEG-TOPOLOGY project-authored artifact-contract topology parser vectors",
+        "authors": ["OriDesign contributors"],
+        "redistribution": "allowed",
+        "licenseSpdx": "MIT"
+      }
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "prefixItems": [
+        {
+          "const": {
+            "caseIndex": 0,
+            "caseId": "NEG-TOPOLOGY-UNSPLIT-CROSSING",
+            "controlArtifactId": "control-primary-design",
+            "mutationKind": "append-unsplit-crossing-interior-edge",
+            "changedPaths": ["$.creaseMesh.edges[7]"],
+            "sourceArtifactId": "source-unsplit-crossing",
+            "sourcePath": "unsplit-crossing.json",
+            "expectedOutcome": "rejected",
+            "expectedIssues": [
+              { "path": "$.creaseMesh.edges[7]", "code": "interior-incidence" },
+              { "path": "$.creaseMesh", "code": "non-planar-intersection" },
+              { "path": "$.creaseMesh", "code": "euler-characteristic-mismatch" }
+            ]
+          }
+        },
+        {
+          "const": {
+            "caseIndex": 1,
+            "caseId": "NEG-TOPOLOGY-DUPLICATE-EDGE",
+            "controlArtifactId": "control-primary-design",
+            "mutationKind": "append-duplicate-physical-edge-with-unique-identity",
+            "changedPaths": ["$.creaseMesh.edges[7]"],
+            "sourceArtifactId": "source-duplicate-edge",
+            "sourcePath": "duplicate-edge.json",
+            "expectedOutcome": "rejected",
+            "expectedIssues": [
+              { "path": "$.creaseMesh.edges[7].vertices", "code": "duplicate-edge" },
+              { "path": "$.creaseMesh", "code": "non-planar-intersection" }
+            ]
+          }
+        },
+        {
+          "const": {
+            "caseIndex": 2,
+            "caseId": "NEG-TOPOLOGY-ZERO-AREA-FACE",
+            "controlArtifactId": "control-primary-design",
+            "mutationKind": "replace-left-face-ring-with-collinear-top-row",
+            "changedPaths": [
+              "$.creaseMesh.faces[0].vertices[1]",
+              "$.creaseMesh.faces[0].vertices[2]",
+              "$.creaseMesh.faces[0].vertices[3]"
+            ],
+            "sourceArtifactId": "source-zero-area-face",
+            "sourcePath": "zero-area-face.json",
+            "expectedOutcome": "rejected",
+            "expectedIssues": [
+              { "path": "$.creaseMesh.faces[0].vertices", "code": "degenerate-face" },
+              { "path": "$.creaseMesh.edges[1]", "code": "boundary-incidence" },
+              { "path": "$.creaseMesh.edges[4]", "code": "boundary-incidence" },
+              { "path": "$.creaseMesh.edges[5]", "code": "boundary-incidence" },
+              { "path": "$.creaseMesh.edges[6]", "code": "interior-incidence" },
+              { "path": "$.creaseMesh", "code": "missing-mesh-edge" }
+            ]
+          }
+        },
+        {
+          "const": {
+            "caseIndex": 3,
+            "caseId": "NEG-TOPOLOGY-HOLE",
+            "controlArtifactId": "control-filled-annulus-fold",
+            "mutationKind": "remove-center-face-and-reclassify-inner-boundary-coherently",
+            "changedPaths": [
+              "$.creaseMesh.edges[8].assignment",
+              "$.creaseMesh.edges[8].role",
+              "$.creaseMesh.edges[9].assignment",
+              "$.creaseMesh.edges[9].role",
+              "$.creaseMesh.edges[10].assignment",
+              "$.creaseMesh.edges[10].role",
+              "$.creaseMesh.edges[11].assignment",
+              "$.creaseMesh.edges[11].role",
+              "$.creaseMesh.faces[4]",
+              "$.input.edgesAssignment[8]",
+              "$.input.edgesAssignment[9]",
+              "$.input.edgesAssignment[10]",
+              "$.input.edgesAssignment[11]",
+              "$.input.facesVertices[4]",
+              "$.pathCandidate.segments[0].motion.anglesByCrease[4]",
+              "$.pathCandidate.segments[0].motion.anglesByCrease[5]",
+              "$.pathCandidate.segments[0].motion.anglesByCrease[6]",
+              "$.pathCandidate.segments[0].motion.anglesByCrease[7]",
+              "$.pathCandidate.segments[0].motion.intervalAngleBoundsByCrease[4]",
+              "$.pathCandidate.segments[0].motion.intervalAngleBoundsByCrease[5]",
+              "$.pathCandidate.segments[0].motion.intervalAngleBoundsByCrease[6]",
+              "$.pathCandidate.segments[0].motion.intervalAngleBoundsByCrease[7]",
+              "$.target.faceTransforms[4]",
+              "$.target.resolvedInteriorAssignments[4]",
+              "$.target.resolvedInteriorAssignments[5]",
+              "$.target.resolvedInteriorAssignments[6]",
+              "$.target.resolvedInteriorAssignments[7]"
+            ],
+            "sourceArtifactId": "source-hole",
+            "sourcePath": "hole.json",
+            "expectedOutcome": "rejected",
+            "expectedIssues": [{ "path": "$.creaseMesh", "code": "euler-characteristic-mismatch" }]
+          }
+        },
+        {
+          "const": {
+            "caseIndex": 4,
+            "caseId": "NEG-TOPOLOGY-NON-MANIFOLD-EDGE",
+            "controlArtifactId": "control-primary-design",
+            "mutationKind": "append-duplicate-right-face-and-target-transform",
+            "changedPaths": ["$.creaseMesh.faces[2]", "$.target.faceTransforms[2]"],
+            "sourceArtifactId": "source-non-manifold-edge",
+            "sourcePath": "non-manifold-edge.json",
+            "expectedOutcome": "rejected",
+            "expectedIssues": [
+              { "path": "$.creaseMesh.edges[1]", "code": "boundary-incidence" },
+              { "path": "$.creaseMesh.edges[2]", "code": "boundary-incidence" },
+              { "path": "$.creaseMesh.edges[3]", "code": "boundary-incidence" },
+              { "path": "$.creaseMesh.edges[6]", "code": "interior-incidence" },
+              { "path": "$.creaseMesh.faces", "code": "non-manifold-edge" },
+              { "path": "$.creaseMesh", "code": "euler-characteristic-mismatch" }
+            ]
+          }
+        }
+      ],
+      "items": false
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "prefixItems": [
+        { "$ref": "#/$defs/readmeArtifact" },
+        { "$ref": "#/$defs/primaryControlArtifact" },
+        { "$ref": "#/$defs/annulusControlArtifact" },
+        { "$ref": "#/$defs/crossingArtifact" },
+        { "$ref": "#/$defs/duplicateArtifact" },
+        { "$ref": "#/$defs/zeroAreaArtifact" },
+        { "$ref": "#/$defs/holeArtifact" },
+        { "$ref": "#/$defs/nonManifoldArtifact" }
+      ],
+      "items": false
+    }
+  },
+  "$defs": {
+    "readmeArtifact": {
+      "allOf": [
+        { "$ref": "#/$defs/artifactBase" },
+        {
+          "type": "object",
+          "properties": {
+            "artifactId": { "const": "bundle-readme" },
+            "role": { "const": "readme" },
+            "path": { "const": "README.md" },
+            "mediaType": { "const": "text/markdown; charset=utf-8" },
+            "provenance": { "$ref": "#/$defs/authoredProvenance" }
+          }
+        }
+      ]
+    },
+    "primaryControlArtifact": {
+      "allOf": [
+        { "$ref": "#/$defs/artifactBase" },
+        {
+          "type": "object",
+          "properties": {
+            "artifactId": { "const": "control-primary-design" },
+            "role": { "const": "accepted-control" },
+            "path": { "const": "control-primary-design.json" },
+            "mediaType": { "const": "application/json" },
+            "provenance": { "$ref": "#/$defs/authoredProvenance" }
+          }
+        }
+      ]
+    },
+    "annulusControlArtifact": {
+      "allOf": [
+        { "$ref": "#/$defs/artifactBase" },
+        {
+          "type": "object",
+          "properties": {
+            "artifactId": { "const": "control-filled-annulus-fold" },
+            "role": { "const": "accepted-control" },
+            "path": { "const": "control-filled-annulus-fold.json" },
+            "mediaType": { "const": "application/json" },
+            "provenance": { "$ref": "#/$defs/authoredProvenance" }
+          }
+        }
+      ]
+    },
+    "crossingArtifact": { "$ref": "#/$defs/negativeCrossing" },
+    "duplicateArtifact": { "$ref": "#/$defs/negativeDuplicate" },
+    "zeroAreaArtifact": { "$ref": "#/$defs/negativeZeroArea" },
+    "holeArtifact": { "$ref": "#/$defs/negativeHole" },
+    "nonManifoldArtifact": { "$ref": "#/$defs/negativeNonManifold" },
+    "negativeCrossing": {
+      "allOf": [
+        { "$ref": "#/$defs/artifactBase" },
+        {
+          "type": "object",
+          "properties": {
+            "artifactId": { "const": "source-unsplit-crossing" },
+            "role": { "const": "negative-source" },
+            "path": { "const": "unsplit-crossing.json" },
+            "mediaType": { "const": "application/json" },
+            "provenance": { "$ref": "#/$defs/primaryMutationProvenance" }
+          }
+        }
+      ]
+    },
+    "negativeDuplicate": {
+      "allOf": [
+        { "$ref": "#/$defs/artifactBase" },
+        {
+          "type": "object",
+          "properties": {
+            "artifactId": { "const": "source-duplicate-edge" },
+            "role": { "const": "negative-source" },
+            "path": { "const": "duplicate-edge.json" },
+            "mediaType": { "const": "application/json" },
+            "provenance": { "$ref": "#/$defs/primaryMutationProvenance" }
+          }
+        }
+      ]
+    },
+    "negativeZeroArea": {
+      "allOf": [
+        { "$ref": "#/$defs/artifactBase" },
+        {
+          "type": "object",
+          "properties": {
+            "artifactId": { "const": "source-zero-area-face" },
+            "role": { "const": "negative-source" },
+            "path": { "const": "zero-area-face.json" },
+            "mediaType": { "const": "application/json" },
+            "provenance": { "$ref": "#/$defs/primaryMutationProvenance" }
+          }
+        }
+      ]
+    },
+    "negativeHole": {
+      "allOf": [
+        { "$ref": "#/$defs/artifactBase" },
+        {
+          "type": "object",
+          "properties": {
+            "artifactId": { "const": "source-hole" },
+            "role": { "const": "negative-source" },
+            "path": { "const": "hole.json" },
+            "mediaType": { "const": "application/json" },
+            "provenance": { "$ref": "#/$defs/annulusMutationProvenance" }
+          }
+        }
+      ]
+    },
+    "negativeNonManifold": {
+      "allOf": [
+        { "$ref": "#/$defs/artifactBase" },
+        {
+          "type": "object",
+          "properties": {
+            "artifactId": { "const": "source-non-manifold-edge" },
+            "role": { "const": "negative-source" },
+            "path": { "const": "non-manifold-edge.json" },
+            "mediaType": { "const": "application/json" },
+            "provenance": { "$ref": "#/$defs/primaryMutationProvenance" }
+          }
+        }
+      ]
+    },
+    "artifactBase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifactId",
+        "role",
+        "path",
+        "mediaType",
+        "sha256",
+        "licenseSpdx",
+        "provenance"
+      ],
+      "properties": {
+        "artifactId": { "type": "string" },
+        "role": { "type": "string" },
+        "path": { "type": "string" },
+        "mediaType": { "type": "string" },
+        "sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+        "licenseSpdx": { "const": "MIT" },
+        "provenance": { "type": "object" }
+      }
+    },
+    "authoredProvenance": {
+      "const": {
+        "sourceReferenceId": "oridesign-neg-topology-candidates-v1",
+        "sourceUse": "project-authored",
+        "derivation": "authored",
+        "dependsOnArtifactIds": []
+      }
+    },
+    "primaryMutationProvenance": {
+      "const": {
+        "sourceReferenceId": "oridesign-neg-topology-candidates-v1",
+        "sourceUse": "project-authored",
+        "derivation": "mutated-from-control",
+        "dependsOnArtifactIds": ["control-primary-design"]
+      }
+    },
+    "annulusMutationProvenance": {
+      "const": {
+        "sourceReferenceId": "oridesign-neg-topology-candidates-v1",
+        "sourceUse": "project-authored",
+        "derivation": "mutated-from-control",
+        "dependsOnArtifactIds": ["control-filled-annulus-fold"]
+      }
+    }
+  }
+}

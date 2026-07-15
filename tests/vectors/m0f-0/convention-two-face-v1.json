@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "schemaId": "https://oridesign.local/schemas/m0f/reference-model-v1.schema.json",
+  "conventionsId": "oridesign-m0f-conventions-v1",
+  "canonicalizationVersion": "oridesign-canonical-v1",
+  "id": "CONVENTION-TWO-FACE-V1",
+  "scope": "conventions-only",
+  "scientificClaim": false,
+  "paper": {
+    "width": 1,
+    "height": 1,
+    "normalizedShortSide": 1
+  },
+  "vertices": [
+    { "id": "v-tl", "x": 0, "y": 0 },
+    { "id": "v-tm", "x": 0.5, "y": 0 },
+    { "id": "v-tr", "x": 1, "y": 0 },
+    { "id": "v-br", "x": 1, "y": 1 },
+    { "id": "v-bm", "x": 0.5, "y": 1 },
+    { "id": "v-bl", "x": 0, "y": 1 }
+  ],
+  "edges": [
+    {
+      "id": "e-top-left",
+      "vertices": ["v-tl", "v-tm"],
+      "assignment": "B",
+      "leftFaceId": null,
+      "rightFaceId": "f-left"
+    },
+    {
+      "id": "e-top-right",
+      "vertices": ["v-tm", "v-tr"],
+      "assignment": "B",
+      "leftFaceId": null,
+      "rightFaceId": "f-right"
+    },
+    {
+      "id": "e-right",
+      "vertices": ["v-tr", "v-br"],
+      "assignment": "B",
+      "leftFaceId": null,
+      "rightFaceId": "f-right"
+    },
+    {
+      "id": "e-bottom-right",
+      "vertices": ["v-br", "v-bm"],
+      "assignment": "B",
+      "leftFaceId": null,
+      "rightFaceId": "f-right"
+    },
+    {
+      "id": "e-bottom-left",
+      "vertices": ["v-bm", "v-bl"],
+      "assignment": "B",
+      "leftFaceId": null,
+      "rightFaceId": "f-left"
+    },
+    {
+      "id": "e-left",
+      "vertices": ["v-bl", "v-tl"],
+      "assignment": "B",
+      "leftFaceId": null,
+      "rightFaceId": "f-left"
+    },
+    {
+      "id": "e-hinge",
+      "vertices": ["v-tm", "v-bm"],
+      "assignment": "V",
+      "leftFaceId": "f-right",
+      "rightFaceId": "f-left"
+    }
+  ],
+  "faces": [
+    { "id": "f-left", "vertices": ["v-tl", "v-bl", "v-bm", "v-tm"] },
+    { "id": "f-right", "vertices": ["v-tm", "v-bm", "v-br", "v-tr"] }
+  ],
+  "hingeSamples": [{ "edgeId": "e-hinge", "foldAngleRadians": 1.5707963267948966 }],
+  "overlapRegions": [
+    {
+      "id": "overlap-final",
+      "faceIds": ["f-left", "f-right"],
+      "aboveFaceId": "f-right",
+      "belowFaceId": "f-left"
+    }
+  ]
+}

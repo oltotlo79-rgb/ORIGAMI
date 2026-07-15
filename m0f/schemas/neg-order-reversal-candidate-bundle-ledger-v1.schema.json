@@ -1,0 +1,207 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oridesign.local/schemas/m0f/neg-order-reversal-candidate-bundle-ledger-v1.schema.json",
+  "title": "NEG-ORDER-REVERSAL exact-negative candidate bundle ledger v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "schemaId",
+    "recordType",
+    "contractStatus",
+    "scientificClaim",
+    "vectorSetId",
+    "scope",
+    "declaredContinuousContactOrderParserOnly",
+    "canonicalManifestPath",
+    "canonicalManifestRegistration",
+    "canonicalPromotionClaimed",
+    "supportProfileIncluded",
+    "toleranceProfileIncluded",
+    "physicalLayerOrderEstablished",
+    "contactCompletenessEstablished",
+    "contactLegalityEstablished",
+    "pathContinuityEstablished",
+    "collisionDetectionIncluded",
+    "collisionFreedomEstablished",
+    "foldabilityEstablished",
+    "scientificVerificationClaimed",
+    "globalM0fGate",
+    "caseCount",
+    "artifactCount",
+    "generator",
+    "provenance",
+    "cases",
+    "artifacts"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "schemaId": {
+      "const": "https://oridesign.local/schemas/m0f/neg-order-reversal-candidate-bundle-ledger-v1.schema.json"
+    },
+    "recordType": { "const": "m0f-neg-order-reversal-candidate-bundle-ledger" },
+    "contractStatus": { "const": "candidate" },
+    "scientificClaim": { "const": false },
+    "vectorSetId": { "const": "NEG-ORDER-REVERSAL-V1" },
+    "scope": {
+      "const": "project-authored-exact-negative-artifact-contract-continuous-contact-layer-order-reversal-parser-replay-only"
+    },
+    "declaredContinuousContactOrderParserOnly": { "const": true },
+    "canonicalManifestPath": { "const": "tests/fixtures/manifest.json" },
+    "canonicalManifestRegistration": { "const": "not-registered" },
+    "canonicalPromotionClaimed": { "const": false },
+    "supportProfileIncluded": { "const": false },
+    "toleranceProfileIncluded": { "const": false },
+    "physicalLayerOrderEstablished": { "const": false },
+    "contactCompletenessEstablished": { "const": false },
+    "contactLegalityEstablished": { "const": false },
+    "pathContinuityEstablished": { "const": false },
+    "collisionDetectionIncluded": { "const": false },
+    "collisionFreedomEstablished": { "const": false },
+    "foldabilityEstablished": { "const": false },
+    "scientificVerificationClaimed": { "const": false },
+    "globalM0fGate": { "const": "not-evaluated" },
+    "caseCount": { "const": 1 },
+    "artifactCount": { "const": 3 },
+    "generator": {
+      "const": {
+        "generatorId": "oridesign-neg-order-reversal-candidate-bundle",
+        "generatorVersion": "1.0.0-candidate",
+        "serialization": "stable-json-utf8-lf-v1",
+        "detector": "parseArtifactContractV1",
+        "detectorSourcePath": "m0f/artifacts/contract.ts"
+      }
+    },
+    "provenance": {
+      "const": {
+        "sourceReferenceId": "oridesign-neg-order-reversal-candidate-v1",
+        "sourceKind": "project-authored",
+        "title": "NEG-ORDER-REVERSAL project-authored continuous-contact layer-order parser vector",
+        "authors": ["OriDesign contributors"],
+        "redistribution": "allowed",
+        "licenseSpdx": "MIT"
+      }
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1,
+      "prefixItems": [
+        {
+          "const": {
+            "caseIndex": 0,
+            "caseId": "NEG-ORDER-REVERSAL",
+            "controlArtifactId": "control-fold",
+            "mutationKind": "extend-terminal-contact-to-full-interval-and-append-initial-reverse-relation",
+            "changedPaths": ["$.contacts[0].interval[0]", "$.layerEvents[1]"],
+            "sourceArtifactId": "source-order-reversal",
+            "sourcePath": "order-reversal.json",
+            "expectedOutcome": "rejected",
+            "expectedIssues": [{ "path": "$.layerEvents", "code": "layer-order-reversal" }]
+          }
+        }
+      ],
+      "items": false
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "prefixItems": [
+        { "$ref": "#/$defs/readmeArtifact" },
+        { "$ref": "#/$defs/controlArtifact" },
+        { "$ref": "#/$defs/sourceArtifact" }
+      ],
+      "items": false
+    }
+  },
+  "$defs": {
+    "readmeArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifactId",
+        "role",
+        "path",
+        "mediaType",
+        "sha256",
+        "licenseSpdx",
+        "provenance"
+      ],
+      "properties": {
+        "artifactId": { "const": "bundle-readme" },
+        "role": { "const": "readme" },
+        "path": { "const": "README.md" },
+        "mediaType": { "const": "text/markdown; charset=utf-8" },
+        "sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+        "licenseSpdx": { "const": "MIT" },
+        "provenance": {
+          "const": {
+            "sourceReferenceId": "oridesign-neg-order-reversal-candidate-v1",
+            "sourceUse": "project-authored",
+            "derivation": "authored",
+            "dependsOnArtifactIds": []
+          }
+        }
+      }
+    },
+    "controlArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifactId",
+        "role",
+        "path",
+        "mediaType",
+        "sha256",
+        "licenseSpdx",
+        "provenance"
+      ],
+      "properties": {
+        "artifactId": { "const": "control-fold" },
+        "role": { "const": "accepted-control" },
+        "path": { "const": "control-fold.json" },
+        "mediaType": { "const": "application/json" },
+        "sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+        "licenseSpdx": { "const": "MIT" },
+        "provenance": {
+          "const": {
+            "sourceReferenceId": "oridesign-neg-order-reversal-candidate-v1",
+            "sourceUse": "project-authored",
+            "derivation": "authored",
+            "dependsOnArtifactIds": []
+          }
+        }
+      }
+    },
+    "sourceArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifactId",
+        "role",
+        "path",
+        "mediaType",
+        "sha256",
+        "licenseSpdx",
+        "provenance"
+      ],
+      "properties": {
+        "artifactId": { "const": "source-order-reversal" },
+        "role": { "const": "negative-source" },
+        "path": { "const": "order-reversal.json" },
+        "mediaType": { "const": "application/json" },
+        "sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+        "licenseSpdx": { "const": "MIT" },
+        "provenance": {
+          "const": {
+            "sourceReferenceId": "oridesign-neg-order-reversal-candidate-v1",
+            "sourceUse": "project-authored",
+            "derivation": "mutated-from-control",
+            "dependsOnArtifactIds": ["control-fold"]
+          }
+        }
+      }
+    }
+  }
+}

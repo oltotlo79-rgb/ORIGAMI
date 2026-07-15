@@ -1,0 +1,10 @@
+{
+  "fixtureId": "_harness-smoke",
+  "payload": {
+    "alpha": 1,
+    "flags": [true, false],
+    "note": "M0F harness plumbing only"
+  },
+  "purpose": "Exercise manifest, hash, JSONL, and CLI plumbing",
+  "scientificClaim": false
+}

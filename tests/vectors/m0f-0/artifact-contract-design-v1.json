@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "schemaId": "https://oridesign.local/schemas/m0f/artifact-contract-v1.schema.json",
+  "contractId": "CONTRACT-DESIGN-TWO-LEAF-V1",
+  "conventionsId": "oridesign-m0f-conventions-v1",
+  "contractStatus": "candidate",
+  "scientificClaim": false,
+  "input": {
+    "kind": "design-generation",
+    "method": "treeMethod",
+    "paper": { "width": 1, "height": 1 },
+    "grid": null,
+    "tree": {
+      "nodes": [
+        { "id": "n-left", "x": 0.25, "y": 0.5 },
+        { "id": "n-center", "x": 0.5, "y": 0.5 },
+        { "id": "n-right", "x": 0.75, "y": 0.5 }
+      ],
+      "edges": [
+        { "id": "t-left", "from": "n-left", "to": "n-center", "length": 1, "width": 0 },
+        { "id": "t-right", "from": "n-center", "to": "n-right", "length": 1, "width": 0 }
+      ],
+      "rotation": [
+        { "nodeId": "n-left", "edgeIds": ["t-left"] },
+        { "nodeId": "n-center", "edgeIds": ["t-left", "t-right"] },
+        { "nodeId": "n-right", "edgeIds": ["t-right"] }
+      ]
+    }
+  },
+  "creaseMesh": {
+    "vertices": [
+      { "id": "v-tl", "x": 0, "y": 0 },
+      { "id": "v-tm", "x": 0.5, "y": 0 },
+      { "id": "v-tr", "x": 1, "y": 0 },
+      { "id": "v-br", "x": 1, "y": 1 },
+      { "id": "v-bm", "x": 0.5, "y": 1 },
+      { "id": "v-bl", "x": 0, "y": 1 }
+    ],
+    "edges": [
+      { "id": "e-top-left", "vertices": ["v-tl", "v-tm"], "assignment": "B", "role": "boundary", "sourceTreeEdgeIds": [], "generationKey": "boundary:top-left" },
+      { "id": "e-top-right", "vertices": ["v-tm", "v-tr"], "assignment": "B", "role": "boundary", "sourceTreeEdgeIds": [], "generationKey": "boundary:top-right" },
+      { "id": "e-right", "vertices": ["v-tr", "v-br"], "assignment": "B", "role": "boundary", "sourceTreeEdgeIds": [], "generationKey": "boundary:right" },
+      { "id": "e-bottom-right", "vertices": ["v-br", "v-bm"], "assignment": "B", "role": "boundary", "sourceTreeEdgeIds": [], "generationKey": "boundary:bottom-right" },
+      { "id": "e-bottom-left", "vertices": ["v-bm", "v-bl"], "assignment": "B", "role": "boundary", "sourceTreeEdgeIds": [], "generationKey": "boundary:bottom-left" },
+      { "id": "e-left", "vertices": ["v-bl", "v-tl"], "assignment": "B", "role": "boundary", "sourceTreeEdgeIds": [], "generationKey": "boundary:left" },
+      { "id": "e-hinge", "vertices": ["v-tm", "v-bm"], "assignment": "V", "role": "hinge", "sourceTreeEdgeIds": ["t-left", "t-right"], "generationKey": "tree:hinge" }
+    ],
+    "faces": [
+      { "id": "f-left", "vertices": ["v-tl", "v-bl", "v-bm", "v-tm"] },
+      { "id": "f-right", "vertices": ["v-tm", "v-bm", "v-br", "v-tr"] }
+    ],
+    "meshJoinEdges": []
+  },
+  "target": {
+    "schemaVersion": 1,
+    "kind": "uniaxial-tree-base",
+    "faceTransforms": [
+      { "faceId": "f-left", "quaternion": [0, 0, 0, 1], "translation": [0, 0, 0] },
+      { "faceId": "f-right", "quaternion": [0, 0, 1, 0], "translation": [1, 0, 0] }
+    ],
+    "goalFaceOrders": [],
+    "overlapRegionIds": [],
+    "branchMeasurements": [
+      { "treeEdgeId": "t-left", "axisEndpoints": [[0, 0], [0.5, 0]], "effectiveLength": 1, "effectiveWidth": 0 },
+      { "treeEdgeId": "t-right", "axisEndpoints": [[0.5, 0], [1, 0]], "effectiveLength": 1, "effectiveWidth": 0 }
+    ],
+    "rotation": [
+      { "nodeId": "n-left", "edgeIds": ["t-left"] },
+      { "nodeId": "n-center", "edgeIds": ["t-left", "t-right"] },
+      { "nodeId": "n-right", "edgeIds": ["t-right"] }
+    ]
+  },
+  "pathCandidate": {
+    "representationVersion": 1,
+    "representationStatus": "candidate",
+    "segments": [
+      {
+        "t0": 0,
+        "t1": 1,
+        "motion": {
+          "kind": "piecewise-polynomial",
+          "degree": 1,
+          "coefficientsByCrease": [{ "edgeId": "e-hinge", "coefficients": [[0, 3.141592653589793]] }],
+          "derivativeBoundsByCrease": [{ "edgeId": "e-hinge", "bounds": [0, 3.141592653589793] }]
+        }
+      }
+    ]
+  },
+  "overlapRegions": [],
+  "contacts": [],
+  "layerEvents": []
+}

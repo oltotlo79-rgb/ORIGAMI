@@ -1,0 +1,234 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oridesign.local/schemas/m0f/neg-path-angle-bound-candidate-bundle-ledger-v1.schema.json",
+  "title": "NEG-PATH-MUTATION-ANGLE-OUTSIDE-BOUND exact-negative candidate bundle ledger v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "schemaId",
+    "recordType",
+    "contractStatus",
+    "scientificClaim",
+    "vectorSetId",
+    "scope",
+    "declaredBoundedInterpolationAngleContainmentParserOnly",
+    "canonicalManifestPath",
+    "canonicalManifestRegistration",
+    "canonicalPromotionClaimed",
+    "canonicalPathMutationFamilyComplete",
+    "physicalAngleBoundsEstablished",
+    "radianConventionEstablished",
+    "conservativeAngleBoundsEstablished",
+    "kinematicFeasibilityEstablished",
+    "endpointContinuityEstablished",
+    "piecewisePolynomialEndpointInferenceIncluded",
+    "supportProfileIncluded",
+    "toleranceProfileIncluded",
+    "physicalPathContinuityEstablished",
+    "creaseMapCompletenessEstablished",
+    "rigidityEstablished",
+    "faceIsometryEstablished",
+    "hingeGeometryEstablished",
+    "certificateHashVerificationIncluded",
+    "contactAnalysisIncluded",
+    "continuousCollisionDetectionIncluded",
+    "collisionDetectionIncluded",
+    "collisionFreedomEstablished",
+    "foldabilityEstablished",
+    "scientificVerificationClaimed",
+    "globalM0fGate",
+    "caseCount",
+    "artifactCount",
+    "generator",
+    "provenance",
+    "cases",
+    "artifacts"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "schemaId": {
+      "const": "https://oridesign.local/schemas/m0f/neg-path-angle-bound-candidate-bundle-ledger-v1.schema.json"
+    },
+    "recordType": { "const": "m0f-neg-path-angle-bound-candidate-bundle-ledger" },
+    "contractStatus": { "const": "candidate" },
+    "scientificClaim": { "const": false },
+    "vectorSetId": { "const": "NEG-PATH-MUTATION-ANGLE-OUTSIDE-BOUND-V1" },
+    "scope": {
+      "const": "project-authored-exact-negative-artifact-contract-declared-bounded-interpolation-angle-containment-parser-replay-only"
+    },
+    "declaredBoundedInterpolationAngleContainmentParserOnly": { "const": true },
+    "canonicalManifestPath": { "const": "tests/fixtures/manifest.json" },
+    "canonicalManifestRegistration": { "const": "not-registered" },
+    "canonicalPromotionClaimed": { "const": false },
+    "canonicalPathMutationFamilyComplete": { "const": false },
+    "physicalAngleBoundsEstablished": { "const": false },
+    "radianConventionEstablished": { "const": false },
+    "conservativeAngleBoundsEstablished": { "const": false },
+    "kinematicFeasibilityEstablished": { "const": false },
+    "endpointContinuityEstablished": { "const": false },
+    "piecewisePolynomialEndpointInferenceIncluded": { "const": false },
+    "supportProfileIncluded": { "const": false },
+    "toleranceProfileIncluded": { "const": false },
+    "physicalPathContinuityEstablished": { "const": false },
+    "creaseMapCompletenessEstablished": { "const": false },
+    "rigidityEstablished": { "const": false },
+    "faceIsometryEstablished": { "const": false },
+    "hingeGeometryEstablished": { "const": false },
+    "certificateHashVerificationIncluded": { "const": false },
+    "contactAnalysisIncluded": { "const": false },
+    "continuousCollisionDetectionIncluded": { "const": false },
+    "collisionDetectionIncluded": { "const": false },
+    "collisionFreedomEstablished": { "const": false },
+    "foldabilityEstablished": { "const": false },
+    "scientificVerificationClaimed": { "const": false },
+    "globalM0fGate": { "const": "not-evaluated" },
+    "caseCount": { "const": 1 },
+    "artifactCount": { "const": 3 },
+    "generator": {
+      "const": {
+        "generatorId": "oridesign-neg-path-angle-bound-candidate-bundle",
+        "generatorVersion": "1.0.0-candidate",
+        "serialization": "stable-json-utf8-lf-v1",
+        "detector": "parseArtifactContractV1",
+        "detectorSourcePath": "m0f/artifacts/contract.ts"
+      }
+    },
+    "provenance": {
+      "const": {
+        "sourceReferenceId": "oridesign-neg-path-angle-bound-candidate-v1",
+        "sourceKind": "project-authored",
+        "title": "NEG-PATH-MUTATION-ANGLE-OUTSIDE-BOUND project-authored bounded-interpolation angle-containment parser vector",
+        "authors": ["OriDesign contributors"],
+        "redistribution": "allowed",
+        "licenseSpdx": "MIT"
+      }
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1,
+      "prefixItems": [
+        {
+          "const": {
+            "caseIndex": 0,
+            "caseId": "NEG-PATH-MUTATION-ANGLE-OUTSIDE-BOUND",
+            "controlArtifactId": "control-fold",
+            "mutationKind": "raise-middle-angle-outside-first-declared-interval-bound",
+            "changedPaths": ["$.pathCandidate.segments[0].motion.anglesByCrease[0].angles[1]"],
+            "sourceArtifactId": "source-path-angle-outside-bound",
+            "sourcePath": "path-angle-outside-bound.json",
+            "expectedOutcome": "rejected",
+            "expectedIssues": [
+              {
+                "path": "$.pathCandidate.segments[0].motion.intervalAngleBoundsByCrease",
+                "code": "angle-outside-bound"
+              }
+            ]
+          }
+        }
+      ],
+      "items": false
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "prefixItems": [
+        { "$ref": "#/$defs/readmeArtifact" },
+        { "$ref": "#/$defs/controlArtifact" },
+        { "$ref": "#/$defs/sourceArtifact" }
+      ],
+      "items": false
+    }
+  },
+  "$defs": {
+    "readmeArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifactId",
+        "role",
+        "path",
+        "mediaType",
+        "sha256",
+        "licenseSpdx",
+        "provenance"
+      ],
+      "properties": {
+        "artifactId": { "const": "bundle-readme" },
+        "role": { "const": "readme" },
+        "path": { "const": "README.md" },
+        "mediaType": { "const": "text/markdown; charset=utf-8" },
+        "sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+        "licenseSpdx": { "const": "MIT" },
+        "provenance": {
+          "const": {
+            "sourceReferenceId": "oridesign-neg-path-angle-bound-candidate-v1",
+            "sourceUse": "project-authored",
+            "derivation": "authored",
+            "dependsOnArtifactIds": []
+          }
+        }
+      }
+    },
+    "controlArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifactId",
+        "role",
+        "path",
+        "mediaType",
+        "sha256",
+        "licenseSpdx",
+        "provenance"
+      ],
+      "properties": {
+        "artifactId": { "const": "control-fold" },
+        "role": { "const": "accepted-control" },
+        "path": { "const": "control-fold.json" },
+        "mediaType": { "const": "application/json" },
+        "sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+        "licenseSpdx": { "const": "MIT" },
+        "provenance": {
+          "const": {
+            "sourceReferenceId": "oridesign-neg-path-angle-bound-candidate-v1",
+            "sourceUse": "project-authored",
+            "derivation": "authored",
+            "dependsOnArtifactIds": []
+          }
+        }
+      }
+    },
+    "sourceArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifactId",
+        "role",
+        "path",
+        "mediaType",
+        "sha256",
+        "licenseSpdx",
+        "provenance"
+      ],
+      "properties": {
+        "artifactId": { "const": "source-path-angle-outside-bound" },
+        "role": { "const": "negative-source" },
+        "path": { "const": "path-angle-outside-bound.json" },
+        "mediaType": { "const": "application/json" },
+        "sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+        "licenseSpdx": { "const": "MIT" },
+        "provenance": {
+          "const": {
+            "sourceReferenceId": "oridesign-neg-path-angle-bound-candidate-v1",
+            "sourceUse": "project-authored",
+            "derivation": "mutated-from-control",
+            "dependsOnArtifactIds": ["control-fold"]
+          }
+        }
+      }
+    }
+  }
+}

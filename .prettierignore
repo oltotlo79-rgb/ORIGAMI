@@ -1,0 +1,13 @@
+node_modules
+dist
+coverage
+playwright-report
+test-results
+.vitest-attachments
+.artifacts
+package-lock.json
+tests/fixtures
+tests/candidate-vectors
+tests/vectors
+docs
+CLAUDE.md

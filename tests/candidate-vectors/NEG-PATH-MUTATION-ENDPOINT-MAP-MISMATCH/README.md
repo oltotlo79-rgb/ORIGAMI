@@ -1,0 +1,9 @@
+# NEG-PATH-MUTATION-ENDPOINT-MAP-MISMATCH exact-negative candidate vector
+
+This closed directory contains one saved project-authored expanded three-face/two-hinge design artifact-contract control and one exact-negative mutation for the current `parseArtifactContractV1` adjacent bounded-interpolation crease-map check. Both accepted-control segments declare the same local two-edge angle and bound maps for `e-hinge` and `e-hinge-far`. The mutation removes only the `e-hinge-far` row from both maps of the second segment, so both segments remain locally valid while their adjacent declared crease sets differ.
+
+The bundle is intentionally outside `tests/fixtures/manifest.json`; `NEG-PATH-MUTATION-ENDPOINT-MAP-MISMATCH` is not canonically registered or promoted. Exact-negative means only that the current artifact-contract parser rejects the saved bytes with the complete ordered issue signature fixed in the ledger.
+
+This parser replay establishes only that the current parser rejects one exact difference between adjacent declared bounded-interpolation crease maps. It is not a physical hinge-drift detector and does not establish mesh or crease-map completeness, endpoint or physical path continuity, rigidity, face isometry, hinge geometry, or piecewise-polynomial endpoint semantics. It includes no contact analysis, CCD, collision detection, collision-freedom or foldability proof, certificate-hash verification or cryptographic authenticity, completeness of the canonical path-mutation family, SupportProfile or ToleranceProfile, scientific verification, or M0F GO. Local SHA-256 rows detect saved-byte drift only and are not signatures.
+
+Verify with `npx tsx m0f/neg-path-endpoint-map-mismatch-candidate-bundle-cli.ts --verify`. Regenerate with `npx tsx m0f/neg-path-endpoint-map-mismatch-candidate-bundle-cli.ts --write`.

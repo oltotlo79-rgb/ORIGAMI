@@ -1,0 +1,9 @@
+# NEG-PATH-MUTATION-MIXED-REPRESENTATION exact-negative candidate vector
+
+This closed directory contains one saved project-authored two-segment bounded-interpolation FOLD control and one exact-negative mutation for the current `parseArtifactContractV1` path-representation uniformity check. Both accepted-control segments are locally valid, contiguous, and agree at their shared endpoint. The mutation replaces only the second motion object with a locally valid degree-one piecewise-polynomial declaration. It produces exactly the sole `mixed-path-representation` issue and produces no endpoint-map or endpoint-discontinuity secondary issue.
+
+The bundle is intentionally outside `tests/fixtures/manifest.json`; `NEG-PATH-MUTATION-MIXED-REPRESENTATION` is not canonically registered or promoted. Exact-negative means only that the current artifact-contract parser rejects these saved bytes with the complete ordered issue signature fixed in the ledger.
+
+This replay establishes only that the current parser requires one declared representation kind across a path. It does not select a representation, freeze either candidate basis, validate polynomial coefficient or derivative-bound semantics, infer polynomial endpoints or cross-representation semantics, establish bounded or cross-representation endpoint continuity, include an interval proof, or establish physical path continuity, rigidity, face isometry, hinge geometry, contact analysis, CCD, collision detection or freedom, foldability, certificate-hash verification, cryptographic authenticity, canonical path-mutation-family completeness, SupportProfile, ToleranceProfile, scientific verification, or M0F GO. Local SHA-256 rows detect saved-byte drift only and are not signatures.
+
+Verify with `npx tsx m0f/neg-path-mixed-representation-candidate-bundle-cli.ts --verify`. Regenerate with `npx tsx m0f/neg-path-mixed-representation-candidate-bundle-cli.ts --write`.

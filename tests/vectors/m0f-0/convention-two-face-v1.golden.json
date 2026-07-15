@@ -1,0 +1,20 @@
+{
+  "canonicalHash": "sha256:ba46964eff411e0f5caaf21f0a8e0bf919a42c7b45a602c0ea44f1c0e13a0ff8",
+  "evidence": {
+    "conventionsId": "oridesign-m0f-conventions-v1",
+    "faceNormals": [
+      { "faceId": "f-left", "worldNormal": [0, 0, 1] },
+      { "faceId": "f-right", "worldNormal": [0, 0, 1] }
+    ],
+    "hingeAssignments": [
+      { "edgeId": "e-hinge", "foldAngleSign": 1, "assignment": "V" }
+    ],
+    "layerRelations": [
+      {
+        "overlapRegionId": "overlap-final",
+        "aboveFaceId": "f-right",
+        "belowFaceId": "f-left"
+      }
+    ]
+  }
+}

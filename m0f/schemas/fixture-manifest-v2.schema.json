@@ -1,0 +1,354 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oridesign.local/schemas/m0f/fixture-manifest-v2.schema.json",
+  "title": "OriDesign M0F fixture manifest version 2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "fixtureSetId", "completeness", "fixtures"],
+  "properties": {
+    "schemaVersion": { "const": 2 },
+    "fixtureSetId": { "$ref": "#/$defs/nonEmptyString" },
+    "completeness": { "enum": ["harness", "m0f"] },
+    "fixtures": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/fixture" }
+    }
+  },
+  "$defs": {
+    "nonEmptyString": {
+      "type": "string",
+      "pattern": "\\S"
+    },
+    "stableId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "fixtureId": {
+      "type": "string",
+      "pattern": "^(?:_harness-smoke|[A-Z0-9][A-Z0-9-]*)$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "httpUrl": {
+      "type": "string",
+      "pattern": "^https?://\\S+$"
+    },
+    "spdx": {
+      "enum": ["MIT", "0BSD", "BSD-2-Clause", "BSD-3-Clause", "Apache-2.0", "ISC"]
+    },
+    "coverageTag": {
+      "enum": [
+        "harness:manifest-runtime",
+        "harness:hashes",
+        "harness:jsonl",
+        "harness:cli",
+        "cp:topology",
+        "cp:mountain-valley",
+        "generation:tree",
+        "generation:box-pleating",
+        "generation:internal-width",
+        "paper:rectangular",
+        "grid:minimum",
+        "symmetry:rotation-order",
+        "scale:leaf-20",
+        "fold:face-reconstruction",
+        "target:flat",
+        "path:rigid-continuous",
+        "collision:ccd",
+        "contact:legal-overlap",
+        "layer:acyclic-order",
+        "support:boundary",
+        "no-solution:certificate",
+        "rigidity:um-negative",
+        "topology:invalid",
+        "path:mutation",
+        "fold:unsupported"
+      ]
+    },
+    "stringList": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/nonEmptyString" }
+    },
+    "allowedRights": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["redistribution", "licenseSpdx"],
+      "properties": {
+        "redistribution": { "const": "allowed" },
+        "licenseSpdx": { "$ref": "#/$defs/spdx" }
+      }
+    },
+    "metadataOnlyRights": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["redistribution", "status"],
+      "properties": {
+        "redistribution": { "const": "metadata-only" },
+        "status": { "enum": ["restricted", "unknown"] },
+        "termsUrl": { "$ref": "#/$defs/httpUrl" }
+      }
+    },
+    "allowedSourceReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceId", "sourceKind", "title", "authors", "rights"],
+      "properties": {
+        "sourceId": { "$ref": "#/$defs/stableId" },
+        "sourceKind": {
+          "enum": ["project-authored", "publication", "external", "generated"]
+        },
+        "title": { "$ref": "#/$defs/nonEmptyString" },
+        "authors": { "$ref": "#/$defs/stringList" },
+        "rights": { "$ref": "#/$defs/allowedRights" },
+        "sourceUrl": { "$ref": "#/$defs/httpUrl" },
+        "sourceSha256": { "$ref": "#/$defs/sha256" },
+        "acquisitionInstructions": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "metadataOnlySourceReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sourceId",
+        "sourceKind",
+        "title",
+        "authors",
+        "rights",
+        "sourceUrl",
+        "sourceSha256",
+        "acquisitionInstructions"
+      ],
+      "properties": {
+        "sourceId": { "$ref": "#/$defs/stableId" },
+        "sourceKind": { "enum": ["publication", "external"] },
+        "title": { "$ref": "#/$defs/nonEmptyString" },
+        "authors": { "$ref": "#/$defs/stringList" },
+        "rights": { "$ref": "#/$defs/metadataOnlyRights" },
+        "sourceUrl": { "$ref": "#/$defs/httpUrl" },
+        "sourceSha256": { "$ref": "#/$defs/sha256" },
+        "acquisitionInstructions": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "sourceReference": {
+      "oneOf": [
+        { "$ref": "#/$defs/allowedSourceReference" },
+        { "$ref": "#/$defs/metadataOnlySourceReference" }
+      ]
+    },
+    "distributedArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifactId",
+        "artifactKind",
+        "path",
+        "sha256",
+        "licenseSpdx",
+        "sourceReferenceId",
+        "sourceUse"
+      ],
+      "properties": {
+        "artifactId": { "$ref": "#/$defs/stableId" },
+        "artifactKind": {
+          "enum": [
+            "input",
+            "readme",
+            "known-artifact",
+            "benchmark-record",
+            "benchmark-golden-jsonl"
+          ]
+        },
+        "path": {
+          "type": "string",
+          "pattern": "^(?!/)(?!.*\\\\)(?!.*(?:^|/)\\.{1,2}(?:/|$))(?!.*//).+/[^/]+$"
+        },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "licenseSpdx": { "$ref": "#/$defs/spdx" },
+        "sourceReferenceId": { "$ref": "#/$defs/stableId" },
+        "sourceUse": {
+          "enum": [
+            "project-authored",
+            "redistributed-source",
+            "generated",
+            "independent-equivalent"
+          ]
+        }
+      }
+    },
+    "inputPointer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["artifactId", "normalizedSha256"],
+      "properties": {
+        "artifactId": { "$ref": "#/$defs/stableId" },
+        "normalizedSha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "readmePointer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["artifactId"],
+      "properties": {
+        "artifactId": { "$ref": "#/$defs/stableId" }
+      }
+    },
+    "verifiedOutcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "checks"],
+      "properties": {
+        "kind": { "const": "verified" },
+        "checks": { "$ref": "#/$defs/stringList" }
+      }
+    },
+    "noSolutionOutcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "reasonCode", "checkerId"],
+      "properties": {
+        "kind": { "const": "no-solution-certified" },
+        "reasonCode": { "$ref": "#/$defs/nonEmptyString" },
+        "checkerId": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "failureOutcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "reasonCode"],
+      "properties": {
+        "kind": { "enum": ["invalid", "unsupported", "rejected"] },
+        "reasonCode": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "harnessOutcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "checks"],
+      "properties": {
+        "kind": { "const": "harness-only" },
+        "checks": { "$ref": "#/$defs/stringList" }
+      }
+    },
+    "expectedOutcome": {
+      "oneOf": [
+        { "$ref": "#/$defs/verifiedOutcome" },
+        { "$ref": "#/$defs/noSolutionOutcome" },
+        { "$ref": "#/$defs/failureOutcome" },
+        { "$ref": "#/$defs/harnessOutcome" }
+      ]
+    },
+    "randomness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["seed", "generatorVersion"],
+      "properties": {
+        "seed": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+        "generatorVersion": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "knownArtifactPointer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "artifactId"],
+      "properties": {
+        "kind": {
+          "enum": [
+            "expectation",
+            "known-solution",
+            "crease-pattern",
+            "target-state",
+            "path-certificate",
+            "no-solution-certificate",
+            "collision-certificate",
+            "contact-events",
+            "layer-order",
+            "evidence-blob"
+          ]
+        },
+        "artifactId": { "$ref": "#/$defs/stableId" }
+      }
+    },
+    "benchmarkPointer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["recordArtifactId", "goldenJsonlArtifactId"],
+      "properties": {
+        "recordArtifactId": { "$ref": "#/$defs/stableId" },
+        "goldenJsonlArtifactId": { "$ref": "#/$defs/stableId" }
+      }
+    },
+    "fixture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "purpose",
+        "workflow",
+        "polarity",
+        "leafCount",
+        "coverageTags",
+        "input",
+        "readme",
+        "expectedOutcome",
+        "sourceReferences",
+        "distributedArtifacts",
+        "randomness",
+        "toleranceProfileId",
+        "knownArtifacts"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/fixtureId" },
+        "title": { "$ref": "#/$defs/nonEmptyString" },
+        "purpose": { "$ref": "#/$defs/nonEmptyString" },
+        "workflow": {
+          "enum": [
+            "generation-tree",
+            "generation-box-pleating",
+            "fold-verification",
+            "reference-verification",
+            "harness"
+          ]
+        },
+        "polarity": { "enum": ["positive", "negative", "boundary", "harness"] },
+        "leafCount": {
+          "anyOf": [{ "type": "integer", "minimum": 1, "maximum": 20 }, { "type": "null" }]
+        },
+        "coverageTags": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/coverageTag" }
+        },
+        "input": { "$ref": "#/$defs/inputPointer" },
+        "readme": { "$ref": "#/$defs/readmePointer" },
+        "expectedOutcome": { "$ref": "#/$defs/expectedOutcome" },
+        "sourceReferences": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/sourceReference" }
+        },
+        "distributedArtifacts": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/distributedArtifact" }
+        },
+        "randomness": {
+          "anyOf": [{ "$ref": "#/$defs/randomness" }, { "type": "null" }]
+        },
+        "toleranceProfileId": {
+          "anyOf": [{ "$ref": "#/$defs/nonEmptyString" }, { "type": "null" }]
+        },
+        "knownArtifacts": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/knownArtifactPointer" }
+        },
+        "benchmark": { "$ref": "#/$defs/benchmarkPointer" }
+      }
+    }
+  }
+}

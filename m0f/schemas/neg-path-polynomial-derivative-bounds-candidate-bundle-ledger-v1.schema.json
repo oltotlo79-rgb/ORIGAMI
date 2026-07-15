@@ -1,0 +1,263 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oridesign.local/schemas/m0f/neg-path-polynomial-derivative-bounds-candidate-bundle-ledger-v1.schema.json",
+  "title": "NEG-PATH-MUTATION-POLYNOMIAL-DERIVATIVE-BOUNDS-INVERTED exact-negative candidate bundle ledger v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "schemaId",
+    "recordType",
+    "contractStatus",
+    "scientificClaim",
+    "vectorSetId",
+    "scope",
+    "declaredPiecewisePolynomialDerivativeBoundsLowerUpperParserOnly",
+    "canonicalManifestPath",
+    "canonicalManifestRegistration",
+    "canonicalPromotionClaimed",
+    "canonicalPathMutationFamilyComplete",
+    "representationSelectionEstablished",
+    "piecewisePolynomialBasisFrozen",
+    "polynomialCoefficientOrderingEstablished",
+    "polynomialCoefficientSemanticsEstablished",
+    "polynomialCoefficientIntervalAssociationEstablished",
+    "polynomialDerivativeSemanticsEstablished",
+    "polynomialDerivativeUnitsEstablished",
+    "piecewisePolynomialEndpointInferenceIncluded",
+    "pathRepresentationCompletenessEstablished",
+    "creaseMapCompletenessEstablished",
+    "physicalAngleScheduleEstablished",
+    "radianConventionEstablished",
+    "physicalAngleBoundsEstablished",
+    "conservativeDerivativeBoundsEstablished",
+    "kinematicFeasibilityEstablished",
+    "physicalPathContinuityEstablished",
+    "endpointContinuityEstablished",
+    "rigidityEstablished",
+    "faceIsometryEstablished",
+    "hingeGeometryEstablished",
+    "certificateHashVerificationIncluded",
+    "cryptographicAuthenticityEstablished",
+    "contactAnalysisIncluded",
+    "continuousCollisionDetectionIncluded",
+    "collisionDetectionIncluded",
+    "collisionFreedomEstablished",
+    "foldabilityEstablished",
+    "supportProfileIncluded",
+    "toleranceProfileIncluded",
+    "scientificVerificationClaimed",
+    "globalM0fGate",
+    "caseCount",
+    "artifactCount",
+    "generator",
+    "provenance",
+    "cases",
+    "artifacts"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "schemaId": {
+      "const": "https://oridesign.local/schemas/m0f/neg-path-polynomial-derivative-bounds-candidate-bundle-ledger-v1.schema.json"
+    },
+    "recordType": { "const": "m0f-neg-path-polynomial-derivative-bounds-candidate-bundle-ledger" },
+    "contractStatus": { "const": "candidate" },
+    "scientificClaim": { "const": false },
+    "vectorSetId": { "const": "NEG-PATH-MUTATION-POLYNOMIAL-DERIVATIVE-BOUNDS-INVERTED-V1" },
+    "scope": {
+      "const": "project-authored-exact-negative-artifact-contract-piecewise-polynomial-derivative-bounds-lower-upper-parser-replay-only"
+    },
+    "declaredPiecewisePolynomialDerivativeBoundsLowerUpperParserOnly": { "const": true },
+    "canonicalManifestPath": { "const": "tests/fixtures/manifest.json" },
+    "canonicalManifestRegistration": { "const": "not-registered" },
+    "canonicalPromotionClaimed": { "const": false },
+    "canonicalPathMutationFamilyComplete": { "const": false },
+    "representationSelectionEstablished": { "const": false },
+    "piecewisePolynomialBasisFrozen": { "const": false },
+    "polynomialCoefficientOrderingEstablished": { "const": false },
+    "polynomialCoefficientSemanticsEstablished": { "const": false },
+    "polynomialCoefficientIntervalAssociationEstablished": { "const": false },
+    "polynomialDerivativeSemanticsEstablished": { "const": false },
+    "polynomialDerivativeUnitsEstablished": { "const": false },
+    "piecewisePolynomialEndpointInferenceIncluded": { "const": false },
+    "pathRepresentationCompletenessEstablished": { "const": false },
+    "creaseMapCompletenessEstablished": { "const": false },
+    "physicalAngleScheduleEstablished": { "const": false },
+    "radianConventionEstablished": { "const": false },
+    "physicalAngleBoundsEstablished": { "const": false },
+    "conservativeDerivativeBoundsEstablished": { "const": false },
+    "kinematicFeasibilityEstablished": { "const": false },
+    "physicalPathContinuityEstablished": { "const": false },
+    "endpointContinuityEstablished": { "const": false },
+    "rigidityEstablished": { "const": false },
+    "faceIsometryEstablished": { "const": false },
+    "hingeGeometryEstablished": { "const": false },
+    "certificateHashVerificationIncluded": { "const": false },
+    "cryptographicAuthenticityEstablished": { "const": false },
+    "contactAnalysisIncluded": { "const": false },
+    "continuousCollisionDetectionIncluded": { "const": false },
+    "collisionDetectionIncluded": { "const": false },
+    "collisionFreedomEstablished": { "const": false },
+    "foldabilityEstablished": { "const": false },
+    "supportProfileIncluded": { "const": false },
+    "toleranceProfileIncluded": { "const": false },
+    "scientificVerificationClaimed": { "const": false },
+    "globalM0fGate": { "const": "not-evaluated" },
+    "caseCount": { "const": 1 },
+    "artifactCount": { "const": 3 },
+    "generator": {
+      "const": {
+        "generatorId": "oridesign-neg-path-polynomial-derivative-bounds-candidate-bundle",
+        "generatorVersion": "1.0.0-candidate",
+        "serialization": "stable-json-utf8-lf-v1",
+        "detector": "parseArtifactContractV1",
+        "detectorSourcePath": "m0f/artifacts/contract.ts"
+      }
+    },
+    "provenance": {
+      "const": {
+        "sourceReferenceId": "oridesign-neg-path-polynomial-derivative-bounds-candidate-v1",
+        "sourceKind": "project-authored",
+        "title": "NEG-PATH-MUTATION-POLYNOMIAL-DERIVATIVE-BOUNDS-INVERTED project-authored piecewise-polynomial derivative-bounds lower-upper parser vector",
+        "authors": ["OriDesign contributors"],
+        "redistribution": "allowed",
+        "licenseSpdx": "MIT"
+      }
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1,
+      "prefixItems": [
+        {
+          "const": {
+            "caseIndex": 0,
+            "caseId": "NEG-PATH-MUTATION-POLYNOMIAL-DERIVATIVE-BOUNDS-INVERTED",
+            "controlArtifactId": "control-design",
+            "mutationKind": "replace-polynomial-derivative-lower-bound-with-two-pi",
+            "changedPaths": [
+              "$.pathCandidate.segments[0].motion.derivativeBoundsByCrease[0].bounds[0]"
+            ],
+            "sourceArtifactId": "source-path-polynomial-derivative-bounds",
+            "sourcePath": "path-polynomial-derivative-bounds-inverted.json",
+            "expectedOutcome": "rejected",
+            "expectedIssues": [
+              {
+                "path": "$.pathCandidate.segments[0].motion.derivativeBoundsByCrease[0].bounds",
+                "code": "invalid-bounds"
+              }
+            ]
+          }
+        }
+      ],
+      "items": false
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "prefixItems": [
+        { "$ref": "#/$defs/readmeArtifact" },
+        { "$ref": "#/$defs/controlArtifact" },
+        { "$ref": "#/$defs/sourceArtifact" }
+      ],
+      "items": false
+    }
+  },
+  "$defs": {
+    "artifactBase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifactId",
+        "role",
+        "path",
+        "mediaType",
+        "sha256",
+        "licenseSpdx",
+        "provenance"
+      ],
+      "properties": {
+        "artifactId": {},
+        "role": {},
+        "path": {},
+        "mediaType": {},
+        "sha256": {},
+        "licenseSpdx": {},
+        "provenance": {}
+      }
+    },
+    "readmeArtifact": {
+      "allOf": [
+        { "$ref": "#/$defs/artifactBase" },
+        {
+          "type": "object",
+          "properties": {
+            "artifactId": { "const": "bundle-readme" },
+            "role": { "const": "readme" },
+            "path": { "const": "README.md" },
+            "mediaType": { "const": "text/markdown; charset=utf-8" },
+            "sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+            "licenseSpdx": { "const": "MIT" },
+            "provenance": {
+              "const": {
+                "sourceReferenceId": "oridesign-neg-path-polynomial-derivative-bounds-candidate-v1",
+                "sourceUse": "project-authored",
+                "derivation": "authored",
+                "dependsOnArtifactIds": []
+              }
+            }
+          }
+        }
+      ]
+    },
+    "controlArtifact": {
+      "allOf": [
+        { "$ref": "#/$defs/artifactBase" },
+        {
+          "type": "object",
+          "properties": {
+            "artifactId": { "const": "control-design" },
+            "role": { "const": "accepted-control" },
+            "path": { "const": "control-design.json" },
+            "mediaType": { "const": "application/json" },
+            "sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+            "licenseSpdx": { "const": "MIT" },
+            "provenance": {
+              "const": {
+                "sourceReferenceId": "oridesign-neg-path-polynomial-derivative-bounds-candidate-v1",
+                "sourceUse": "project-authored",
+                "derivation": "authored",
+                "dependsOnArtifactIds": []
+              }
+            }
+          }
+        }
+      ]
+    },
+    "sourceArtifact": {
+      "allOf": [
+        { "$ref": "#/$defs/artifactBase" },
+        {
+          "type": "object",
+          "properties": {
+            "artifactId": { "const": "source-path-polynomial-derivative-bounds" },
+            "role": { "const": "negative-source" },
+            "path": { "const": "path-polynomial-derivative-bounds-inverted.json" },
+            "mediaType": { "const": "application/json" },
+            "sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+            "licenseSpdx": { "const": "MIT" },
+            "provenance": {
+              "const": {
+                "sourceReferenceId": "oridesign-neg-path-polynomial-derivative-bounds-candidate-v1",
+                "sourceUse": "project-authored",
+                "derivation": "mutated-from-control",
+                "dependsOnArtifactIds": ["control-design"]
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

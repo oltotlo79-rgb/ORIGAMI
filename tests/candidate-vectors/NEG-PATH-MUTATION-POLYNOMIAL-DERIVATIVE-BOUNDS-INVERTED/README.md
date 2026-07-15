@@ -1,0 +1,9 @@
+# NEG-PATH-MUTATION-POLYNOMIAL-DERIVATIVE-BOUNDS-INVERTED exact-negative candidate vector
+
+This closed directory contains one saved project-authored single-segment piecewise-polynomial design control and one exact-negative mutation for the current `parseArtifactContractV1` derivative-bound lower/upper ordering check. The accepted control declares degree 1, the sole `e-hinge` coefficient row `[0,pi]`, and derivative bounds `[0,pi]`. The mutation changes only the lower derivative bound from zero to `2*pi`, making it greater than the unchanged upper bound. It produces exactly the sole `invalid-bounds` issue and no `motion-map-mismatch` or other path secondary issue.
+
+The bundle is intentionally outside `tests/fixtures/manifest.json`; `NEG-PATH-MUTATION-POLYNOMIAL-DERIVATIVE-BOUNDS-INVERTED` is not canonically registered or promoted. Exact-negative means only that the current artifact-contract parser rejects these saved bytes with the complete ordered issue signature fixed in the ledger.
+
+This replay establishes only that the declared derivative-bound lower value must not exceed its declared upper value. It does not establish derivative semantics, conservative derivative bounds, derivative units, select a path representation, freeze a polynomial basis, establish coefficient ordering or semantics, infer polynomial endpoints, establish physical angle or path semantics, prove crease-map completeness, rigidity, face isometry, hinge geometry, contact analysis, CCD, collision detection or freedom, foldability, certificate-hash verification, cryptographic authenticity, canonical path-mutation-family completeness, SupportProfile, ToleranceProfile, scientific verification, or M0F GO. Local SHA-256 rows detect saved-byte drift only and are not signatures.
+
+Verify with `npx tsx m0f/neg-path-polynomial-derivative-bounds-candidate-bundle-cli.ts --verify`. Regenerate with `npx tsx m0f/neg-path-polynomial-derivative-bounds-candidate-bundle-cli.ts --write`.

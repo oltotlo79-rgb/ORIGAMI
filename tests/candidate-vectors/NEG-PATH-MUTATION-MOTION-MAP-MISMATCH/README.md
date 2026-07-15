@@ -1,0 +1,9 @@
+# NEG-PATH-MUTATION-MOTION-MAP-MISMATCH exact-negative candidate vector
+
+This closed directory contains one saved project-authored three-face/two-hinge artifact-contract control and one exact-negative mutation for the current `parseArtifactContractV1` bounded-interpolation motion-map pairing check. Both accepted-control segments declare two angle rows and two interval-bound rows. The mutation removes only the `e-hinge-far` bound row from the first segment, leaving its two angle rows paired with one bound row. The first segment is locally invalid, so no adjacent endpoint-map secondary issue is inferred.
+
+The bundle is intentionally outside `tests/fixtures/manifest.json`; `NEG-PATH-MUTATION-MOTION-MAP-MISMATCH` is not canonically registered or promoted. Exact-negative means only that the current artifact-contract parser rejects these saved bytes with the complete ordered issue signature fixed in the ledger.
+
+This replay establishes only equality of the edge-ID sets in the declared bounded-interpolation angle and interval-bound row arrays. It is not a physical hinge-drift detector and does not establish crease-map completeness against the mesh, physical or conservative angle bounds, physical or endpoint path continuity, piecewise-polynomial endpoint semantics, rigidity, face isometry, hinge geometry, contact analysis, CCD, collision detection or freedom, foldability, certificate-hash verification, cryptographic authenticity, canonical path-mutation-family completeness, SupportProfile, ToleranceProfile, scientific verification, or M0F GO. Local SHA-256 rows detect saved-byte drift only and are not signatures.
+
+Verify with `npx tsx m0f/neg-path-motion-map-mismatch-candidate-bundle-cli.ts --verify`. Regenerate with `npx tsx m0f/neg-path-motion-map-mismatch-candidate-bundle-cli.ts --write`.

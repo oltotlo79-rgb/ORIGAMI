@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 1,
+  "schemaId": "https://oridesign.local/schemas/m0f/runtime-limits-v1.schema.json",
+  "profileId": "oridesign-runtime-limits-v1-candidates",
+  "status": "candidate",
+  "profileHash": null,
+  "limits": {
+    "maxProjectFileBytes": {
+      "unit": "bytes",
+      "candidates": [16777216, 33554432, 67108864],
+      "selected": null,
+      "measurementStatus": "pending",
+      "measurementRef": null,
+      "rejectionReasonCode": "runtime.project-file-too-large"
+    },
+    "maxFoldFileBytes": {
+      "unit": "bytes",
+      "candidates": [8388608, 16777216, 33554432],
+      "selected": null,
+      "measurementStatus": "pending",
+      "measurementRef": null,
+      "rejectionReasonCode": "runtime.fold-file-too-large"
+    },
+    "maxEvidenceBlobBytes": {
+      "unit": "bytes",
+      "candidates": [8388608, 33554432, 67108864],
+      "selected": null,
+      "measurementStatus": "pending",
+      "measurementRef": null,
+      "rejectionReasonCode": "runtime.evidence-blob-too-large"
+    },
+    "maxVertices": {
+      "unit": "count",
+      "candidates": [10000, 50000, 100000],
+      "selected": null,
+      "measurementStatus": "pending",
+      "measurementRef": null,
+      "rejectionReasonCode": "runtime.too-many-vertices"
+    },
+    "maxEdges": {
+      "unit": "count",
+      "candidates": [20000, 100000, 200000],
+      "selected": null,
+      "measurementStatus": "pending",
+      "measurementRef": null,
+      "rejectionReasonCode": "runtime.too-many-edges"
+    },
+    "maxFaces": {
+      "unit": "count",
+      "candidates": [10000, 50000, 100000],
+      "selected": null,
+      "measurementStatus": "pending",
+      "measurementRef": null,
+      "rejectionReasonCode": "runtime.too-many-faces"
+    },
+    "maxStringCodeUnits": {
+      "unit": "code-units",
+      "candidates": [1048576, 4194304, 16777216],
+      "selected": null,
+      "measurementStatus": "pending",
+      "measurementRef": null,
+      "rejectionReasonCode": "runtime.string-too-long"
+    },
+    "maxJsonDepth": {
+      "unit": "levels",
+      "candidates": [32, 64, 128],
+      "selected": null,
+      "measurementStatus": "pending",
+      "measurementRef": null,
+      "rejectionReasonCode": "runtime.json-too-deep"
+    },
+    "maxGridColumns": {
+      "unit": "count",
+      "candidates": [64, 128, 256, 512],
+      "selected": null,
+      "measurementStatus": "pending",
+      "measurementRef": null,
+      "rejectionReasonCode": "runtime.grid-columns-too-large"
+    },
+    "maxGridRows": {
+      "unit": "count",
+      "candidates": [64, 128, 256, 512],
+      "selected": null,
+      "measurementStatus": "pending",
+      "measurementRef": null,
+      "rejectionReasonCode": "runtime.grid-rows-too-large"
+    },
+    "maxHistoryBytes": {
+      "unit": "bytes",
+      "candidates": [16777216, 67108864, 134217728],
+      "selected": null,
+      "measurementStatus": "pending",
+      "measurementRef": null,
+      "rejectionReasonCode": "runtime.history-budget-exceeded"
+    },
+    "maxWorkerMessageBytes": {
+      "unit": "bytes",
+      "candidates": [4194304, 16777216, 33554432],
+      "selected": null,
+      "measurementStatus": "pending",
+      "measurementRef": null,
+      "rejectionReasonCode": "runtime.worker-message-too-large"
+    },
+    "maxWorkerCancelResponseMs": {
+      "unit": "milliseconds",
+      "candidates": [100, 250, 500],
+      "selected": null,
+      "measurementStatus": "pending",
+      "measurementRef": null,
+      "rejectionReasonCode": "runtime.worker-cancel-too-slow"
+    },
+    "maxInputDecimalDigits": {
+      "unit": "decimal-digits",
+      "candidates": [12, 15, 17],
+      "selected": null,
+      "measurementStatus": "pending",
+      "measurementRef": null,
+      "rejectionReasonCode": "runtime.input-has-too-many-digits"
+    },
+    "minNormalizedFeature": {
+      "unit": "normalized-length",
+      "candidates": [1e-10, 1e-8, 0.000001],
+      "selected": null,
+      "measurementStatus": "pending",
+      "measurementRef": null,
+      "rejectionReasonCode": "runtime.feature-too-small"
+    },
+    "maxNormalizedLengthRatio": {
+      "unit": "ratio",
+      "candidates": [1000, 10000, 100000],
+      "selected": null,
+      "measurementStatus": "pending",
+      "measurementRef": null,
+      "rejectionReasonCode": "runtime.length-ratio-too-large"
+    },
+    "maxPaperAspectRatio": {
+      "unit": "ratio",
+      "candidates": [4, 10, 20],
+      "selected": null,
+      "measurementStatus": "pending",
+      "measurementRef": null,
+      "rejectionReasonCode": "runtime.paper-aspect-ratio-too-large"
+    },
+    "maxTreeDegree": {
+      "unit": "count",
+      "candidates": [6, 10, 20],
+      "selected": null,
+      "measurementStatus": "pending",
+      "measurementRef": null,
+      "rejectionReasonCode": "runtime.tree-degree-too-large"
+    }
+  }
+}

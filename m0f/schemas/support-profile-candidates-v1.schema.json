@@ -1,0 +1,305 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oridesign.local/schemas/m0f/support-profile-candidates-v1.schema.json",
+  "title": "OriDesign M0F support-profile candidates v1",
+  "description": "Candidate-only workflow boundaries. This schema cannot express a supported-input, frozen-profile, measurement, selection, evidence, or hash claim.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "schemaId", "catalogId", "status", "profiles"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "schemaId": {
+      "const": "https://oridesign.local/schemas/m0f/support-profile-candidates-v1.schema.json"
+    },
+    "catalogId": { "const": "oridesign-support-profile-v1-candidates" },
+    "status": { "const": "candidate" },
+    "profiles": {
+      "type": "array",
+      "prefixItems": [
+        { "$ref": "#/$defs/treeMethodProfile" },
+        { "$ref": "#/$defs/boxPleatingProfile" },
+        { "$ref": "#/$defs/foldVerificationProfile" }
+      ],
+      "items": false,
+      "minItems": 3,
+      "maxItems": 3
+    }
+  },
+  "$defs": {
+    "numericSelection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidates", "selected"],
+      "properties": {
+        "candidates": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "number", "exclusiveMinimum": 0 }
+        },
+        "selected": { "type": "null" }
+      }
+    },
+    "policySelection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidates", "selected"],
+      "properties": {
+        "candidates": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9.-]{0,127}$"
+          }
+        },
+        "selected": { "type": "null" }
+      }
+    },
+    "pendingEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "ref"],
+      "properties": {
+        "status": { "const": "pending" },
+        "ref": { "type": "null" }
+      }
+    },
+    "treeMethodProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profileId",
+        "kind",
+        "method",
+        "profileHash",
+        "constraintsSchemaId",
+        "constraints",
+        "evidence"
+      ],
+      "properties": {
+        "profileId": { "const": "oridesign-generation-tree-method-v1-candidates" },
+        "kind": { "const": "design-generation" },
+        "method": { "const": "treeMethod" },
+        "profileHash": { "type": "null" },
+        "constraintsSchemaId": {
+          "const": "https://oridesign.local/schemas/m0f/support-profile-tree-method-constraints-v1"
+        },
+        "constraints": { "$ref": "#/$defs/treeMethodConstraints" },
+        "evidence": { "$ref": "#/$defs/pendingEvidence" }
+      }
+    },
+    "boxPleatingProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profileId",
+        "kind",
+        "method",
+        "profileHash",
+        "constraintsSchemaId",
+        "constraints",
+        "evidence"
+      ],
+      "properties": {
+        "profileId": { "const": "oridesign-generation-box-pleating-v1-candidates" },
+        "kind": { "const": "design-generation" },
+        "method": { "const": "boxPleating" },
+        "profileHash": { "type": "null" },
+        "constraintsSchemaId": {
+          "const": "https://oridesign.local/schemas/m0f/support-profile-box-pleating-constraints-v1"
+        },
+        "constraints": { "$ref": "#/$defs/boxPleatingConstraints" },
+        "evidence": { "$ref": "#/$defs/pendingEvidence" }
+      }
+    },
+    "foldVerificationProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profileId",
+        "kind",
+        "profileHash",
+        "constraintsSchemaId",
+        "constraints",
+        "evidence"
+      ],
+      "properties": {
+        "profileId": { "const": "oridesign-fold-verification-v1-candidates" },
+        "kind": { "const": "fold-verification" },
+        "profileHash": { "type": "null" },
+        "constraintsSchemaId": {
+          "const": "https://oridesign.local/schemas/m0f/support-profile-fold-verification-constraints-v1"
+        },
+        "constraints": { "$ref": "#/$defs/foldVerificationConstraints" },
+        "evidence": { "$ref": "#/$defs/pendingEvidence" }
+      }
+    },
+    "treeMethodConstraints": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "leafCountMinimum",
+        "leafCountMaximum",
+        "maxTreeDegree",
+        "maxTreeEdges",
+        "degreeSequencePolicy",
+        "cyclicOrderPolicy",
+        "maxInputDecimalDigits",
+        "minNormalizedBranchLength",
+        "maxNormalizedLengthRatio",
+        "maxWidthToLengthRatio",
+        "branchWidthAccommodationPolicy",
+        "maxPaperAspectRatio",
+        "minNormalizedPaperFeature",
+        "minNormalizedBoundaryMargin",
+        "packingCondition",
+        "moleculeFamily",
+        "minNormalizedSingularityDistance",
+        "pathCompositionPolicy",
+        "maxPathDegreesOfFreedom",
+        "maxClosedLoopConditionNumber",
+        "layerPatternPolicy",
+        "terminationModel"
+      ],
+      "properties": {
+        "leafCountMinimum": { "$ref": "#/$defs/numericSelection" },
+        "leafCountMaximum": { "$ref": "#/$defs/numericSelection" },
+        "maxTreeDegree": { "$ref": "#/$defs/numericSelection" },
+        "maxTreeEdges": { "$ref": "#/$defs/numericSelection" },
+        "degreeSequencePolicy": { "$ref": "#/$defs/policySelection" },
+        "cyclicOrderPolicy": { "$ref": "#/$defs/policySelection" },
+        "maxInputDecimalDigits": { "$ref": "#/$defs/numericSelection" },
+        "minNormalizedBranchLength": { "$ref": "#/$defs/numericSelection" },
+        "maxNormalizedLengthRatio": { "$ref": "#/$defs/numericSelection" },
+        "maxWidthToLengthRatio": { "$ref": "#/$defs/numericSelection" },
+        "branchWidthAccommodationPolicy": { "$ref": "#/$defs/policySelection" },
+        "maxPaperAspectRatio": { "$ref": "#/$defs/numericSelection" },
+        "minNormalizedPaperFeature": { "$ref": "#/$defs/numericSelection" },
+        "minNormalizedBoundaryMargin": { "$ref": "#/$defs/numericSelection" },
+        "packingCondition": { "$ref": "#/$defs/policySelection" },
+        "moleculeFamily": { "$ref": "#/$defs/policySelection" },
+        "minNormalizedSingularityDistance": { "$ref": "#/$defs/numericSelection" },
+        "pathCompositionPolicy": { "$ref": "#/$defs/policySelection" },
+        "maxPathDegreesOfFreedom": { "$ref": "#/$defs/numericSelection" },
+        "maxClosedLoopConditionNumber": { "$ref": "#/$defs/numericSelection" },
+        "layerPatternPolicy": { "$ref": "#/$defs/policySelection" },
+        "terminationModel": { "$ref": "#/$defs/policySelection" }
+      }
+    },
+    "boxPleatingConstraints": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "leafCountMinimum",
+        "leafCountMaximum",
+        "maxTreeDegree",
+        "maxTreeEdges",
+        "degreeSequencePolicy",
+        "cyclicOrderPolicy",
+        "maxInputDecimalDigits",
+        "minNormalizedBranchLength",
+        "maxNormalizedLengthRatio",
+        "maxWidthToLengthRatio",
+        "branchWidthAccommodationPolicy",
+        "maxPaperAspectRatio",
+        "minNormalizedPaperFeature",
+        "minNormalizedBoundaryMargin",
+        "maxGridColumns",
+        "maxGridRows",
+        "cellGeometryPolicy",
+        "gridAspectPolicy",
+        "directionFamilyPolicy",
+        "maxNormalizedQuantizationError",
+        "junctionGadgetFamily",
+        "elevationRoutingPolicy",
+        "pathCompositionPolicy",
+        "maxPathDegreesOfFreedom",
+        "maxClosedLoopConditionNumber",
+        "layerPatternPolicy",
+        "terminationModel"
+      ],
+      "properties": {
+        "leafCountMinimum": { "$ref": "#/$defs/numericSelection" },
+        "leafCountMaximum": { "$ref": "#/$defs/numericSelection" },
+        "maxTreeDegree": { "$ref": "#/$defs/numericSelection" },
+        "maxTreeEdges": { "$ref": "#/$defs/numericSelection" },
+        "degreeSequencePolicy": { "$ref": "#/$defs/policySelection" },
+        "cyclicOrderPolicy": { "$ref": "#/$defs/policySelection" },
+        "maxInputDecimalDigits": { "$ref": "#/$defs/numericSelection" },
+        "minNormalizedBranchLength": { "$ref": "#/$defs/numericSelection" },
+        "maxNormalizedLengthRatio": { "$ref": "#/$defs/numericSelection" },
+        "maxWidthToLengthRatio": { "$ref": "#/$defs/numericSelection" },
+        "branchWidthAccommodationPolicy": { "$ref": "#/$defs/policySelection" },
+        "maxPaperAspectRatio": { "$ref": "#/$defs/numericSelection" },
+        "minNormalizedPaperFeature": { "$ref": "#/$defs/numericSelection" },
+        "minNormalizedBoundaryMargin": { "$ref": "#/$defs/numericSelection" },
+        "maxGridColumns": { "$ref": "#/$defs/numericSelection" },
+        "maxGridRows": { "$ref": "#/$defs/numericSelection" },
+        "cellGeometryPolicy": { "$ref": "#/$defs/policySelection" },
+        "gridAspectPolicy": { "$ref": "#/$defs/policySelection" },
+        "directionFamilyPolicy": { "$ref": "#/$defs/policySelection" },
+        "maxNormalizedQuantizationError": { "$ref": "#/$defs/numericSelection" },
+        "junctionGadgetFamily": { "$ref": "#/$defs/policySelection" },
+        "elevationRoutingPolicy": { "$ref": "#/$defs/policySelection" },
+        "pathCompositionPolicy": { "$ref": "#/$defs/policySelection" },
+        "maxPathDegreesOfFreedom": { "$ref": "#/$defs/numericSelection" },
+        "maxClosedLoopConditionNumber": { "$ref": "#/$defs/numericSelection" },
+        "layerPatternPolicy": { "$ref": "#/$defs/policySelection" },
+        "terminationModel": { "$ref": "#/$defs/policySelection" }
+      }
+    },
+    "foldVerificationConstraints": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "formatVersionPolicy",
+        "dimensionPolicy",
+        "fileFramesPolicy",
+        "maxVertices",
+        "maxEdges",
+        "maxFaces",
+        "assignmentPolicy",
+        "facesPolicy",
+        "planarityPolicy",
+        "manifoldPolicy",
+        "minNormalizedFeature",
+        "maxPaperAspectRatio",
+        "maxVertexDegree",
+        "faceAdjacencyPolicy",
+        "treeDependencyPolicy",
+        "targetPolicy",
+        "pathCompositionPolicy",
+        "maxPathDegreesOfFreedom",
+        "maxClosedLoopConditionNumber",
+        "layerPatternPolicy",
+        "terminationModel"
+      ],
+      "properties": {
+        "formatVersionPolicy": { "$ref": "#/$defs/policySelection" },
+        "dimensionPolicy": { "$ref": "#/$defs/policySelection" },
+        "fileFramesPolicy": { "$ref": "#/$defs/policySelection" },
+        "maxVertices": { "$ref": "#/$defs/numericSelection" },
+        "maxEdges": { "$ref": "#/$defs/numericSelection" },
+        "maxFaces": { "$ref": "#/$defs/numericSelection" },
+        "assignmentPolicy": { "$ref": "#/$defs/policySelection" },
+        "facesPolicy": { "$ref": "#/$defs/policySelection" },
+        "planarityPolicy": { "$ref": "#/$defs/policySelection" },
+        "manifoldPolicy": { "$ref": "#/$defs/policySelection" },
+        "minNormalizedFeature": { "$ref": "#/$defs/numericSelection" },
+        "maxPaperAspectRatio": { "$ref": "#/$defs/numericSelection" },
+        "maxVertexDegree": { "$ref": "#/$defs/numericSelection" },
+        "faceAdjacencyPolicy": { "$ref": "#/$defs/policySelection" },
+        "treeDependencyPolicy": { "$ref": "#/$defs/policySelection" },
+        "targetPolicy": { "$ref": "#/$defs/policySelection" },
+        "pathCompositionPolicy": { "$ref": "#/$defs/policySelection" },
+        "maxPathDegreesOfFreedom": { "$ref": "#/$defs/numericSelection" },
+        "maxClosedLoopConditionNumber": { "$ref": "#/$defs/numericSelection" },
+        "layerPatternPolicy": { "$ref": "#/$defs/policySelection" },
+        "terminationModel": { "$ref": "#/$defs/policySelection" }
+      }
+    }
+  },
+  "$comment": "The runtime parser additionally fixes integer-vs-real candidates, policy vocabularies, canonical candidate order, and rejects frozen status fail-closed."
+}

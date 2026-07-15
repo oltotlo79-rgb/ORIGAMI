@@ -1,0 +1,627 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oridesign.local/schemas/m0f/artifact-contract-v1.schema.json",
+  "title": "OriDesign M0F artifact contract v1",
+  "description": "Candidate-only structural contract for M0F design and fold-verification artifacts. It is not a scientific certificate.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "schemaId",
+    "contractId",
+    "conventionsId",
+    "contractStatus",
+    "scientificClaim",
+    "input",
+    "creaseMesh",
+    "target",
+    "pathCandidate",
+    "overlapRegions",
+    "contacts",
+    "layerEvents"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "schemaId": { "const": "https://oridesign.local/schemas/m0f/artifact-contract-v1.schema.json" },
+    "contractId": { "$ref": "#/$defs/id" },
+    "conventionsId": { "const": "oridesign-m0f-conventions-v1" },
+    "contractStatus": { "const": "candidate" },
+    "scientificClaim": { "const": false },
+    "input": {
+      "oneOf": [{ "$ref": "#/$defs/designInput" }, { "$ref": "#/$defs/foldInput" }]
+    },
+    "creaseMesh": { "$ref": "#/$defs/creaseMesh" },
+    "target": {
+      "oneOf": [{ "$ref": "#/$defs/flatFoldedTarget" }, { "$ref": "#/$defs/uniaxialTreeTarget" }]
+    },
+    "pathCandidate": { "$ref": "#/$defs/pathCandidate" },
+    "overlapRegions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/overlapRegion" }
+    },
+    "contacts": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/contact" }
+    },
+    "layerEvents": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/layerEvent" }
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9._:-]{0,127}$"
+    },
+    "finiteNumber": {
+      "type": "number"
+    },
+    "number2": {
+      "type": "array",
+      "prefixItems": [{ "$ref": "#/$defs/finiteNumber" }, { "$ref": "#/$defs/finiteNumber" }],
+      "items": false,
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "number3": {
+      "type": "array",
+      "prefixItems": [
+        { "$ref": "#/$defs/finiteNumber" },
+        { "$ref": "#/$defs/finiteNumber" },
+        { "$ref": "#/$defs/finiteNumber" }
+      ],
+      "items": false,
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "number4": {
+      "type": "array",
+      "prefixItems": [
+        { "$ref": "#/$defs/finiteNumber" },
+        { "$ref": "#/$defs/finiteNumber" },
+        { "$ref": "#/$defs/finiteNumber" },
+        { "$ref": "#/$defs/finiteNumber" }
+      ],
+      "items": false,
+      "minItems": 4,
+      "maxItems": 4
+    },
+    "idPair": {
+      "type": "array",
+      "prefixItems": [{ "$ref": "#/$defs/id" }, { "$ref": "#/$defs/id" }],
+      "items": false,
+      "minItems": 2,
+      "maxItems": 2,
+      "uniqueItems": true
+    },
+    "indexPair": {
+      "type": "array",
+      "prefixItems": [
+        { "type": "integer", "minimum": 0 },
+        { "type": "integer", "minimum": 0 }
+      ],
+      "items": false,
+      "minItems": 2,
+      "maxItems": 2,
+      "uniqueItems": true
+    },
+    "interval": {
+      "$ref": "#/$defs/number2"
+    },
+    "rotationEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["nodeId", "edgeIds"],
+      "properties": {
+        "nodeId": { "$ref": "#/$defs/id" },
+        "edgeIds": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/id" }
+        }
+      }
+    },
+    "treeNode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "x", "y"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "x": { "$ref": "#/$defs/finiteNumber" },
+        "y": { "$ref": "#/$defs/finiteNumber" }
+      }
+    },
+    "treeEdge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "from", "to", "length", "width"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "from": { "$ref": "#/$defs/id" },
+        "to": { "$ref": "#/$defs/id" },
+        "length": { "type": "number", "exclusiveMinimum": 0 },
+        "width": { "type": "number", "minimum": 0 }
+      }
+    },
+    "tree": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["nodes", "edges", "rotation"],
+      "properties": {
+        "nodes": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "$ref": "#/$defs/treeNode" }
+        },
+        "edges": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/treeEdge" }
+        },
+        "rotation": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "$ref": "#/$defs/rotationEntry" }
+        }
+      },
+      "$comment": "Node/edge reference integrity, connectivity, acyclicity, leaf count, and rotation completeness are runtime checks."
+    },
+    "paper": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["width", "height"],
+      "properties": {
+        "width": { "type": "number", "exclusiveMinimum": 0 },
+        "height": { "type": "number", "exclusiveMinimum": 0 }
+      },
+      "$comment": "The runtime parser checks the paper-normalization convention."
+    },
+    "grid": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["columns", "rows"],
+      "properties": {
+        "columns": { "type": "integer", "minimum": 1 },
+        "rows": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "designInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "method", "paper", "grid", "tree"],
+      "properties": {
+        "kind": { "const": "design-generation" },
+        "method": { "enum": ["treeMethod", "boxPleating"] },
+        "paper": { "$ref": "#/$defs/paper" },
+        "grid": {
+          "anyOf": [{ "type": "null" }, { "$ref": "#/$defs/grid" }]
+        },
+        "tree": { "$ref": "#/$defs/tree" }
+      }
+    },
+    "foldInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "specVersion",
+        "frameCount",
+        "frameClasses",
+        "verticesCoords",
+        "edgesVertices",
+        "edgesAssignment",
+        "facesVertices"
+      ],
+      "properties": {
+        "kind": { "const": "fold-verification" },
+        "specVersion": { "enum": ["1.1", "1.2"] },
+        "frameCount": { "const": 1 },
+        "frameClasses": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "enum": ["creasePattern"] }
+        },
+        "verticesCoords": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "$ref": "#/$defs/number2" }
+        },
+        "edgesVertices": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/indexPair" }
+        },
+        "edgesAssignment": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "enum": ["M", "V", "B", "F", "U"] }
+        },
+        "facesVertices": {
+          "anyOf": [
+            { "type": "null" },
+            {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "array",
+                "minItems": 3,
+                "uniqueItems": true,
+                "items": { "type": "integer", "minimum": 0 }
+              }
+            }
+          ]
+        }
+      },
+      "$comment": "Parallel-array lengths and all index bounds are runtime checks."
+    },
+    "meshVertex": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "x", "y"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "x": { "$ref": "#/$defs/finiteNumber" },
+        "y": { "$ref": "#/$defs/finiteNumber" }
+      }
+    },
+    "meshEdge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "vertices", "assignment", "role", "sourceTreeEdgeIds", "generationKey"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "vertices": { "$ref": "#/$defs/idPair" },
+        "assignment": { "enum": ["M", "V", "B", "F", "U"] },
+        "role": {
+          "enum": ["boundary", "axial", "axialN", "ridge", "hinge", "gusset", "pleat", "flat"]
+        },
+        "sourceTreeEdgeIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/id" }
+        },
+        "generationKey": { "type": "string", "minLength": 1, "maxLength": 256 }
+      }
+    },
+    "meshFace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "vertices"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "vertices": {
+          "type": "array",
+          "minItems": 3,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/id" }
+        }
+      }
+    },
+    "meshJoinEdge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "vertices", "purpose", "incidentFaceIds"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "vertices": { "$ref": "#/$defs/idPair" },
+        "purpose": { "enum": ["triangulation", "overlap-subdivision"] },
+        "incidentFaceIds": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/id" }
+        }
+      }
+    },
+    "creaseMesh": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["vertices", "edges", "faces", "meshJoinEdges"],
+      "properties": {
+        "vertices": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "$ref": "#/$defs/meshVertex" }
+        },
+        "edges": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/meshEdge" }
+        },
+        "faces": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/meshFace" }
+        },
+        "meshJoinEdges": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/meshJoinEdge" }
+        }
+      },
+      "$comment": "Stable-ID uniqueness, references, incidence, exact area, and winding are runtime checks."
+    },
+    "faceTransform": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["faceId", "quaternion", "translation"],
+      "properties": {
+        "faceId": { "$ref": "#/$defs/id" },
+        "quaternion": { "$ref": "#/$defs/number4" },
+        "translation": { "$ref": "#/$defs/number3" }
+      }
+    },
+    "goalFaceOrder": {
+      "type": "array",
+      "prefixItems": [{ "$ref": "#/$defs/id" }, { "$ref": "#/$defs/id" }, { "enum": [-1, 1] }],
+      "items": false,
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "resolvedAssignment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["edgeId", "assignment"],
+      "properties": {
+        "edgeId": { "$ref": "#/$defs/id" },
+        "assignment": { "enum": ["M", "V", "F"] }
+      }
+    },
+    "flatFoldedTarget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "kind",
+        "faceTransforms",
+        "goalFaceOrders",
+        "overlapRegionIds",
+        "assignmentPolicy",
+        "resolvedInteriorAssignments"
+      ],
+      "properties": {
+        "schemaVersion": { "const": 1 },
+        "kind": { "const": "flat-folded-cp" },
+        "faceTransforms": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/faceTransform" }
+        },
+        "goalFaceOrders": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/goalFaceOrder" }
+        },
+        "overlapRegionIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/id" }
+        },
+        "assignmentPolicy": { "const": "respect-mv-solve-u" },
+        "resolvedInteriorAssignments": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/resolvedAssignment" }
+        }
+      }
+    },
+    "branchMeasurement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["treeEdgeId", "axisEndpoints", "effectiveLength", "effectiveWidth"],
+      "properties": {
+        "treeEdgeId": { "$ref": "#/$defs/id" },
+        "axisEndpoints": {
+          "type": "array",
+          "prefixItems": [{ "$ref": "#/$defs/number2" }, { "$ref": "#/$defs/number2" }],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "effectiveLength": { "type": "number", "exclusiveMinimum": 0 },
+        "effectiveWidth": { "type": "number", "minimum": 0 }
+      }
+    },
+    "uniaxialTreeTarget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "kind",
+        "faceTransforms",
+        "goalFaceOrders",
+        "overlapRegionIds",
+        "branchMeasurements",
+        "rotation"
+      ],
+      "properties": {
+        "schemaVersion": { "const": 1 },
+        "kind": { "const": "uniaxial-tree-base" },
+        "faceTransforms": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/faceTransform" }
+        },
+        "goalFaceOrders": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/goalFaceOrder" }
+        },
+        "overlapRegionIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/id" }
+        },
+        "branchMeasurements": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/branchMeasurement" }
+        },
+        "rotation": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "$ref": "#/$defs/rotationEntry" }
+        }
+      }
+    },
+    "creaseAngles": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["edgeId", "angles"],
+      "properties": {
+        "edgeId": { "$ref": "#/$defs/id" },
+        "angles": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "$ref": "#/$defs/finiteNumber" }
+        }
+      }
+    },
+    "intervalAngleBounds": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["edgeId", "bounds"],
+      "properties": {
+        "edgeId": { "$ref": "#/$defs/id" },
+        "bounds": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/number2" }
+        }
+      }
+    },
+    "boundedInterpolation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "knotTimes", "anglesByCrease", "intervalAngleBoundsByCrease"],
+      "properties": {
+        "kind": { "const": "bounded-interpolation" },
+        "knotTimes": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "$ref": "#/$defs/finiteNumber" }
+        },
+        "anglesByCrease": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/creaseAngles" }
+        },
+        "intervalAngleBoundsByCrease": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/intervalAngleBounds" }
+        }
+      }
+    },
+    "creaseCoefficients": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["edgeId", "coefficients"],
+      "properties": {
+        "edgeId": { "$ref": "#/$defs/id" },
+        "coefficients": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "$ref": "#/$defs/finiteNumber" }
+          }
+        }
+      }
+    },
+    "creaseDerivativeBounds": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["edgeId", "bounds"],
+      "properties": {
+        "edgeId": { "$ref": "#/$defs/id" },
+        "bounds": { "$ref": "#/$defs/number2" }
+      }
+    },
+    "piecewisePolynomial": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "degree", "coefficientsByCrease", "derivativeBoundsByCrease"],
+      "properties": {
+        "kind": { "const": "piecewise-polynomial" },
+        "degree": { "type": "integer", "minimum": 1 },
+        "coefficientsByCrease": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/creaseCoefficients" }
+        },
+        "derivativeBoundsByCrease": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/creaseDerivativeBounds" }
+        }
+      }
+    },
+    "pathSegment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["t0", "t1", "motion"],
+      "properties": {
+        "t0": { "$ref": "#/$defs/finiteNumber" },
+        "t1": { "$ref": "#/$defs/finiteNumber" },
+        "motion": {
+          "oneOf": [
+            { "$ref": "#/$defs/boundedInterpolation" },
+            { "$ref": "#/$defs/piecewisePolynomial" }
+          ]
+        }
+      }
+    },
+    "pathCandidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["representationVersion", "representationStatus", "segments"],
+      "properties": {
+        "representationVersion": { "const": 1 },
+        "representationStatus": { "const": "candidate" },
+        "segments": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/pathSegment" }
+        }
+      },
+      "$comment": "Segment ordering, continuity, full [0,1] coverage, knot alignment, and crease references are runtime checks."
+    },
+    "overlapRegion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "faceIds"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "faceIds": { "$ref": "#/$defs/idPair" }
+      }
+    },
+    "contact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "interval", "faceIds", "overlapRegionId", "classification"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "interval": { "$ref": "#/$defs/interval" },
+        "faceIds": { "$ref": "#/$defs/idPair" },
+        "overlapRegionId": {
+          "anyOf": [{ "type": "null" }, { "$ref": "#/$defs/id" }]
+        },
+        "classification": { "enum": ["point", "edge", "tangential-face", "coplanar-overlap"] }
+      }
+    },
+    "layerEvent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "interval", "overlapRegionId", "aboveFaceId", "belowFaceId"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "interval": { "$ref": "#/$defs/interval" },
+        "overlapRegionId": { "$ref": "#/$defs/id" },
+        "aboveFaceId": { "$ref": "#/$defs/id" },
+        "belowFaceId": { "$ref": "#/$defs/id" }
+      }
+    }
+  },
+  "$comment": "Cross-object references, workflow-target compatibility, tree and layer DAGs, time coverage, candidate motion dimensions, and exact geometry are fail-closed runtime checks."
+}
