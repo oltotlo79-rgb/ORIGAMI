@@ -1,7 +1,25 @@
+import { createHash } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { arch, cpus, platform, release, totalmem } from 'node:os';
+import { resolve } from 'node:path';
+
 import { expect, test, type Page } from '@playwright/test';
+
+import {
+  createBrowserWorkerMeasurementArtifactV1,
+  createBrowserWorkerRawMeasurementCandidateV1,
+  verifyBrowserWorkerMeasurementArtifactV1,
+  type BrowserWorkerFlowV1,
+  type BrowserWorkerProjectV1,
+  type BrowserWorkerRawMeasurementCandidateV1,
+  type BrowserWorkerScenarioV1,
+} from '../../m0f/browser-worker-measurement-artifact.js';
+import type { JsonValue } from '../../m0f/stable-json.js';
 
 type Measurement = Readonly<{
   mode: string;
+  inputJson: string;
   beforeByteLength: number;
   afterByteLength: number;
   elapsedMs: number;
@@ -15,6 +33,7 @@ type Measurement = Readonly<{
 
 type GridMeasurement = Readonly<{
   mode: string;
+  inputJson: string;
   elapsedMs: number;
   contractStatus: string;
   scientificClaim: boolean;
@@ -26,6 +45,7 @@ type GridMeasurement = Readonly<{
 
 type PackingMeasurement = Readonly<{
   mode: string;
+  inputJson: string;
   elapsedMs: number;
   workerFactoryCallCount: number;
   contractStatus: string;
@@ -53,6 +73,8 @@ type PackingMeasurement = Readonly<{
 
 type WitnessMeasurement = Readonly<{
   mode: string;
+  inputJson: string;
+  elapsedMs: number;
   searchWorkerFactoryCallCount: number;
   validationWorkerFactoryCallCount: number;
   contractStatus: string;
@@ -79,6 +101,7 @@ type WitnessMeasurement = Readonly<{
 
 type SweptCensusMeasurement = Readonly<{
   mode: string;
+  inputJson: string;
   elapsedMs: number;
   workerFactoryCallCount: number;
   contractStatus: string;
@@ -96,61 +119,268 @@ type SweptCensusMeasurement = Readonly<{
   resultJson: string | null;
 }>;
 
-async function runMeasurement(page: Page, buttonTestId: string): Promise<Measurement> {
-  await page.getByTestId(buttonTestId).click();
-  const output = page.getByTestId('measurement');
-  await expect(output).not.toHaveText('running');
-  return JSON.parse(await output.innerText()) as Measurement;
+type CapturableMeasurement =
+  Measurement | GridMeasurement | PackingMeasurement | WitnessMeasurement | SweptCensusMeasurement;
+
+const BUTTON_CASES = {
+  'run-success': ['fold-document-face-reconstruction', 'success-repeatability'],
+  'run-cancel': ['fold-document-face-reconstruction', 'in-progress-cancellation'],
+  'run-pre-abort': ['fold-document-face-reconstruction', 'pre-abort'],
+  'run-grid-success': ['square-grid-quantization', 'success-repeatability'],
+  'run-grid-cancel': ['square-grid-quantization', 'in-progress-cancellation'],
+  'run-grid-pre-abort': ['square-grid-quantization', 'pre-abort'],
+  'run-packing-success': ['polygon-river-packing-problem', 'success-repeatability'],
+  'run-packing-cancel': ['polygon-river-packing-problem', 'in-progress-cancellation'],
+  'run-packing-pre-abort': ['polygon-river-packing-problem', 'pre-abort'],
+  'run-witness-success': ['euclidean-necessary-witness-two-stage', 'success-repeatability'],
+  'run-witness-cancel': ['euclidean-necessary-witness-two-stage', 'in-progress-cancellation'],
+  'run-witness-pre-abort': ['euclidean-necessary-witness-two-stage', 'pre-abort'],
+  'run-swept-census-success': ['affine-origin-rotation-swept-aabb-census', 'success-repeatability'],
+  'run-swept-census-cancel': [
+    'affine-origin-rotation-swept-aabb-census',
+    'in-progress-cancellation',
+  ],
+  'run-swept-census-pre-abort': ['affine-origin-rotation-swept-aabb-census', 'pre-abort'],
+} as const satisfies Readonly<
+  Record<string, readonly [BrowserWorkerFlowV1, BrowserWorkerScenarioV1]>
+>;
+
+type MeasurementButtonTestId = keyof typeof BUTTON_CASES;
+
+type BrowserNavigatorSnapshot = Readonly<{
+  userAgent: string;
+  navigatorPlatform: string;
+  hardwareConcurrency: number;
+  deviceMemoryGiB: number | null;
+  screen: Readonly<{
+    width: number;
+    height: number;
+    colorDepth: number;
+    devicePixelRatio: number;
+  }>;
+  webGlVendor: string | null;
+  webGlRenderer: string | null;
+}>;
+
+const HARNESS_SOURCE_PATHS = [
+  'playwright.m0f.config.ts',
+  'tests/browser-harness/m0f-worker.html',
+  'tests/browser-harness/m0f-worker.ts',
+  'tests/e2e-m0f/worker-measurement.spec.ts',
+  'm0f/browser-worker-measurement-artifact.ts',
+] as const;
+const records: BrowserWorkerRawMeasurementCandidateV1[] = [];
+const repetitionByCase = new Map<string, number>();
+let activeProject: BrowserWorkerProjectV1 | undefined;
+let runGroupId: string | undefined;
+let browserNavigator: BrowserNavigatorSnapshot | undefined;
+
+function parseProject(value: string): BrowserWorkerProjectV1 {
+  if (value === 'chromium' || value === 'edge' || value === 'firefox') return value;
+  throw new TypeError(`unsupported browser measurement project: ${value}`);
 }
 
-async function runGridMeasurement(page: Page, buttonTestId: string): Promise<GridMeasurement> {
-  await page.getByTestId(buttonTestId).click();
-  const output = page.getByTestId('measurement');
-  await expect(output).not.toHaveText('running');
-  return JSON.parse(await output.innerText()) as GridMeasurement;
+function gitOutput(arguments_: readonly string[]): string | null {
+  try {
+    return execFileSync('git', arguments_, {
+      cwd: process.cwd(),
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'ignore'],
+    }).trim();
+  } catch {
+    return null;
+  }
 }
 
-async function runPackingMeasurement(
+async function hashHarnessSources(): Promise<string> {
+  const hash = createHash('sha256');
+  for (const path of HARNESS_SOURCE_PATHS) {
+    hash.update(path, 'utf8');
+    hash.update('\0', 'utf8');
+    hash.update(await readFile(resolve(process.cwd(), path)));
+    hash.update('\0', 'utf8');
+  }
+  return `sha256:${hash.digest('hex')}`;
+}
+
+function captureMeasurement<T extends CapturableMeasurement>(
+  buttonTestId: MeasurementButtonTestId,
+  startedAt: string,
+  measurement: T,
+): T {
+  if (activeProject === undefined || runGroupId === undefined) {
+    throw new TypeError('measurement project was not initialized');
+  }
+  if (measurement.outcome !== 'completed' && measurement.outcome !== 'cancelled') {
+    throw new TypeError('measurement outcome escaped the candidate closed enum');
+  }
+  const [workerFlow, scenario] = BUTTON_CASES[buttonTestId];
+  const caseKey = `${workerFlow}\0${scenario}`;
+  const repetition = repetitionByCase.get(caseKey) ?? 0;
+  repetitionByCase.set(caseKey, repetition + 1);
+  records.push(
+    createBrowserWorkerRawMeasurementCandidateV1({
+      runGroupId,
+      project: activeProject,
+      workerFlow,
+      scenario,
+      repetition,
+      startedAt,
+      outcome: measurement.outcome,
+      inputJson: measurement.inputJson,
+      resultJson: measurement.resultJson,
+      measurement: measurement as unknown as Readonly<Record<string, JsonValue>>,
+    }),
+  );
+  return measurement;
+}
+
+async function runCapturedMeasurement<T extends CapturableMeasurement>(
   page: Page,
-  buttonTestId: string,
+  buttonTestId: MeasurementButtonTestId,
+): Promise<T> {
+  const startedAt = new Date().toISOString();
+  await page.getByTestId(buttonTestId).click();
+  const output = page.getByTestId('measurement');
+  await expect(output).not.toHaveText('running');
+  const measurement = JSON.parse(await output.innerText()) as T;
+  return captureMeasurement(buttonTestId, startedAt, measurement);
+}
+
+function runMeasurement(page: Page, buttonTestId: MeasurementButtonTestId): Promise<Measurement> {
+  return runCapturedMeasurement<Measurement>(page, buttonTestId);
+}
+
+function runGridMeasurement(
+  page: Page,
+  buttonTestId: MeasurementButtonTestId,
+): Promise<GridMeasurement> {
+  return runCapturedMeasurement<GridMeasurement>(page, buttonTestId);
+}
+
+function runPackingMeasurement(
+  page: Page,
+  buttonTestId: MeasurementButtonTestId,
 ): Promise<PackingMeasurement> {
-  await page.getByTestId(buttonTestId).click();
-  const output = page.getByTestId('measurement');
-  await expect(output).not.toHaveText('running');
-  return JSON.parse(await output.innerText()) as PackingMeasurement;
+  return runCapturedMeasurement<PackingMeasurement>(page, buttonTestId);
 }
 
-async function runWitnessMeasurement(
+function runWitnessMeasurement(
   page: Page,
-  buttonTestId: string,
+  buttonTestId: MeasurementButtonTestId,
 ): Promise<WitnessMeasurement> {
-  await page.getByTestId(buttonTestId).click();
-  const output = page.getByTestId('measurement');
-  await expect(output).not.toHaveText('running');
-  return JSON.parse(await output.innerText()) as WitnessMeasurement;
+  return runCapturedMeasurement<WitnessMeasurement>(page, buttonTestId);
 }
 
-async function runSweptCensusMeasurement(
+function runSweptCensusMeasurement(
   page: Page,
-  buttonTestId: string,
+  buttonTestId: MeasurementButtonTestId,
 ): Promise<SweptCensusMeasurement> {
-  await page.getByTestId(buttonTestId).click();
-  const output = page.getByTestId('measurement');
-  await expect(output).not.toHaveText('running');
-  return JSON.parse(await output.innerText()) as SweptCensusMeasurement;
+  return runCapturedMeasurement<SweptCensusMeasurement>(page, buttonTestId);
 }
 
-test.beforeEach(async ({ page }) => {
+test.beforeEach(async ({ page }, testInfo) => {
+  const project = parseProject(testInfo.project.name);
+  activeProject ??= project;
+  if (activeProject !== project) throw new TypeError('one worker cannot mix browser projects');
+  runGroupId ??= `m0f-worker:${project}:${new Date().toISOString()}:${process.pid}`;
   const response = await page.goto('/tests/browser-harness/m0f-worker.html');
   expect(response?.ok()).toBe(true);
   await expect(page).toHaveTitle('M0F Worker measurement harness');
+  browserNavigator ??= await page.evaluate(() => {
+    const canvas = document.createElement('canvas');
+    const gl = canvas.getContext('webgl');
+    const debugInfo = gl?.getExtension('WEBGL_debug_renderer_info') ?? null;
+    const navigatorMetadata = navigator as Navigator & {
+      deviceMemory?: number;
+      userAgentData?: { platform?: string };
+    };
+    const deviceMemory = navigatorMetadata.deviceMemory;
+    return {
+      userAgent: navigator.userAgent,
+      navigatorPlatform: navigatorMetadata.userAgentData?.platform ?? 'unavailable',
+      hardwareConcurrency: navigator.hardwareConcurrency,
+      deviceMemoryGiB: typeof deviceMemory === 'number' ? deviceMemory : null,
+      screen: {
+        width: screen.width,
+        height: screen.height,
+        colorDepth: screen.colorDepth,
+        devicePixelRatio,
+      },
+      webGlVendor:
+        gl === null || debugInfo === null
+          ? null
+          : String(gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL)),
+      webGlRenderer:
+        gl === null || debugInfo === null
+          ? null
+          : String(gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)),
+    };
+  });
+});
+
+test.afterAll(async ({ browser }, testInfo) => {
+  if (activeProject === undefined || browserNavigator === undefined) {
+    throw new TypeError('browser measurement environment was not captured');
+  }
+  const sourceRevision = (process.env.GITHUB_SHA ?? gitOutput(['rev-parse', 'HEAD']) ?? 'unknown')
+    .trim()
+    .toLowerCase();
+  const status = gitOutput(['status', '--porcelain']);
+  const sourceTreeState = status === null ? 'unknown' : status === '' ? 'clean' : 'dirty';
+  const cpuInfo = cpus();
+  const artifact = createBrowserWorkerMeasurementArtifactV1({
+    records,
+    createdAt: new Date().toISOString(),
+    build: {
+      sourceRevision,
+      sourceTreeState,
+      ciRunId: process.env.GITHUB_RUN_ID ?? null,
+      harnessVersion: 'm0f-browser-worker-measurement-harness-v1',
+      harnessSourceHashBasis: 'sha256-of-path-nul-raw-bytes-nul-in-declared-order',
+      harnessSourceSha256: await hashHarnessSources(),
+      harnessSourcePaths: HARNESS_SOURCE_PATHS,
+    },
+    environment: {
+      project: activeProject,
+      os: platform(),
+      osRelease: release(),
+      arch: arch(),
+      cpu: cpuInfo[0]?.model ?? 'unknown-cpu',
+      logicalCores: cpuInfo.length,
+      memoryBytes: totalmem(),
+      nodeVersion: process.version,
+      browserEngine: browser.browserType().name(),
+      browserVersion: browser.version(),
+      ...browserNavigator,
+    },
+  });
+  const verificationIssues = verifyBrowserWorkerMeasurementArtifactV1(
+    artifact.rawJsonl,
+    artifact.manifest,
+  );
+  if (verificationIssues.length > 0) {
+    throw new TypeError(
+      `measurement artifact failed self-check: ${JSON.stringify(verificationIssues)}`,
+    );
+  }
+  const artifactRoot = resolve(
+    process.env.M0F_WORKER_MEASUREMENT_ARTIFACT_ROOT ??
+      resolve(process.cwd(), '.artifacts', 'm0f-worker-measurements'),
+    testInfo.project.name,
+  );
+  await mkdir(artifactRoot, { recursive: true });
+  await Promise.all([
+    writeFile(resolve(artifactRoot, 'measurements.raw.jsonl'), artifact.rawJsonl, 'utf8'),
+    writeFile(resolve(artifactRoot, 'manifest.json'), artifact.manifestJson, 'utf8'),
+  ]);
 });
 
 test('transfers FOLD bytes and returns repeatable results in real module Workers', async ({
   page,
 }) => {
   const measurements: Measurement[] = [];
-  for (let repetition = 0; repetition < 3; repetition += 1) {
+  for (let repetition = 0; repetition < 5; repetition += 1) {
     measurements.push(await runMeasurement(page, 'run-success'));
   }
   for (const measurement of measurements) {
@@ -205,7 +435,7 @@ test('pre-aborted work neither creates a Worker nor consumes the byte buffer', a
 
 test('returns repeatable square-grid candidates in real module Workers', async ({ page }) => {
   const measurements: GridMeasurement[] = [];
-  for (let repetition = 0; repetition < 3; repetition += 1) {
+  for (let repetition = 0; repetition < 5; repetition += 1) {
     measurements.push(await runGridMeasurement(page, 'run-grid-success'));
   }
   for (const measurement of measurements) {
@@ -254,7 +484,7 @@ test('returns a repeatable finite packing-problem description in real module Wor
   page,
 }) => {
   const measurements: PackingMeasurement[] = [];
-  for (let repetition = 0; repetition < 3; repetition += 1) {
+  for (let repetition = 0; repetition < 5; repetition += 1) {
     measurements.push(await runPackingMeasurement(page, 'run-packing-success'));
   }
   for (const measurement of measurements) {
@@ -328,7 +558,7 @@ test('runs filter-only witness search and independent replay in two real module 
   page,
 }) => {
   const measurements: WitnessMeasurement[] = [];
-  for (let repetition = 0; repetition < 2; repetition += 1) {
+  for (let repetition = 0; repetition < 5; repetition += 1) {
     measurements.push(await runWitnessMeasurement(page, 'run-witness-success'));
   }
   for (const measurement of measurements) {
@@ -356,6 +586,7 @@ test('runs filter-only witness search and independent replay in two real module 
       globalPackingIncluded: false,
       polygonRiverPackingIncluded: false,
     });
+    expect(measurement.elapsedMs).toBeGreaterThanOrEqual(0);
     expect(measurement.resultJson).not.toBeNull();
   }
   expect(new Set(measurements.map(({ resultJson }) => resultJson)).size).toBe(1);
@@ -382,6 +613,7 @@ test('AbortSignal cancels an in-progress real witness-search Worker before repla
     witnessCount: null,
     resultJson: null,
   });
+  expect(measurement.elapsedMs).toBeLessThan(2_000);
 });
 
 test('pre-aborted witness work creates neither real Worker stage', async ({ page }) => {
@@ -403,13 +635,14 @@ test('pre-aborted witness work creates neither real Worker stage', async ({ page
     witnessCount: null,
     resultJson: null,
   });
+  expect(measurement.elapsedMs).toBeGreaterThanOrEqual(0);
 });
 
 test('returns a repeatable complete swept-AABB census in a real module Worker', async ({
   page,
 }) => {
   const measurements: SweptCensusMeasurement[] = [];
-  for (let repetition = 0; repetition < 3; repetition += 1) {
+  for (let repetition = 0; repetition < 5; repetition += 1) {
     measurements.push(await runSweptCensusMeasurement(page, 'run-swept-census-success'));
   }
   for (const measurement of measurements) {

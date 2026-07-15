@@ -68,6 +68,7 @@ const FOLD_DOCUMENT = Object.freeze({
 
 type Measurement = Readonly<{
   mode: 'success' | 'cancel' | 'pre-abort';
+  inputJson: string;
   beforeByteLength: number;
   afterByteLength: number;
   elapsedMs: number;
@@ -81,6 +82,7 @@ type Measurement = Readonly<{
 
 type GridMeasurement = Readonly<{
   mode: 'grid-success' | 'grid-cancel' | 'grid-pre-abort';
+  inputJson: string;
   elapsedMs: number;
   contractStatus: SquareGridQuantizationWorkerRunResultV1['contractStatus'];
   scientificClaim: SquareGridQuantizationWorkerRunResultV1['scientificClaim'];
@@ -92,6 +94,7 @@ type GridMeasurement = Readonly<{
 
 type PackingMeasurement = Readonly<{
   mode: 'packing-success' | 'packing-cancel' | 'packing-pre-abort';
+  inputJson: string;
   elapsedMs: number;
   workerFactoryCallCount: number;
   contractStatus: PolygonRiverPackingProblemWorkerRunResultV1['contractStatus'];
@@ -119,6 +122,7 @@ type PackingMeasurement = Readonly<{
 
 type WitnessMeasurement = Readonly<{
   mode: 'witness-success' | 'witness-cancel' | 'witness-pre-abort';
+  inputJson: string;
   elapsedMs: number;
   searchWorkerFactoryCallCount: number;
   validationWorkerFactoryCallCount: number;
@@ -146,6 +150,7 @@ type WitnessMeasurement = Readonly<{
 
 type SweptCensusMeasurement = Readonly<{
   mode: 'swept-census-success' | 'swept-census-cancel' | 'swept-census-pre-abort';
+  inputJson: string;
   elapsedMs: number;
   workerFactoryCallCount: number;
   contractStatus: AffineOriginRotationSweptAabbCensusWorkerRunResultV1['contractStatus'];
@@ -259,8 +264,10 @@ const SWEPT_CENSUS_INPUT = Object.freeze({
   ]),
 });
 
+const FOLD_DOCUMENT_INPUT_JSON = JSON.stringify(FOLD_DOCUMENT);
+
 function encodeDocument(): ArrayBuffer {
-  return new TextEncoder().encode(JSON.stringify(FOLD_DOCUMENT)).buffer;
+  return new TextEncoder().encode(FOLD_DOCUMENT_INPUT_JSON).buffer;
 }
 
 function summarize(
@@ -272,6 +279,7 @@ function summarize(
 ): Measurement {
   return {
     mode,
+    inputJson: FOLD_DOCUMENT_INPUT_JSON,
     beforeByteLength,
     afterByteLength,
     elapsedMs,
@@ -350,10 +358,11 @@ function gridInput(stress: boolean): Record<string, unknown> {
 async function measureGrid(mode: GridMeasurement['mode']): Promise<GridMeasurement> {
   const controller = new AbortController();
   if (mode === 'grid-pre-abort') controller.abort();
+  const input = gridInput(mode !== 'grid-success');
   const started = performance.now();
   const pending = runSquareGridQuantizationWorkerV1({
     jobId: `browser-measurement:${mode}`,
-    input: gridInput(mode !== 'grid-success'),
+    input,
     workerFactory: createBrowserSquareGridQuantizationWorkerV1,
     signal: controller.signal,
   });
@@ -361,6 +370,7 @@ async function measureGrid(mode: GridMeasurement['mode']): Promise<GridMeasureme
   const result = await pending;
   return {
     mode,
+    inputJson: JSON.stringify(input),
     elapsedMs: performance.now() - started,
     contractStatus: result.contractStatus,
     scientificClaim: result.scientificClaim,
@@ -412,6 +422,7 @@ async function measurePacking(mode: PackingMeasurement['mode']): Promise<Packing
   const completed = result.outcome === 'completed' ? result.result : null;
   return {
     mode,
+    inputJson: JSON.stringify(PACKING_PROBLEM_INPUT),
     elapsedMs: performance.now() - started,
     workerFactoryCallCount,
     contractStatus: result.contractStatus,
@@ -484,6 +495,7 @@ async function measureWitness(mode: WitnessMeasurement['mode']): Promise<Witness
   const completed = result.outcome === 'completed' ? result.result : null;
   return {
     mode,
+    inputJson: JSON.stringify(WITNESS_SEARCH_INPUT),
     elapsedMs: performance.now() - started,
     searchWorkerFactoryCallCount,
     validationWorkerFactoryCallCount,
@@ -538,6 +550,12 @@ function stringifyBigInt(value: unknown): string {
   );
 }
 
+function stringifyBigIntCandidateInput(value: unknown): string {
+  return JSON.stringify(value, (_key, item: unknown) =>
+    typeof item === 'bigint' ? { $m0fBigIntDecimal: item.toString(10) } : item,
+  );
+}
+
 async function measureSweptCensus(
   mode: SweptCensusMeasurement['mode'],
 ): Promise<SweptCensusMeasurement> {
@@ -560,6 +578,7 @@ async function measureSweptCensus(
   const completed = result.outcome === 'completed' ? result.result : null;
   return {
     mode,
+    inputJson: stringifyBigIntCandidateInput(SWEPT_CENSUS_INPUT),
     elapsedMs: performance.now() - started,
     workerFactoryCallCount,
     contractStatus: result.contractStatus,

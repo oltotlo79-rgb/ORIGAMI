@@ -168,7 +168,7 @@ malformed messages, exceptions, cleanup, and repeat execution.
 
 `npm run test:e2e:m0f-worker` runs a test-only Vite page in Chromium, while
 `npm run test:e2e:m0f-worker:matrix` runs the same probe in Chromium, Edge, and
-Firefox. They check buffer detachment, three-run serialized-result
+Firefox. They check buffer detachment, five-run serialized-result
 repeatability, immediate cancellation under a loose two-second smoke ceiling,
 and the pre-abort no-transfer path. This is plumbing evidence only: it does not
 measure memory or representative device limits and cannot select a

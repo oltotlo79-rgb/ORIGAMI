@@ -267,9 +267,48 @@ const FLOW_MEASUREMENT_KEYS: Readonly<Record<BrowserWorkerFlowV1, readonly strin
     'indeterminatePairCount',
   ],
 };
+const RAW_RECORD_KEYS = [
+  'schemaVersion',
+  'recordType',
+  'contractStatus',
+  'scientificClaim',
+  'finalPerformanceEvidence',
+  'runtimeLimitEvidence',
+  'globalM0fGo',
+  'harnessVersion',
+  'runGroupId',
+  'runId',
+  'project',
+  'workerFlow',
+  'scenario',
+  'repetition',
+  'startedAt',
+  'durationMs',
+  'seed',
+  'inputBinding',
+  'outcome',
+  'resultBinding',
+  'measurement',
+] as const;
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+function isProject(value: unknown): value is BrowserWorkerProjectV1 {
+  return (
+    typeof value === 'string' && (BROWSER_WORKER_PROJECTS as readonly string[]).includes(value)
+  );
+}
+
+function isWorkerFlow(value: unknown): value is BrowserWorkerFlowV1 {
+  return typeof value === 'string' && (BROWSER_WORKER_FLOWS as readonly string[]).includes(value);
+}
+
+function isScenario(value: unknown): value is BrowserWorkerScenarioV1 {
+  return (
+    typeof value === 'string' && (BROWSER_WORKER_SCENARIOS as readonly string[]).includes(value)
+  );
 }
 
 function assertUtcTimestamp(value: string, label: string): void {
@@ -286,18 +325,62 @@ function assertNonEmpty(value: string, label: string): void {
   if (value.trim() === '') throw new TypeError(`${label} must be non-empty`);
 }
 
+function hasExactKeys(
+  value: Readonly<Record<string, unknown>>,
+  expected: readonly string[],
+): boolean {
+  const actual = Object.keys(value).sort();
+  const sortedExpected = [...expected].sort();
+  return (
+    actual.length === sortedExpected.length &&
+    actual.every((key, index) => key === sortedExpected[index])
+  );
+}
+
+function assertExactMeasurementKeys(
+  measurement: Readonly<Record<string, unknown>>,
+  workerFlow: BrowserWorkerFlowV1,
+): void {
+  if (!hasExactKeys(measurement, FLOW_MEASUREMENT_KEYS[workerFlow])) {
+    throw new TypeError(`measurement keys do not match the closed ${workerFlow} contract`);
+  }
+}
+
+function assertCandidateClaims(value: unknown, path = '$'): void {
+  if (Array.isArray(value)) {
+    value.forEach((entry, index) => assertCandidateClaims(entry, `${path}[${index}]`));
+    return;
+  }
+  if (!isRecord(value)) return;
+  for (const [key, child] of Object.entries(value)) {
+    const childPath = `${path}.${key}`;
+    if (
+      ((key === 'scientificClaim' || key === 'collisionFreeClaim') && child !== false) ||
+      (key === 'globalM0fGo' && child !== false && child !== null)
+    ) {
+      throw new TypeError(`${childPath} must remain false in candidate artifacts`);
+    }
+    if (key === 'contractStatus' && child !== 'candidate' && child !== 'candidate-no-claim') {
+      throw new TypeError(`${childPath} must remain candidate-only`);
+    }
+    assertCandidateClaims(child, childPath);
+  }
+}
+
 export function sha256BrowserWorkerMeasurementUtf8(value: string): string {
   return `sha256:${createHash('sha256').update(value, 'utf8').digest('hex')}`;
 }
 
 export function createBrowserWorkerRawMeasurementCandidateV1(
   input: Readonly<{
+    runGroupId: string;
     project: BrowserWorkerProjectV1;
     workerFlow: BrowserWorkerFlowV1;
     scenario: BrowserWorkerScenarioV1;
     repetition: number;
     startedAt: string;
-    outcome: string;
+    outcome: 'completed' | 'cancelled';
+    inputJson: string;
     resultJson: string | null;
     measurement: Readonly<Record<string, JsonValue>>;
   }>,
@@ -309,12 +392,58 @@ export function createBrowserWorkerRawMeasurementCandidateV1(
     throw new TypeError('repetition must be a non-negative safe integer');
   }
   assertUtcTimestamp(input.startedAt, 'startedAt');
-  assertNonEmpty(input.outcome, 'outcome');
+  assertNonEmpty(input.runGroupId, 'runGroupId');
   stableStringify(input.measurement);
   const measurement = cloneAndDeepFreeze(input.measurement);
+  assertExactMeasurementKeys(measurement, input.workerFlow);
+  const expectedOutcome = input.scenario === 'success-repeatability' ? 'completed' : 'cancelled';
+  if (input.outcome !== expectedOutcome || measurement.outcome !== expectedOutcome) {
+    throw new TypeError(`${input.scenario} must have outcome ${expectedOutcome}`);
+  }
+  if (measurement.mode !== EXPECTED_MODES[input.workerFlow][input.scenario]) {
+    throw new TypeError('measurement mode does not match worker flow and scenario');
+  }
+  if (measurement.scientificClaim !== false) {
+    throw new TypeError('measurement.scientificClaim must remain false');
+  }
+  const expectedContractStatus =
+    input.workerFlow === 'affine-origin-rotation-swept-aabb-census'
+      ? 'candidate-no-claim'
+      : 'candidate';
+  if (measurement.contractStatus !== expectedContractStatus) {
+    throw new TypeError(`measurement.contractStatus must equal ${expectedContractStatus}`);
+  }
+  if (measurement.reason !== (expectedOutcome === 'completed' ? null : 'aborted-by-caller')) {
+    throw new TypeError('measurement reason does not match the scenario outcome');
+  }
+  if (
+    typeof measurement.elapsedMs !== 'number' ||
+    !Number.isFinite(measurement.elapsedMs) ||
+    measurement.elapsedMs < 0
+  ) {
+    throw new TypeError('measurement.elapsedMs must be a non-negative finite number');
+  }
+  if (measurement.inputJson !== input.inputJson) {
+    throw new TypeError('measurement.inputJson must match the input hash source');
+  }
   if (measurement.resultJson !== input.resultJson) {
     throw new TypeError('measurement.resultJson must match the hash source');
   }
+  if ((expectedOutcome === 'completed') !== (input.resultJson !== null)) {
+    throw new TypeError('only completed measurements may contain result JSON');
+  }
+  try {
+    assertCandidateClaims(JSON.parse(input.inputJson) as unknown, '$.inputJson');
+    if (input.resultJson !== null) {
+      assertCandidateClaims(JSON.parse(input.resultJson) as unknown, '$.resultJson');
+    }
+  } catch (error) {
+    if (error instanceof SyntaxError)
+      throw new TypeError('input and result JSON must be valid JSON');
+    throw error;
+  }
+  assertCandidateClaims(measurement, '$.measurement');
+  const runId = `${input.runGroupId}:${input.workerFlow}:${input.scenario}:${input.repetition}`;
   const record: BrowserWorkerRawMeasurementCandidateV1 = {
     schemaVersion: 1,
     recordType: BROWSER_WORKER_MEASUREMENT_RECORD_TYPE,
@@ -323,43 +452,46 @@ export function createBrowserWorkerRawMeasurementCandidateV1(
     finalPerformanceEvidence: false,
     runtimeLimitEvidence: false,
     globalM0fGo: false,
+    harnessVersion: HARNESS_VERSION,
+    runGroupId: input.runGroupId,
+    runId,
     project: input.project,
     workerFlow: input.workerFlow,
     scenario: input.scenario,
     repetition: input.repetition,
     startedAt: input.startedAt,
+    durationMs: measurement.elapsedMs,
     seed: null,
-    inputIdentity: `tests/browser-harness/m0f-worker.ts#${input.workerFlow}:${input.scenario}:v1`,
+    inputBinding: {
+      identity: `tests/browser-harness/m0f-worker.ts#${input.workerFlow}:${input.scenario}:v1`,
+      hashBasis: INPUT_HASH_BASIS,
+      json: input.inputJson,
+      sha256: sha256BrowserWorkerMeasurementUtf8(input.inputJson),
+    },
     outcome: input.outcome,
-    resultJsonSha256:
-      input.resultJson === null ? null : sha256BrowserWorkerMeasurementUtf8(input.resultJson),
+    resultBinding: {
+      hashBasis: RESULT_HASH_BASIS,
+      sha256:
+        input.resultJson === null ? null : sha256BrowserWorkerMeasurementUtf8(input.resultJson),
+    },
     measurement,
   };
   return deepFreezeOwned(record);
-}
-
-function recordSortKey(record: BrowserWorkerRawMeasurementCandidateV1): readonly unknown[] {
-  return [
-    BROWSER_WORKER_FLOWS.indexOf(record.workerFlow),
-    BROWSER_WORKER_SCENARIOS.indexOf(record.scenario),
-    record.repetition,
-    record.startedAt,
-  ];
 }
 
 function compareRecords(
   left: BrowserWorkerRawMeasurementCandidateV1,
   right: BrowserWorkerRawMeasurementCandidateV1,
 ): number {
-  const leftKey = recordSortKey(left);
-  const rightKey = recordSortKey(right);
-  for (let index = 0; index < leftKey.length; index += 1) {
-    const leftPart = String(leftKey[index]);
-    const rightPart = String(rightKey[index]);
-    if (leftPart === rightPart) continue;
-    return leftPart < rightPart ? -1 : 1;
-  }
-  return 0;
+  const flowOrder =
+    BROWSER_WORKER_FLOWS.indexOf(left.workerFlow) - BROWSER_WORKER_FLOWS.indexOf(right.workerFlow);
+  if (flowOrder !== 0) return flowOrder;
+  const scenarioOrder =
+    BROWSER_WORKER_SCENARIOS.indexOf(left.scenario) -
+    BROWSER_WORKER_SCENARIOS.indexOf(right.scenario);
+  if (scenarioOrder !== 0) return scenarioOrder;
+  if (left.repetition !== right.repetition) return left.repetition - right.repetition;
+  return left.startedAt.localeCompare(right.startedAt);
 }
 
 function uniqueSorted<T extends string | null>(values: readonly T[]): readonly T[] {
@@ -382,7 +514,7 @@ function summarizeRepeatability(
       .sort((left, right) => left.repetition - right.repetition);
     const repetitions = successes.map(({ repetition }) => repetition);
     const outcomes = uniqueSorted(successes.map(({ outcome }) => outcome));
-    const hashes = uniqueSorted(successes.map(({ resultJsonSha256 }) => resultJsonSha256));
+    const hashes = uniqueSorted(successes.map(({ resultBinding }) => resultBinding.sha256));
     const expectedRepetitions = Array.from(
       { length: BROWSER_WORKER_SUCCESS_REPETITIONS },
       (_, index) => index,
@@ -390,7 +522,8 @@ function summarizeRepeatability(
     const exactRepetitions =
       repetitions.length === expectedRepetitions.length &&
       repetitions.every((value, index) => value === expectedRepetitions[index]);
-    const outcomeStable = successes.length > 0 && outcomes.length === 1;
+    const outcomeStable =
+      successes.length > 0 && outcomes.length === 1 && outcomes[0] === 'completed';
     const resultHashStable = successes.length > 0 && hashes.length === 1 && hashes[0] !== null;
     return deepFreezeOwned({
       workerFlow,
@@ -420,6 +553,40 @@ export function createBrowserWorkerMeasurementArtifactV1(
 ): BrowserWorkerMeasurementArtifactV1 {
   assertUtcTimestamp(input.createdAt, 'createdAt');
   assertNonEmpty(input.build.sourceRevision, 'build.sourceRevision');
+  if (
+    !SHA256_PATTERN.test(input.build.harnessSourceSha256) ||
+    input.build.harnessSourcePaths.length === 0 ||
+    input.build.harnessSourcePaths.some((path) => path.trim() === '')
+  ) {
+    throw new TypeError('build must bind the declared harness sources');
+  }
+  if (!BROWSER_WORKER_PROJECTS.includes(input.environment.project)) {
+    throw new TypeError('environment project is unknown');
+  }
+  for (const [label, value] of [
+    ['environment.os', input.environment.os],
+    ['environment.osRelease', input.environment.osRelease],
+    ['environment.arch', input.environment.arch],
+    ['environment.cpu', input.environment.cpu],
+    ['environment.nodeVersion', input.environment.nodeVersion],
+    ['environment.browserEngine', input.environment.browserEngine],
+    ['environment.browserVersion', input.environment.browserVersion],
+    ['environment.userAgent', input.environment.userAgent],
+    ['environment.navigatorPlatform', input.environment.navigatorPlatform],
+  ] as const) {
+    assertNonEmpty(value, label);
+  }
+  for (const [label, value] of [
+    ['environment.logicalCores', input.environment.logicalCores],
+    ['environment.memoryBytes', input.environment.memoryBytes],
+    ['environment.hardwareConcurrency', input.environment.hardwareConcurrency],
+    ['environment.screen.width', input.environment.screen.width],
+    ['environment.screen.height', input.environment.screen.height],
+    ['environment.screen.colorDepth', input.environment.screen.colorDepth],
+    ['environment.screen.devicePixelRatio', input.environment.screen.devicePixelRatio],
+  ] as const) {
+    if (!Number.isFinite(value) || value < 0) throw new TypeError(`${label} must be non-negative`);
+  }
   stableStringify(input.build);
   stableStringify(input.environment);
   const records = [...input.records].sort(compareRecords);
@@ -463,6 +630,8 @@ export function createBrowserWorkerMeasurementArtifactV1(
       performanceThresholdDecisionIncluded: false,
       percentileSummaryIncluded: false,
       memoryMeasurementIncluded: false,
+      environmentMetadataComplete: false,
+      buildArtifactHashIncluded: false,
       supportProfileIncluded: false,
       toleranceProfileIncluded: false,
       scientificEvidenceIncluded: false,
@@ -517,12 +686,27 @@ export function verifyBrowserWorkerMeasurementArtifactV1(
         continue;
       }
       if (
+        !hasExactKeys(parsed, RAW_RECORD_KEYS) ||
+        parsed.schemaVersion !== 1 ||
         parsed.recordType !== BROWSER_WORKER_MEASUREMENT_RECORD_TYPE ||
         parsed.contractStatus !== 'candidate' ||
         parsed.scientificClaim !== false ||
         parsed.finalPerformanceEvidence !== false ||
         parsed.runtimeLimitEvidence !== false ||
         parsed.globalM0fGo !== false ||
+        parsed.harnessVersion !== HARNESS_VERSION ||
+        typeof parsed.runGroupId !== 'string' ||
+        typeof parsed.runId !== 'string' ||
+        !isProject(parsed.project) ||
+        !isWorkerFlow(parsed.workerFlow) ||
+        !isScenario(parsed.scenario) ||
+        !Number.isSafeInteger(parsed.repetition) ||
+        typeof parsed.startedAt !== 'string' ||
+        typeof parsed.durationMs !== 'number' ||
+        parsed.seed !== null ||
+        (parsed.outcome !== 'completed' && parsed.outcome !== 'cancelled') ||
+        !isRecord(parsed.inputBinding) ||
+        !isRecord(parsed.resultBinding) ||
         !isRecord(parsed.measurement)
       ) {
         issues.push({
@@ -531,21 +715,68 @@ export function verifyBrowserWorkerMeasurementArtifactV1(
         });
         continue;
       }
+      const inputJson = parsed.inputBinding.json;
       const resultJson = parsed.measurement.resultJson;
-      if (resultJson !== null && typeof resultJson !== 'string') {
-        issues.push({ code: 'invalid-result-json', message: 'resultJson must be string or null' });
+      if (
+        typeof inputJson !== 'string' ||
+        (resultJson !== null && typeof resultJson !== 'string')
+      ) {
+        issues.push({ code: 'invalid-result-json', message: 'input/result JSON types changed' });
         continue;
       }
+      const expectedInputHash = sha256BrowserWorkerMeasurementUtf8(inputJson);
       const expectedResultHash =
         resultJson === null ? null : sha256BrowserWorkerMeasurementUtf8(resultJson);
-      if (parsed.resultJsonSha256 !== expectedResultHash) {
+      if (
+        parsed.inputBinding.hashBasis !== INPUT_HASH_BASIS ||
+        parsed.inputBinding.sha256 !== expectedInputHash
+      ) {
+        issues.push({ code: 'input-sha256-mismatch', message: 'input JSON hash changed' });
+        continue;
+      }
+      if (
+        parsed.resultBinding.hashBasis !== RESULT_HASH_BASIS ||
+        parsed.resultBinding.sha256 !== expectedResultHash
+      ) {
         issues.push({ code: 'result-sha256-mismatch', message: 'result JSON hash changed' });
         continue;
       }
-      parsedRecords.push(parsed as unknown as BrowserWorkerRawMeasurementCandidateV1);
+      const rebuilt = createBrowserWorkerRawMeasurementCandidateV1({
+        runGroupId: parsed.runGroupId,
+        project: parsed.project,
+        workerFlow: parsed.workerFlow,
+        scenario: parsed.scenario,
+        repetition: parsed.repetition as number,
+        startedAt: parsed.startedAt,
+        outcome: parsed.outcome,
+        inputJson,
+        resultJson,
+        measurement: parsed.measurement as Readonly<Record<string, JsonValue>>,
+      });
+      if (stableStringify(rebuilt) !== stableStringify(parsed)) {
+        issues.push({ code: 'derived-record-mismatch', message: 'derived record fields changed' });
+        continue;
+      }
+      parsedRecords.push(rebuilt);
     } catch {
-      issues.push({ code: 'invalid-jsonl', message: 'raw measurement line is not valid JSON' });
+      issues.push({
+        code: 'invalid-jsonl',
+        message: 'raw measurement line failed closed validation',
+      });
     }
+  }
+  const recordKeys = parsedRecords.map(
+    ({ workerFlow, scenario, repetition }) => `${workerFlow}\0${scenario}\0${repetition}`,
+  );
+  if (new Set(recordKeys).size !== recordKeys.length) {
+    issues.push({ code: 'duplicate-record', message: 'raw JSONL contains duplicate run slots' });
+  }
+  const canonicalRaw = [...parsedRecords]
+    .sort(compareRecords)
+    .map((record) => serializeJsonLine(record))
+    .join('');
+  if (parsedRecords.length === nonEmptyLines.length && canonicalRaw !== rawJsonl) {
+    issues.push({ code: 'record-order-mismatch', message: 'raw JSONL ordering changed' });
   }
   if (parsedRecords.some(({ project }) => project !== manifest.environment.project)) {
     issues.push({ code: 'project-mismatch', message: 'record project differs from environment' });

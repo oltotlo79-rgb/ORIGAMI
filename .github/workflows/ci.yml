@@ -64,11 +64,19 @@ jobs:
         if: matrix.browser != 'edge'
         run: npx playwright install --with-deps ${{ matrix.browser }}
       - run: npm run test:e2e -- --project=${{ matrix.project }}
+      - name: Capture candidate M0F Worker measurements
+        run: npm run test:e2e:m0f-worker:matrix -- --project=${{ matrix.project }}
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: playwright-report-${{ matrix.project }}
           path: playwright-report/
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: m0f-worker-measurements-${{ matrix.project }}
+          path: .artifacts/m0f-worker-measurements/${{ matrix.project }}/
           if-no-files-found: ignore
 
   pages-build:
