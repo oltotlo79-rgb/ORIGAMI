@@ -151,3 +151,4 @@ export * from './workers/square-grid-quantization-protocol.js';
 export * from './workers/square-grid-quantization-worker-handler.js';
 export * from './workers/run-square-grid-quantization-worker.js';
 export * from './workers/browser-square-grid-quantization-worker.js';
+export * from './m0f-product-handoff-diagnostic.js';

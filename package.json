@@ -96,7 +96,8 @@
     "m0f:neg-path-mixed-representation-candidate": "tsx m0f/neg-path-mixed-representation-candidate-bundle-cli.ts",
     "m0f:neg-support-catalog-candidate": "tsx m0f/neg-support-catalog-candidate-bundle-cli.ts",
     "m0f:coverage": "vitest run --coverage m0f",
-    "licenses:check": "node scripts/check-licenses.mjs"
+    "licenses:check": "node scripts/check-licenses.mjs",
+    "m0f:product-handoff-diagnostic": "tsx m0f/m0f-product-handoff-diagnostic-cli.ts"
   },
   "dependencies": {
     "react": "19.2.7",
