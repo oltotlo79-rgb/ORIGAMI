@@ -1,9 +1,22 @@
-import { bundledM0fProductHandoffDiagnostic as diagnostic } from './diagnostics/m0fProductHandoffDiagnostic';
+import { useState } from 'react';
+
+import {
+  bundledM0fProductHandoffDiagnosticEvaluation,
+  runBundledM0fProductHandoffDiagnostic,
+} from './diagnostics/m0fProductHandoffDiagnostic';
 import { ja } from './strings/ja';
 
 export function M0fDiagnosticPanel() {
-  const summary = diagnostic.readiness.summary;
-  const catalog = diagnostic.readiness.catalog;
+  const diagnostic = bundledM0fProductHandoffDiagnosticEvaluation.ok
+    ? bundledM0fProductHandoffDiagnosticEvaluation.value
+    : null;
+  const [lastRun, setLastRun] = useState<ReturnType<
+    typeof runBundledM0fProductHandoffDiagnostic
+  > | null>(null);
+
+  const runDiagnostic = () => {
+    setLastRun(runBundledM0fProductHandoffDiagnostic());
+  };
 
   return (
     <section
@@ -18,7 +31,7 @@ export function M0fDiagnosticPanel() {
         </div>
         <p className="diagnostic-card__status" data-testid="m0f-diagnostic-status">
           <span aria-hidden="true" />
-          {ja.diagnostic.statusNotReady}
+          {diagnostic === null ? ja.diagnostic.statusUnavailable : ja.diagnostic.statusIncomplete}
         </p>
       </div>
 
@@ -28,24 +41,33 @@ export function M0fDiagnosticPanel() {
         <div>
           <dt>{ja.diagnostic.blockingAreas}</dt>
           <dd data-testid="m0f-blocking-areas">
-            {diagnostic.blockingAreaCount} / {summary.gateAreaCount}
+            {diagnostic === null
+              ? ja.diagnostic.unavailableValue
+              : `${String(diagnostic.blockingAreaCount)} / ${String(diagnostic.readiness.summary.gateAreaCount)}`}
           </dd>
         </div>
         <div>
           <dt>{ja.diagnostic.unmetGoConditions}</dt>
           <dd data-testid="m0f-unmet-go-conditions">
-            {diagnostic.unmetGoConditionCount} / {summary.goConditionCount}
+            {diagnostic === null
+              ? ja.diagnostic.unavailableValue
+              : `${String(diagnostic.unmetGoConditionCount)} / ${String(diagnostic.readiness.summary.goConditionCount)}`}
           </dd>
         </div>
         <div>
           <dt>{ja.diagnostic.unmetDeliverables}</dt>
           <dd data-testid="m0f-unmet-deliverables">
-            {diagnostic.unmetRequiredDeliverableCount} / {summary.requiredDeliverableCount}
+            {diagnostic === null
+              ? ja.diagnostic.unavailableValue
+              : `${String(diagnostic.unmetRequiredDeliverableCount)} / ${String(diagnostic.readiness.summary.requiredDeliverableCount)}`}
           </dd>
         </div>
         <div>
           <dt>{ja.diagnostic.missingFixtures}</dt>
-          <dd data-testid="m0f-missing-fixtures">{catalog.missingCanonicalFixtureCount}</dd>
+          <dd data-testid="m0f-missing-canonical-rules">
+            {diagnostic?.readiness.catalog.missingCanonicalFixtureCount ??
+              ja.diagnostic.unavailableValue}
+          </dd>
         </div>
       </dl>
 
@@ -54,18 +76,42 @@ export function M0fDiagnosticPanel() {
         <span>{ja.diagnostic.finalDecisionNotRecorded}</span>
       </p>
 
-      <details className="diagnostic-details">
-        <summary>{ja.diagnostic.detailsSummary}</summary>
-        <ul>
-          {diagnostic.areas.map((area) => (
-            <li key={area.areaId}>
-              <span>{ja.diagnostic.areaLabels[area.areaId]}</span>
-              <small>{ja.diagnostic.notEvaluated}</small>
-            </li>
-          ))}
-        </ul>
-        <p>{ja.diagnostic.claimBoundary}</p>
-      </details>
+      <p className="diagnostic-card__claim-boundary">{ja.diagnostic.claimBoundary}</p>
+
+      <div className="diagnostic-runner" aria-labelledby="diagnostic-runner-title">
+        <div>
+          <h3 id="diagnostic-runner-title">{ja.diagnostic.runnerTitle}</h3>
+          <p>{ja.diagnostic.runnerDescription}</p>
+        </div>
+        <button type="button" onClick={runDiagnostic}>
+          {ja.diagnostic.runButton}
+        </button>
+      </div>
+
+      <div
+        className="diagnostic-run-result"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+        data-testid="m0f-diagnostic-run-result"
+      >
+        {lastRun === null ? (
+          <p>{ja.diagnostic.runIdle}</p>
+        ) : lastRun.ok ? (
+          <p>
+            <strong>{ja.diagnostic.runComplete}</strong>{' '}
+            {ja.diagnostic.runResultSummary(
+              lastRun.value.blockingAreaCount,
+              lastRun.value.finalDecision,
+            )}
+          </p>
+        ) : (
+          <p>
+            <strong>{ja.diagnostic.runUnavailable}</strong>{' '}
+            {ja.diagnostic.runUnavailableDescription}
+          </p>
+        )}
+      </div>
     </section>
   );
 }

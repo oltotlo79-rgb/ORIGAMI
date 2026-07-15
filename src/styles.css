@@ -339,52 +339,66 @@ h1 {
   font-size: 0.82rem;
 }
 
-.diagnostic-details {
-  margin-top: 1rem;
-  border-top: 1px solid #d7c9ba;
-  padding-top: 0.85rem;
-}
-
-.diagnostic-details summary {
-  width: fit-content;
-  cursor: pointer;
-  color: #5e4d42;
-  font-size: 0.86rem;
-  font-weight: 750;
-}
-
-.diagnostic-details ul {
-  display: grid;
-  margin: 0.9rem 0 0;
-  padding: 0;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.5rem 1rem;
-  list-style: none;
-}
-
-.diagnostic-details li {
-  display: flex;
-  min-width: 0;
-  padding-bottom: 0.4rem;
-  border-bottom: 1px dotted #d2c4b5;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 0.8rem;
-  color: #544b43;
-  font-size: 0.82rem;
-}
-
-.diagnostic-details small {
-  flex: none;
-  color: #98462c;
-  font-weight: 750;
-}
-
-.diagnostic-details p {
+.diagnostic-card__claim-boundary {
   margin: 0.9rem 0 0;
   color: #71655b;
   font-size: 0.78rem;
   line-height: 1.6;
+}
+
+.diagnostic-runner {
+  display: flex;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #d7c9ba;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.diagnostic-runner h3 {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.diagnostic-runner p {
+  max-width: 43rem;
+  margin: 0.35rem 0 0;
+  color: #6c6157;
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+.diagnostic-runner button {
+  flex: none;
+  padding: 0.65rem 0.9rem;
+  border: 1px solid #5d5147;
+  border-radius: 0.45rem;
+  background: #3b332d;
+  color: #fffdf8;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 750;
+}
+
+.diagnostic-runner button:hover {
+  background: #564940;
+}
+
+.diagnostic-run-result {
+  min-height: 2.9rem;
+  margin-top: 0.75rem;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid #d7c9ba;
+  border-radius: 0.45rem;
+  background: rgb(255 253 248 / 75%);
+  color: #5d534b;
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+.diagnostic-run-result p {
+  margin: 0;
 }
 
 .notice {
@@ -434,13 +448,13 @@ h1 {
   }
 
   .diagnostic-card__header,
-  .diagnostic-card__authorization {
+  .diagnostic-card__authorization,
+  .diagnostic-runner {
     align-items: flex-start;
     flex-direction: column;
   }
 
-  .diagnostic-metrics,
-  .diagnostic-details ul {
+  .diagnostic-metrics {
     grid-template-columns: 1fr;
   }
 }

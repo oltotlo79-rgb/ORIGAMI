@@ -49,6 +49,10 @@ test('production shell performs only same-origin static requests', async ({ base
   page.on('websocket', (socket) => webSockets.push(socket.url()));
 
   await page.goto('./');
+  await page.getByRole('button', { name: '候補診断を実行' }).click();
+  await expect(page.getByTestId('m0f-diagnostic-run-result')).toContainText(
+    'ブラウザ内評価が完了しました',
+  );
   await page.waitForLoadState('networkidle');
 
   const externalRequests = requests.filter(({ url }) => new URL(url).origin !== expectedOrigin);
