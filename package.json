@@ -60,6 +60,7 @@
     "m0f:neg-layer-contact-coverage-candidate": "tsx m0f/neg-layer-contact-coverage-candidate-bundle-cli.ts",
     "m0f:neg-path-empty-segments-candidate": "tsx m0f/neg-path-empty-segments-candidate-bundle-cli.ts",
     "m0f:neg-path-unsupported-representation-kind-candidate": "tsx m0f/neg-path-unsupported-representation-kind-candidate-bundle-cli.ts",
+    "m0f:neg-path-representation-version-mismatch-candidate": "tsx m0f/neg-path-representation-version-mismatch-candidate-bundle-cli.ts",
     "m0f:neg-path-representation-status-escalation-candidate": "tsx m0f/neg-path-representation-status-escalation-candidate-bundle-cli.ts",
     "m0f:neg-path-endpoint-continuity-candidate": "tsx m0f/neg-path-endpoint-continuity-candidate-bundle-cli.ts",
     "m0f:neg-path-endpoint-map-mismatch-candidate": "tsx m0f/neg-path-endpoint-map-mismatch-candidate-bundle-cli.ts",

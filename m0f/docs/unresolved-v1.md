@@ -283,6 +283,17 @@ and M0F `GO` is impossible while any required value remains unresolved.
   the remaining canonical path mutations, contacts, CCD, collision freedom,
   and foldability remain open.
 - One project-authored
+  `NEG-PATH-MUTATION-REPRESENTATION-VERSION-MISMATCH` source now forms a
+  separate deterministic candidate bundle outside the canonical manifest. Its
+  accepted bounded-interpolation control declares representation version 1;
+  the negative changes only that leaf to 2, fixes the exact one-path delta, and
+  replays the sole `invalid-literal` issue. This is only the current fixed
+  representation-version boundary. Representation selection and completeness,
+  time coverage, angle, bound, endpoint, derivative, and physical path
+  semantics, rigidity, face isometry, hinge geometry, certificate hashes and
+  authenticity, the remaining canonical path mutations, contacts, CCD,
+  collision freedom, and foldability remain open.
+- One project-authored
   `NEG-PATH-MUTATION-REPRESENTATION-STATUS-ESCALATION` source now forms a
   separate deterministic candidate bundle outside the canonical manifest. Its
   accepted bounded-interpolation control keeps

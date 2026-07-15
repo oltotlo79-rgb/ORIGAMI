@@ -768,6 +768,20 @@ canonical path-mutation family. No canonical, SupportProfile, ToleranceProfile,
 scientific, or global-gate claim is made. See
 `docs/neg-path-unsupported-representation-kind-candidate-bundle-v1.md`.
 
+`npm run m0f:neg-path-representation-version-mismatch-candidate` verifies one
+project-authored exact-negative artifact-contract source outside the canonical
+manifest. Its saved accepted bounded-interpolation control declares
+`representationVersion` 1. The negative changes only that leaf to 2, fixing one
+exact path and the sole `invalid-literal` issue. This is only the current fixed
+representation-version boundary. It does not select or complete a
+representation, establish time coverage, angle, bound, endpoint, derivative, or
+physical path semantics, prove rigidity, face isometry, or hinge geometry,
+verify certificate hashes or cryptographic authenticity, perform contact
+analysis or CCD, establish collision freedom or foldability, or complete the
+canonical path-mutation family. No canonical, SupportProfile, ToleranceProfile,
+scientific, or global-gate claim is made. See
+`docs/neg-path-representation-version-mismatch-candidate-bundle-v1.md`.
+
 `npm run m0f:neg-path-representation-status-escalation-candidate` verifies one
 project-authored exact-negative artifact-contract source outside the canonical
 manifest. Its saved accepted bounded-interpolation control keeps

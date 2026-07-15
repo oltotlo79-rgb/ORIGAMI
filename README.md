@@ -30,6 +30,8 @@ M0F-2では、幅付き順序木の閉じた検証、木の全枝から格子量
 
 `NEG-PATH-MUTATION-UNSUPPORTED-REPRESENTATION-KIND`もcanonical manifest外のartifact-contract parser候補です。保存済みaccepted bounded-interpolation controlのmotion kindだけを`bounded-interpolation`から未対応の`spline`へ変え、完全な1-path差分と同じleafの単一`invalid-enum` issueを再実行します。これはpath representation kindの列挙境界だけであり、representation選定・完全性、時間coverage、angle／bound／端点／物理経路semantics、剛体性、面等長、ヒンジ幾何、certificate hash／真正性、contact、CCD、衝突自由、foldability、SupportProfile、ToleranceProfile、canonical family全体、科学的検証、global M0F `GO`を意味しません。
 
+`NEG-PATH-MUTATION-REPRESENTATION-VERSION-MISMATCH`もcanonical manifest外のartifact-contract parser候補です。保存済みaccepted bounded-interpolation controlの`pathCandidate.representationVersion`だけを`1`から`2`へ変え、完全な1-path差分と同じleafの単一`invalid-literal` issueを再実行します。これはrepresentation versionの固定値境界だけであり、representation選定・完全性、時間coverage、angle／bound／端点／物理経路semantics、剛体性、面等長、ヒンジ幾何、certificate hash／真正性、contact、CCD、衝突自由、foldability、SupportProfile、ToleranceProfile、canonical family全体、科学的検証、global M0F `GO`を意味しません。
+
 `NEG-PATH-MUTATION-REPRESENTATION-STATUS-ESCALATION`もcanonical manifest外のartifact-contract parser候補です。保存済みaccepted bounded-interpolation controlの`pathCandidate.representationStatus`だけを`candidate`から`verified`へ変え、完全な1-path差分と同じleafの単一`claim-boundary` issueを再実行します。これは未検証のpath宣言を`candidate`に留める現parser境界だけであり、representationの選定・完全性、angle／bound／時間／端点／物理経路semantics、剛体性、面等長、ヒンジ幾何、certificate hash／真正性、contact、CCD、衝突自由、foldability、SupportProfile、ToleranceProfile、canonical family全体、科学的検証、global M0F `GO`を意味しません。
 
 `NEG-PATH-MUTATION-ENDPOINT-DISCONTINUITY`もcanonical manifest外のartifact-contract parser候補です。保存済みのaccepted 2-segment FOLD controlは共有端点で`pi/2`を一致させ、negativeは第2 segmentの開始角だけを宣言bound内の`3*pi/4`へ変え、完全な1-path差分と単一の`path-endpoint-discontinuity` issueを再実行します。これはvalidなbounded-interpolation宣言のexact一致だけであり、canonical `NEG-PATH-MUTATION-*`全体、piecewise-polynomial、剛体性、面等長、ヒンジ幾何、certificate hash、CCD、科学的検証、global M0F `GO`を意味しません。
@@ -95,78 +97,79 @@ Viteは通常`@vitejs/plugin-react-swc`を使用します。OS policyなどでSW
 
 ## コマンド
 
-| コマンド                                                                      | 用途                                          |
-| ----------------------------------------------------------------------------- | --------------------------------------------- |
-| `npm run dev`                                                                 | Vite 開発サーバー                             |
-| `npm run build`                                                               | 型検査後に静的ビルド                          |
-| `npm run preview`                                                             | ビルド成果物のローカル確認                    |
-| `npm run typecheck`                                                           | TypeScript project references の型検査        |
-| `npm run lint`                                                                | ESLint と Prettier の検査                     |
-| `npm run format`                                                              | Prettier による整形                           |
-| `npm test` / `npm run test:unit`                                              | Vitest のユニットテスト                       |
-| `npm run test:coverage`                                                       | 数理・ドメイン層のカバレッジ計測              |
-| `npm run test:e2e`                                                            | Playwright E2E                                |
-| `npm run test:golden`                                                         | golden/certificate テスト                     |
-| `npm run test:perf`                                                           | 固定 fixture のベンチマーク                   |
-| `npm run m0f:test`                                                            | M0F 試作のテスト                              |
-| `npm run m0f:validate`                                                        | M0F fixture manifest の検証                   |
-| `npm run m0f:list`                                                            | 登録済みfixtureの一覧                         |
-| `npm run m0f:smoke`                                                           | M0F ハーネスの smoke 検証                     |
-| `npm run m0f:catalog-gate`                                                    | 必須 fixture ID 群の完備性検査                |
-| `npm run m0f:gate`                                                            | 最終 M0F 証拠ゲート（完成まで失敗終了）       |
-| `npm run m0f:bench`                                                           | M0F 試作のベンチマーク                        |
-| `npm run m0f:box-grid-candidates`                                             | 箱ひだ正方形grid量子化候補を列挙              |
-| `npm run m0f:box-grid-lattice`                                                | 候補からexactな4方向格子基盤を生成            |
-| `npm run m0f:box-grid-paper-partition`                                        | 用紙全体のgrid・余り帯候補をexact分割         |
-| `npm run m0f:ordered-tree`                                                    | 内部枝幅を含む順序付き木候補を検査            |
-| `npm run m0f:ordered-tree-grid-quantization`                                  | 順序付き木を格子量子化入力へ1対1変換          |
-| `npm run m0f:ordered-tree-grid-candidates`                                    | 木からexactな格子量子化候補まで列挙           |
-| `npm run m0f:ordered-tree-path-demands`                                       | 全葉ペアの整数木経路・内部枝幅を構築          |
-| `npm run m0f:polygon-river-packing-problem`                                   | 有限配置問題の未解決入力骨格を構築            |
-| `npm run m0f:polygon-river-search-space`                                      | 未制約の有限探索空間をexact監査               |
-| `npm run m0f:euclidean-necessary-filter`                                      | 割当済み葉の必要条件だけをexact評価           |
-| `npm run m0f:euclidean-necessary-witness-search`                              | 必要条件を通る格子割当を上限付き探索          |
-| `npm run m0f:experiment`                                                      | 固定seedの候補数値kernel比較実験              |
-| `npm run m0f:experiment -- --square-grid-quantization`                        | 正方格子候補をhash付き実験記録へ保存          |
-| `npm run m0f:faces`                                                           | exact-rational面再構築の固定候補実験          |
-| `npm run m0f:face-audit`                                                      | 別実装による面複体auditの固定候補実験         |
-| `npm run m0f:face-evidence`                                                   | 保存・再監査可能なface候補証拠を出力          |
-| `npm run m0f:face-mutations`                                                  | face改変suite 11件の候補結果を出力            |
-| `npm run m0f:face-subgate`                                                    | face段階だけを再実行してfail-closed判定       |
-| `npm run m0f:ref-fold-nofaces-candidate`                                      | 非canonical face候補bundleを再実行            |
-| `npm run m0f:neg-fold-unsupported-candidate`                                  | FOLD非対応候補10件を厳密に再実行              |
-| `npm run m0f:neg-tree-candidate`                                              | 順序木parser負例12件を厳密に再実行            |
-| `npm run m0f:neg-topology-candidate`                                          | topology parser負例5件を厳密に再実行          |
-| `npm run m0f:neg-layer-cycle-candidate`                                       | 層循環parser負例を厳密に再実行                |
-| `npm run m0f:neg-order-reversal-candidate`                                    | 連続接触中の上下反転負例を厳密に再実行        |
-| `npm run m0f:neg-layer-contact-coverage-candidate`                            | 接触中の層宣言coverage負例を厳密に再実行      |
-| `npm run m0f:neg-path-empty-segments-candidate`                               | path segment空配列を厳密に再実行              |
-| `npm run m0f:neg-path-unsupported-representation-kind-candidate`              | 未対応path representation kindを厳密に再実行  |
-| `npm run m0f:neg-path-representation-status-escalation-candidate`             | path表現status不正昇格を厳密に再実行          |
-| `npm run m0f:neg-path-endpoint-continuity-candidate`                          | path端点宣言不連続を厳密に再実行              |
-| `npm run m0f:neg-path-endpoint-map-mismatch-candidate`                        | path端点crease map不一致を厳密に再実行        |
-| `npm run m0f:neg-path-motion-map-mismatch-candidate`                          | path内angle／bound map不一致を厳密に再実行    |
-| `npm run m0f:neg-path-time-coverage-candidate`                                | path時間coverageの4境界を厳密に再実行         |
-| `npm run m0f:neg-path-non-monotonic-knot-time-candidate`                      | path knot time非単調性を厳密に再実行          |
-| `npm run m0f:neg-path-angle-bound-candidate`                                  | path角度bound逸脱を厳密に再実行               |
-| `npm run m0f:neg-path-angle-knot-cardinality-candidate`                       | path angle／knot要素数不一致を厳密に再実行    |
-| `npm run m0f:neg-path-duplicate-angle-crease-candidate`                       | path angle crease重複を厳密に再実行           |
-| `npm run m0f:neg-path-bound-knot-interval-cardinality-candidate`              | path bound／knot interval要素数不一致を再実行 |
-| `npm run m0f:neg-path-duplicate-interval-bound-crease-candidate`              | path interval-bound crease重複を厳密に再実行  |
-| `npm run m0f:neg-path-non-interior-motion-edge-candidate`                     | motion mapの非内側crease参照を厳密に再実行    |
-| `npm run m0f:neg-path-polynomial-degree-range-candidate`                      | polynomial degree下限違反を厳密に再実行       |
-| `npm run m0f:neg-path-polynomial-coefficient-degree-candidate`                | polynomial係数行／degree不一致を厳密に再実行  |
-| `npm run m0f:neg-path-polynomial-empty-coefficient-rows-candidate`            | polynomial係数行空配列を厳密に再実行          |
-| `npm run m0f:neg-path-polynomial-non-finite-coefficient-candidate`            | polynomial非finite係数を厳密に再実行          |
-| `npm run m0f:neg-path-polynomial-duplicate-coefficient-crease-candidate`      | polynomial係数crease重複を厳密に再実行        |
-| `npm run m0f:neg-path-polynomial-duplicate-derivative-bound-crease-candidate` | polynomial微分境界crease重複を厳密に再実行    |
-| `npm run m0f:neg-path-polynomial-derivative-bounds-candidate`                 | polynomial derivative bound逆転を厳密に再実行 |
-| `npm run m0f:neg-path-polynomial-motion-map-mismatch-candidate`               | polynomial motion map不一致を厳密に再実行     |
-| `npm run m0f:neg-path-mixed-representation-candidate`                         | path内representation混在を厳密に再実行        |
-| `npm run m0f:neg-support-catalog-candidate`                                   | Support候補claim境界を厳密に再実行            |
-| `npm run test:e2e:m0f-worker`                                                 | 実module Workerの転送・中断smoke測定          |
-| `npm run test:e2e:m0f-worker:matrix`                                          | Chromium・Edge・Firefoxで同じ測定             |
-| `npm run licenses:check`                                                      | SPDX ライセンス allowlist 検査                |
+| コマンド                                                                      | 用途                                            |
+| ----------------------------------------------------------------------------- | ----------------------------------------------- |
+| `npm run dev`                                                                 | Vite 開発サーバー                               |
+| `npm run build`                                                               | 型検査後に静的ビルド                            |
+| `npm run preview`                                                             | ビルド成果物のローカル確認                      |
+| `npm run typecheck`                                                           | TypeScript project references の型検査          |
+| `npm run lint`                                                                | ESLint と Prettier の検査                       |
+| `npm run format`                                                              | Prettier による整形                             |
+| `npm test` / `npm run test:unit`                                              | Vitest のユニットテスト                         |
+| `npm run test:coverage`                                                       | 数理・ドメイン層のカバレッジ計測                |
+| `npm run test:e2e`                                                            | Playwright E2E                                  |
+| `npm run test:golden`                                                         | golden/certificate テスト                       |
+| `npm run test:perf`                                                           | 固定 fixture のベンチマーク                     |
+| `npm run m0f:test`                                                            | M0F 試作のテスト                                |
+| `npm run m0f:validate`                                                        | M0F fixture manifest の検証                     |
+| `npm run m0f:list`                                                            | 登録済みfixtureの一覧                           |
+| `npm run m0f:smoke`                                                           | M0F ハーネスの smoke 検証                       |
+| `npm run m0f:catalog-gate`                                                    | 必須 fixture ID 群の完備性検査                  |
+| `npm run m0f:gate`                                                            | 最終 M0F 証拠ゲート（完成まで失敗終了）         |
+| `npm run m0f:bench`                                                           | M0F 試作のベンチマーク                          |
+| `npm run m0f:box-grid-candidates`                                             | 箱ひだ正方形grid量子化候補を列挙                |
+| `npm run m0f:box-grid-lattice`                                                | 候補からexactな4方向格子基盤を生成              |
+| `npm run m0f:box-grid-paper-partition`                                        | 用紙全体のgrid・余り帯候補をexact分割           |
+| `npm run m0f:ordered-tree`                                                    | 内部枝幅を含む順序付き木候補を検査              |
+| `npm run m0f:ordered-tree-grid-quantization`                                  | 順序付き木を格子量子化入力へ1対1変換            |
+| `npm run m0f:ordered-tree-grid-candidates`                                    | 木からexactな格子量子化候補まで列挙             |
+| `npm run m0f:ordered-tree-path-demands`                                       | 全葉ペアの整数木経路・内部枝幅を構築            |
+| `npm run m0f:polygon-river-packing-problem`                                   | 有限配置問題の未解決入力骨格を構築              |
+| `npm run m0f:polygon-river-search-space`                                      | 未制約の有限探索空間をexact監査                 |
+| `npm run m0f:euclidean-necessary-filter`                                      | 割当済み葉の必要条件だけをexact評価             |
+| `npm run m0f:euclidean-necessary-witness-search`                              | 必要条件を通る格子割当を上限付き探索            |
+| `npm run m0f:experiment`                                                      | 固定seedの候補数値kernel比較実験                |
+| `npm run m0f:experiment -- --square-grid-quantization`                        | 正方格子候補をhash付き実験記録へ保存            |
+| `npm run m0f:faces`                                                           | exact-rational面再構築の固定候補実験            |
+| `npm run m0f:face-audit`                                                      | 別実装による面複体auditの固定候補実験           |
+| `npm run m0f:face-evidence`                                                   | 保存・再監査可能なface候補証拠を出力            |
+| `npm run m0f:face-mutations`                                                  | face改変suite 11件の候補結果を出力              |
+| `npm run m0f:face-subgate`                                                    | face段階だけを再実行してfail-closed判定         |
+| `npm run m0f:ref-fold-nofaces-candidate`                                      | 非canonical face候補bundleを再実行              |
+| `npm run m0f:neg-fold-unsupported-candidate`                                  | FOLD非対応候補10件を厳密に再実行                |
+| `npm run m0f:neg-tree-candidate`                                              | 順序木parser負例12件を厳密に再実行              |
+| `npm run m0f:neg-topology-candidate`                                          | topology parser負例5件を厳密に再実行            |
+| `npm run m0f:neg-layer-cycle-candidate`                                       | 層循環parser負例を厳密に再実行                  |
+| `npm run m0f:neg-order-reversal-candidate`                                    | 連続接触中の上下反転負例を厳密に再実行          |
+| `npm run m0f:neg-layer-contact-coverage-candidate`                            | 接触中の層宣言coverage負例を厳密に再実行        |
+| `npm run m0f:neg-path-empty-segments-candidate`                               | path segment空配列を厳密に再実行                |
+| `npm run m0f:neg-path-unsupported-representation-kind-candidate`              | 未対応path representation kindを厳密に再実行    |
+| `npm run m0f:neg-path-representation-version-mismatch-candidate`              | path representation version不一致を厳密に再実行 |
+| `npm run m0f:neg-path-representation-status-escalation-candidate`             | path表現status不正昇格を厳密に再実行            |
+| `npm run m0f:neg-path-endpoint-continuity-candidate`                          | path端点宣言不連続を厳密に再実行                |
+| `npm run m0f:neg-path-endpoint-map-mismatch-candidate`                        | path端点crease map不一致を厳密に再実行          |
+| `npm run m0f:neg-path-motion-map-mismatch-candidate`                          | path内angle／bound map不一致を厳密に再実行      |
+| `npm run m0f:neg-path-time-coverage-candidate`                                | path時間coverageの4境界を厳密に再実行           |
+| `npm run m0f:neg-path-non-monotonic-knot-time-candidate`                      | path knot time非単調性を厳密に再実行            |
+| `npm run m0f:neg-path-angle-bound-candidate`                                  | path角度bound逸脱を厳密に再実行                 |
+| `npm run m0f:neg-path-angle-knot-cardinality-candidate`                       | path angle／knot要素数不一致を厳密に再実行      |
+| `npm run m0f:neg-path-duplicate-angle-crease-candidate`                       | path angle crease重複を厳密に再実行             |
+| `npm run m0f:neg-path-bound-knot-interval-cardinality-candidate`              | path bound／knot interval要素数不一致を再実行   |
+| `npm run m0f:neg-path-duplicate-interval-bound-crease-candidate`              | path interval-bound crease重複を厳密に再実行    |
+| `npm run m0f:neg-path-non-interior-motion-edge-candidate`                     | motion mapの非内側crease参照を厳密に再実行      |
+| `npm run m0f:neg-path-polynomial-degree-range-candidate`                      | polynomial degree下限違反を厳密に再実行         |
+| `npm run m0f:neg-path-polynomial-coefficient-degree-candidate`                | polynomial係数行／degree不一致を厳密に再実行    |
+| `npm run m0f:neg-path-polynomial-empty-coefficient-rows-candidate`            | polynomial係数行空配列を厳密に再実行            |
+| `npm run m0f:neg-path-polynomial-non-finite-coefficient-candidate`            | polynomial非finite係数を厳密に再実行            |
+| `npm run m0f:neg-path-polynomial-duplicate-coefficient-crease-candidate`      | polynomial係数crease重複を厳密に再実行          |
+| `npm run m0f:neg-path-polynomial-duplicate-derivative-bound-crease-candidate` | polynomial微分境界crease重複を厳密に再実行      |
+| `npm run m0f:neg-path-polynomial-derivative-bounds-candidate`                 | polynomial derivative bound逆転を厳密に再実行   |
+| `npm run m0f:neg-path-polynomial-motion-map-mismatch-candidate`               | polynomial motion map不一致を厳密に再実行       |
+| `npm run m0f:neg-path-mixed-representation-candidate`                         | path内representation混在を厳密に再実行          |
+| `npm run m0f:neg-support-catalog-candidate`                                   | Support候補claim境界を厳密に再実行              |
+| `npm run test:e2e:m0f-worker`                                                 | 実module Workerの転送・中断smoke測定            |
+| `npm run test:e2e:m0f-worker:matrix`                                          | Chromium・Edge・Firefoxで同じ測定               |
+| `npm run licenses:check`                                                      | SPDX ライセンス allowlist 検査                  |
 
 直接依存のバージョンは `package.json` で固定し、推移依存を `package-lock.json` で再現可能にします。許可する依存ライセンスは `MIT`、`0BSD`、`BSD-2-Clause`、`BSD-3-Clause`、`Apache-2.0`、`ISC` のみです。
 
