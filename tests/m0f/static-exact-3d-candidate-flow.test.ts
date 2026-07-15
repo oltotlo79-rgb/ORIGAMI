@@ -101,7 +101,12 @@ describe('M0F static exact 3D candidate flow', () => {
     ) as {
       staticTriangleSet: { triangles: { triangle: { x: string }[] }[] };
     };
-    invalidCoordinate.staticTriangleSet.triangles[0]!.triangle[0]!.x = '01';
+    const firstTriangle = invalidCoordinate.staticTriangleSet.triangles[0];
+    expect(firstTriangle).toBeDefined();
+    const firstVertex = firstTriangle?.triangle[0];
+    expect(firstVertex).toBeDefined();
+    if (firstVertex === undefined) throw new Error('fixture test triangle is missing');
+    firstVertex.x = '01';
     expect(await evaluateStaticExact3dCandidateFlowV1(invalidCoordinate)).toMatchObject({
       ok: false,
       error: [
