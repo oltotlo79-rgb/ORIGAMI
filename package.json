@@ -46,6 +46,7 @@
     "m0f:euclidean-necessary-filter": "tsx m0f/euclidean-necessary-filter-cli.ts",
     "m0f:euclidean-necessary-witness-search": "tsx m0f/euclidean-necessary-witness-search-cli.ts",
     "m0f:box-pleating-candidate-flow": "tsx m0f/box-pleating-candidate-flow-cli.ts",
+    "m0f:box-pleating-support-candidate-diagnostic": "tsx m0f/box-pleating-support-candidate-diagnostic-cli.ts",
     "m0f:bounded-path-candidate-flow": "tsx m0f/bounded-path-candidate-flow-cli.ts",
     "m0f:fold-face-candidate-flow": "tsx m0f/fold-face-candidate-flow-cli.ts",
     "m0f:static-exact-3d-candidate-flow": "tsx m0f/static-exact-3d-candidate-flow-cli.ts",

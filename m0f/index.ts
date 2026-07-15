@@ -2,6 +2,7 @@ export * from './benchmark.js';
 export * from './bounded-path-candidate-flow.js';
 export * from './box-pleating/branch-grid-allocation.js';
 export * from './box-pleating/box-pleating-candidate-flow.js';
+export * from './box-pleating/box-pleating-support-candidate-diagnostic.js';
 export * from './box-pleating/euclidean-necessary-filter.js';
 export * from './box-pleating/euclidean-necessary-witness-search.js';
 export * from './box-pleating/euclidean-necessary-witness-search-result-validation.js';
