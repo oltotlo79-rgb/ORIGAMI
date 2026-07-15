@@ -75,6 +75,9 @@ jobs:
     name: Pages base-path smoke and build
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: [quality, e2e]
+    permissions:
+      contents: read
+      pages: read
     runs-on: ubuntu-latest
     env:
       BASE_PATH: /${{ github.event.repository.name }}/
@@ -89,6 +92,8 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e -- --project=chromium
       - uses: actions/configure-pages@v5
+        with:
+          enablement: true
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
