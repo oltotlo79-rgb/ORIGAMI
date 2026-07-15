@@ -97,6 +97,8 @@ const ID_PATTERN = /^[A-Za-z][A-Za-z0-9._:-]{0,127}$/;
 const FRACTION_MASK = (1n << 52n) - 1n;
 const HIDDEN_BIT = 1n << 52n;
 const EXPONENT_MASK = 0x7ffn;
+// Triangulation is synchronous, and every Worker has its own module realm.
+const BINARY64_SCRATCH_VIEW = new DataView(new ArrayBuffer(8));
 const INPUT_KEYS = ['faceId', 'vertices'] as const;
 const VERTEX_KEYS = ['id', 'x', 'y'] as const;
 const POLICY_KEYS = ['fastFilterArea'] as const;
@@ -300,10 +302,8 @@ function captureBinaryInvocation(
 }
 
 function finiteNumberToDyadic(value: number): Dyadic {
-  const buffer = new ArrayBuffer(8);
-  const view = new DataView(buffer);
-  view.setFloat64(0, value, false);
-  const bits = view.getBigUint64(0, false);
+  BINARY64_SCRATCH_VIEW.setFloat64(0, value, false);
+  const bits = BINARY64_SCRATCH_VIEW.getBigUint64(0, false);
   const negative = bits >> 63n === 1n;
   const exponentBits = Number((bits >> 52n) & EXPONENT_MASK);
   const fraction = bits & FRACTION_MASK;

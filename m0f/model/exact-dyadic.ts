@@ -10,6 +10,8 @@ export type ExactPoint2 = Readonly<{ x: number; y: number }>;
 const FRACTION_MASK = (1n << 52n) - 1n;
 const HIDDEN_BIT = 1n << 52n;
 const EXPONENT_MASK = 0x7ffn;
+// Conversion is synchronous, and every Worker has its own module realm.
+const BINARY64_SCRATCH_VIEW = new DataView(new ArrayBuffer(8));
 
 function finiteNumberToDyadic(value: number): Dyadic {
   if (!Number.isFinite(value)) {
@@ -17,10 +19,8 @@ function finiteNumberToDyadic(value: number): Dyadic {
   }
   if (value === 0) return { coefficient: 0n, exponent: 0 };
 
-  const buffer = new ArrayBuffer(8);
-  const view = new DataView(buffer);
-  view.setFloat64(0, value, false);
-  const bits = view.getBigUint64(0, false);
+  BINARY64_SCRATCH_VIEW.setFloat64(0, value, false);
+  const bits = BINARY64_SCRATCH_VIEW.getBigUint64(0, false);
   const negative = bits >> 63n === 1n;
   const exponentBits = Number((bits >> 52n) & EXPONENT_MASK);
   const fraction = bits & FRACTION_MASK;

@@ -29,8 +29,13 @@ not scientific evidence and not an M0F `GO` decision.
 
 `gate` is intentionally fail-closed until artifact schemas, all scientific
 fixtures, the independent reference verifier, mutation tests, measured
-profiles, and the signed-off M0F report are implemented. Merely adding IDs and
-hash-valid files can never make this command claim `GO`.
+profiles, and the signed-off M0F report are implemented. Its JSON output now
+includes candidate-status readiness diagnostics: missing canonical rules are
+classified as positive/reference exact IDs, negative exact IDs, negative
+families, or unclassified entries; ten blocked evidence areas map every
+normative GO condition and required deliverable in docs/05 sections 12.3 and
+13 exactly once. Candidate artifacts remain `not-evaluated`, so merely adding
+IDs and hash-valid files can never make this command claim `GO`.
 
 M0F-0 convention work lives under `model/`, `schemas/`, and `docs/`. The
 two-face convention vector under `tests/vectors/m0f-0` is deliberately outside

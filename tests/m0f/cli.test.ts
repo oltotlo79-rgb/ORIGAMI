@@ -55,9 +55,46 @@ describe('M0F CLI', () => {
   it('keeps the final M0F evidence gate fail-closed and distinct from catalog completeness', async () => {
     const capture = captureIo();
     expect(await runCli(['gate', '--json'], capture.io)).toBe(1);
-    const payload = JSON.parse(capture.stdout.join('')) as Record<string, unknown>;
+    const payload = JSON.parse(capture.stdout.join('')) as {
+      passed: boolean;
+      catalogComplete: boolean;
+      reasonCode: string;
+      readiness: {
+        contractStatus: string;
+        scientificClaim: boolean;
+        catalog: {
+          missingCanonicalFixtureCount: number;
+          missingCanonicalGroups: { gapClass: string; count: number }[];
+        };
+        summary: {
+          gateAreaCount: number;
+          blockingAreaCount: number;
+          coveredGoConditionCount: number;
+          coveredRequiredDeliverableCount: number;
+        };
+        reasonCodes: string[];
+      };
+    };
     expect(payload.passed).toBe(false);
+    expect(payload.catalogComplete).toBe(false);
     expect(payload.reasonCode).toBe('final-evidence-gate-not-ready');
+    expect(payload.readiness.contractStatus).toBe('candidate');
+    expect(payload.readiness.scientificClaim).toBe(false);
+    expect(payload.readiness.catalog.missingCanonicalFixtureCount).toBe(27);
+    expect(payload.readiness.catalog.missingCanonicalGroups).toEqual([
+      expect.objectContaining({ gapClass: 'positive-or-reference-exact', count: 16 }),
+      expect.objectContaining({ gapClass: 'negative-exact', count: 3 }),
+      expect.objectContaining({ gapClass: 'negative-family', count: 8 }),
+      expect.objectContaining({ gapClass: 'unclassified', count: 0 }),
+    ]);
+    expect(payload.readiness.summary).toMatchObject({
+      gateAreaCount: 10,
+      blockingAreaCount: 10,
+      coveredGoConditionCount: 14,
+      coveredRequiredDeliverableCount: 14,
+    });
+    expect(payload.readiness.reasonCodes).toContain('canonical-fixture-catalog-incomplete');
+    expect(payload.readiness.reasonCodes).toContain('go-decision-record-not-evaluated');
   });
 
   it('returns usage status for an unknown command', async () => {

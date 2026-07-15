@@ -20,6 +20,7 @@ export * from './canonical-fixtures.js';
 export * from './artifacts/contract.js';
 export * from './face-complex-candidate-evidence.js';
 export * from './face-complex-candidate-subgate.js';
+export * from './final-evidence-gate-readiness.js';
 export * from './neg-fold-unsupported-candidate-bundle.js';
 export * from './neg-layer-cycle-candidate-bundle.js';
 export * from './neg-order-reversal-candidate-bundle.js';

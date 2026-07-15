@@ -3,6 +3,10 @@ import { pathToFileURL } from 'node:url';
 
 import { CANONICAL_FIXTURE_RULES, HARNESS_SMOKE_FIXTURE_ID } from './canonical-fixtures.js';
 import {
+  createM0fFinalEvidenceGateReadinessV1,
+  M0F_FINAL_EVIDENCE_GATE_REASON_CODE,
+} from './final-evidence-gate-readiness.js';
+import {
   type FixtureRepositoryValidationResult,
   type FixtureValidationIssue,
   validateFixtureRepository,
@@ -212,24 +216,34 @@ async function runSmoke(parsed: ParsedArgs, io: CliIo): Promise<number> {
 
 async function runGate(parsed: ParsedArgs, io: CliIo): Promise<number> {
   const catalog = await validateFixtureRepository(parsed.manifestPath, { completeness: 'm0f' });
-  const catalogComplete = !hasErrors(catalog);
-  const reasonCode = 'final-evidence-gate-not-ready';
-  const message =
-    'The final M0F gate is fail-closed: artifact schemas, scientific fixtures, reference verifier, mutation tests, measured profiles, and a GO record are not complete.';
+  const catalogErrors = catalog.issues.filter((issue) => issue.severity === 'error');
+  const readiness = createM0fFinalEvidenceGateReadinessV1({
+    catalogComplete: catalogErrors.length === 0,
+    catalogErrorCount: catalogErrors.length,
+    missingCanonicalPatterns: catalogErrors.flatMap((issue) =>
+      issue.code === 'missing-canonical-fixture' && issue.canonicalPattern !== undefined
+        ? [issue.canonicalPattern]
+        : [],
+    ),
+  });
   if (parsed.json) {
     writeJson(io, {
       command: 'gate',
       passed: false,
-      catalogComplete,
-      reasonCode,
-      message,
+      catalogComplete: readiness.catalog.complete,
+      reasonCode: M0F_FINAL_EVIDENCE_GATE_REASON_CODE,
+      message: readiness.message,
+      readiness,
       catalog: validationPayload(catalog),
     });
   } else {
-    catalog.issues
-      .filter((entry) => entry.severity === 'error')
-      .forEach((entry) => io.stderr(issueText(entry)));
-    io.stderr(`M0F GATE NOT READY ${reasonCode}: ${message}\n`);
+    catalogErrors.forEach((entry) => io.stderr(issueText(entry)));
+    readiness.areas.forEach((area) =>
+      io.stderr(
+        `M0F GATE BLOCKED ${area.areaId} ${area.reasonCode}: ${area.message} Next: ${area.nextAction}\n`,
+      ),
+    );
+    io.stderr(`M0F GATE NOT READY ${M0F_FINAL_EVIDENCE_GATE_REASON_CODE}: ${readiness.message}\n`);
   }
   return 1;
 }

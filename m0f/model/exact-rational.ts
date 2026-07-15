@@ -13,6 +13,8 @@ export type ExactRationalSign = -1 | 0 | 1;
 const FRACTION_MASK = (1n << 52n) - 1n;
 const HIDDEN_BIT = 1n << 52n;
 const EXPONENT_MASK = 0x7ffn;
+// Conversion is synchronous, and every Worker has its own module realm.
+const BINARY64_SCRATCH_VIEW = new DataView(new ArrayBuffer(8));
 
 function absolute(value: bigint): bigint {
   return value < 0n ? -value : value;
@@ -49,10 +51,8 @@ export function finiteBinary64ToExactRational(value: number): ExactRational {
   }
   if (value === 0) return exactRational(0n);
 
-  const buffer = new ArrayBuffer(8);
-  const view = new DataView(buffer);
-  view.setFloat64(0, value, false);
-  const bits = view.getBigUint64(0, false);
+  BINARY64_SCRATCH_VIEW.setFloat64(0, value, false);
+  const bits = BINARY64_SCRATCH_VIEW.getBigUint64(0, false);
   const exponentBits = Number((bits >> 52n) & EXPONENT_MASK);
   const fraction = bits & FRACTION_MASK;
   const unsignedCoefficient = exponentBits === 0 ? fraction : HIDDEN_BIT | fraction;
