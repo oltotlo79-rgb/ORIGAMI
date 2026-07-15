@@ -26,6 +26,7 @@ jobs:
       - run: npm run typecheck
       - run: npm test
       - run: npm run m0f:validate
+      - run: npm run m0f:readiness-report
       - run: npm run licenses:check
       - run: npm audit --audit-level=high
       - run: npm run build
@@ -34,6 +35,12 @@ jobs:
         with:
           name: license-inventory
           path: .artifacts/license-inventory.json
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: m0f-readiness-report-candidate
+          path: .artifacts/m0f-readiness-report/
           if-no-files-found: ignore
 
   e2e:

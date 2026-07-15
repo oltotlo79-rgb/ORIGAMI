@@ -97,7 +97,8 @@
     "m0f:neg-support-catalog-candidate": "tsx m0f/neg-support-catalog-candidate-bundle-cli.ts",
     "m0f:coverage": "vitest run --coverage m0f",
     "licenses:check": "node scripts/check-licenses.mjs",
-    "m0f:product-handoff-diagnostic": "tsx m0f/m0f-product-handoff-diagnostic-cli.ts"
+    "m0f:product-handoff-diagnostic": "tsx m0f/m0f-product-handoff-diagnostic-cli.ts",
+    "m0f:readiness-report": "tsx m0f/m0f-readiness-report-candidate-cli.ts"
   },
   "dependencies": {
     "react": "19.2.7",
