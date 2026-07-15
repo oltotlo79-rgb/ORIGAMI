@@ -63,6 +63,7 @@
     "m0f:neg-path-representation-version-mismatch-candidate": "tsx m0f/neg-path-representation-version-mismatch-candidate-bundle-cli.ts",
     "m0f:neg-path-bounded-finite-knot-times-candidate": "tsx m0f/neg-path-bounded-finite-knot-times-candidate-bundle-cli.ts",
     "m0f:neg-path-bounded-finite-angles-candidate": "tsx m0f/neg-path-bounded-finite-angles-candidate-bundle-cli.ts",
+    "m0f:neg-path-bounded-finite-interval-angle-bounds-candidate": "tsx m0f/neg-path-bounded-finite-interval-angle-bounds-candidate-bundle-cli.ts",
     "m0f:neg-path-representation-status-escalation-candidate": "tsx m0f/neg-path-representation-status-escalation-candidate-bundle-cli.ts",
     "m0f:neg-path-endpoint-continuity-candidate": "tsx m0f/neg-path-endpoint-continuity-candidate-bundle-cli.ts",
     "m0f:neg-path-endpoint-map-mismatch-candidate": "tsx m0f/neg-path-endpoint-map-mismatch-candidate-bundle-cli.ts",

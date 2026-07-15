@@ -308,6 +308,39 @@ and M0F `GO` is impossible while any required value remains unresolved.
   geometry, certificate hashes and authenticity, the remaining canonical path
   mutations, contacts, CCD, collision freedom, and foldability remain open.
 - One project-authored
+  `NEG-PATH-MUTATION-BOUNDED-FINITE-ANGLES` source now forms a separate
+  deterministic candidate bundle outside the canonical manifest. Its accepted
+  single-segment bounded-interpolation control declares one `e-hinge` angle row
+  `[0,pi/2,pi]`; the negative replaces only angle index 0 with JSON `null`,
+  fixes the exact one-path delta, and replays the sole leaf `non-finite-number`
+  issue. The array length and crease-reference set remain unchanged, and failed
+  finite validation prevents containment inference, so cardinality, map, and
+  containment produce no secondary issue. This is only the current parser's
+  finite-binary64 boundary for saved declared angle values. Finite-knot
+  handling, radian conventions, physical angle schedules and bounds,
+  conservative bounds, kinematic feasibility, endpoint and physical path
+  semantics, representation selection and completeness, rigidity, face
+  isometry, hinge geometry, certificate hashes and authenticity, the remaining
+  canonical path mutations, contacts, CCD, collision freedom, and foldability
+  remain open.
+- One project-authored
+  `NEG-PATH-MUTATION-BOUNDED-FINITE-INTERVAL-ANGLE-BOUNDS` source now forms a
+  separate deterministic candidate bundle outside the canonical manifest. Its
+  accepted single-segment bounded-interpolation control declares one `e-hinge`
+  interval-angle-bound row `[[0,pi/2],[pi/2,pi]]`; the negative replaces only
+  the first lower-bound coordinate with JSON `null`, fixes the exact one-path
+  delta, and replays the sole leaf `non-finite-number` issue. Bound-row length,
+  interval cardinality, and the crease-reference set remain unchanged, and
+  failed finite-tuple validation prevents containment inference, so
+  cardinality, map, and containment produce no secondary issue. This is only
+  the current parser's finite-binary64 boundary for saved declared interval
+  angle bounds. Finite-knot and finite-angle handling, radian conventions,
+  physical angle schedules and bounds, conservative bounds, kinematic
+  feasibility, endpoint and physical path semantics, representation selection
+  and completeness, rigidity, face isometry, hinge geometry, certificate
+  hashes and authenticity, the remaining canonical path mutations, contacts,
+  CCD, collision freedom, and foldability remain open.
+- One project-authored
   `NEG-PATH-MUTATION-REPRESENTATION-STATUS-ESCALATION` source now forms a
   separate deterministic candidate bundle outside the canonical manifest. Its
   accepted bounded-interpolation control keeps

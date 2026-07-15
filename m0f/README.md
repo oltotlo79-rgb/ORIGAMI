@@ -891,6 +891,26 @@ the canonical path-mutation family. No canonical, SupportProfile,
 ToleranceProfile, scientific, or global-gate claim is made. See
 `docs/neg-path-bounded-finite-angles-candidate-bundle-v1.md`.
 
+`npm run m0f:neg-path-bounded-finite-interval-angle-bounds-candidate` verifies
+one project-authored exact-negative artifact-contract source outside the
+canonical manifest. Its accepted single-segment bounded-interpolation control
+declares one `e-hinge` interval-angle-bound row
+`[[0,pi/2],[pi/2,pi]]`. The negative replaces only the first lower-bound
+coordinate with JSON `null`, fixing one exact path and the sole leaf
+`non-finite-number` issue. Bound-row length, interval cardinality, and the
+crease-reference set stay unchanged, and failed finite-tuple validation
+prevents containment inference, so no cardinality, map, or containment
+secondary issue is emitted. This is only the current parser's finite-binary64
+boundary for saved interval-angle-bound values. It does not establish finite
+knot or angle handling, a radian convention, physical angle schedules or
+bounds, conservative bounds, kinematic feasibility, endpoint or physical path
+semantics, representation selection, crease-map completeness, polynomial
+semantics, rigidity, face isometry, hinge geometry, certificate hashes or
+authenticity, contacts, CCD, collision freedom, foldability, or completeness of
+the canonical path-mutation family. No canonical, SupportProfile,
+ToleranceProfile, scientific, or global-gate claim is made. See
+`docs/neg-path-bounded-finite-interval-angle-bounds-candidate-bundle-v1.md`.
+
 `npm run m0f:neg-path-non-monotonic-knot-time-candidate` verifies one
 project-authored exact-negative artifact-contract source outside the canonical
 manifest. Its accepted single-segment bounded-interpolation control declares

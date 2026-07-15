@@ -29,6 +29,7 @@ export * from './neg-path-unsupported-representation-kind-candidate-bundle.js';
 export * from './neg-path-representation-version-mismatch-candidate-bundle.js';
 export * from './neg-path-bounded-finite-knot-times-candidate-bundle.js';
 export * from './neg-path-bounded-finite-angles-candidate-bundle.js';
+export * from './neg-path-bounded-finite-interval-angle-bounds-candidate-bundle.js';
 export * from './neg-path-representation-status-escalation-candidate-bundle.js';
 export * from './neg-path-endpoint-continuity-candidate-bundle.js';
 export * from './neg-path-endpoint-map-mismatch-candidate-bundle.js';
