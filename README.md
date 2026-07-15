@@ -28,6 +28,8 @@ M0F-2では、幅付き順序木の閉じた検証、木の全枝から格子量
 
 `NEG-PATH-MUTATION-EMPTY-SEGMENTS`もcanonical manifest外のartifact-contract parser候補です。保存済みaccepted bounded-interpolation controlから唯一のpath segmentを削除し、完全な1-path削除差分と`segments`配列parentの単一`invalid-array` issueを再実行します。これはpath candidateが少なくとも1 segmentを持つ現parser境界だけであり、時間coverage、representationの選定・完全性、angle／bound／端点／物理経路semantics、剛体性、面等長、ヒンジ幾何、certificate hash／真正性、contact、CCD、衝突自由、foldability、SupportProfile、ToleranceProfile、canonical family全体、科学的検証、global M0F `GO`を意味しません。
 
+`NEG-PATH-MUTATION-UNSUPPORTED-REPRESENTATION-KIND`もcanonical manifest外のartifact-contract parser候補です。保存済みaccepted bounded-interpolation controlのmotion kindだけを`bounded-interpolation`から未対応の`spline`へ変え、完全な1-path差分と同じleafの単一`invalid-enum` issueを再実行します。これはpath representation kindの列挙境界だけであり、representation選定・完全性、時間coverage、angle／bound／端点／物理経路semantics、剛体性、面等長、ヒンジ幾何、certificate hash／真正性、contact、CCD、衝突自由、foldability、SupportProfile、ToleranceProfile、canonical family全体、科学的検証、global M0F `GO`を意味しません。
+
 `NEG-PATH-MUTATION-REPRESENTATION-STATUS-ESCALATION`もcanonical manifest外のartifact-contract parser候補です。保存済みaccepted bounded-interpolation controlの`pathCandidate.representationStatus`だけを`candidate`から`verified`へ変え、完全な1-path差分と同じleafの単一`claim-boundary` issueを再実行します。これは未検証のpath宣言を`candidate`に留める現parser境界だけであり、representationの選定・完全性、angle／bound／時間／端点／物理経路semantics、剛体性、面等長、ヒンジ幾何、certificate hash／真正性、contact、CCD、衝突自由、foldability、SupportProfile、ToleranceProfile、canonical family全体、科学的検証、global M0F `GO`を意味しません。
 
 `NEG-PATH-MUTATION-ENDPOINT-DISCONTINUITY`もcanonical manifest外のartifact-contract parser候補です。保存済みのaccepted 2-segment FOLD controlは共有端点で`pi/2`を一致させ、negativeは第2 segmentの開始角だけを宣言bound内の`3*pi/4`へ変え、完全な1-path差分と単一の`path-endpoint-discontinuity` issueを再実行します。これはvalidなbounded-interpolation宣言のexact一致だけであり、canonical `NEG-PATH-MUTATION-*`全体、piecewise-polynomial、剛体性、面等長、ヒンジ幾何、certificate hash、CCD、科学的検証、global M0F `GO`を意味しません。
@@ -139,6 +141,7 @@ Viteは通常`@vitejs/plugin-react-swc`を使用します。OS policyなどでSW
 | `npm run m0f:neg-order-reversal-candidate`                                    | 連続接触中の上下反転負例を厳密に再実行        |
 | `npm run m0f:neg-layer-contact-coverage-candidate`                            | 接触中の層宣言coverage負例を厳密に再実行      |
 | `npm run m0f:neg-path-empty-segments-candidate`                               | path segment空配列を厳密に再実行              |
+| `npm run m0f:neg-path-unsupported-representation-kind-candidate`              | 未対応path representation kindを厳密に再実行  |
 | `npm run m0f:neg-path-representation-status-escalation-candidate`             | path表現status不正昇格を厳密に再実行          |
 | `npm run m0f:neg-path-endpoint-continuity-candidate`                          | path端点宣言不連続を厳密に再実行              |
 | `npm run m0f:neg-path-endpoint-map-mismatch-candidate`                        | path端点crease map不一致を厳密に再実行        |

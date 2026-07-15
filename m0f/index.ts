@@ -25,6 +25,7 @@ export * from './neg-layer-cycle-candidate-bundle.js';
 export * from './neg-order-reversal-candidate-bundle.js';
 export * from './neg-layer-contact-coverage-candidate-bundle.js';
 export * from './neg-path-empty-segments-candidate-bundle.js';
+export * from './neg-path-unsupported-representation-kind-candidate-bundle.js';
 export * from './neg-path-representation-status-escalation-candidate-bundle.js';
 export * from './neg-path-endpoint-continuity-candidate-bundle.js';
 export * from './neg-path-endpoint-map-mismatch-candidate-bundle.js';

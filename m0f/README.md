@@ -754,6 +754,20 @@ foldability, or complete the canonical path-mutation family. No canonical,
 SupportProfile, ToleranceProfile, scientific, or global-gate claim is made. See
 `docs/neg-path-empty-segments-candidate-bundle-v1.md`.
 
+`npm run m0f:neg-path-unsupported-representation-kind-candidate` verifies one
+project-authored exact-negative artifact-contract source outside the canonical
+manifest. Its saved accepted bounded-interpolation control keeps a supported
+motion kind. The negative changes only that kind to unsupported `spline`, fixing
+one exact path and the sole leaf `invalid-enum` issue. This is only the current
+representation-kind enumeration boundary. It does not select or complete a
+representation, establish time coverage, angle, bound, endpoint, derivative, or
+physical path semantics, prove rigidity, face isometry, or hinge geometry,
+verify certificate hashes or cryptographic authenticity, perform contact
+analysis or CCD, establish collision freedom or foldability, or complete the
+canonical path-mutation family. No canonical, SupportProfile, ToleranceProfile,
+scientific, or global-gate claim is made. See
+`docs/neg-path-unsupported-representation-kind-candidate-bundle-v1.md`.
+
 `npm run m0f:neg-path-representation-status-escalation-candidate` verifies one
 project-authored exact-negative artifact-contract source outside the canonical
 manifest. Its saved accepted bounded-interpolation control keeps

@@ -272,6 +272,17 @@ and M0F `GO` is impossible while any required value remains unresolved.
   authenticity, the remaining canonical path mutations, contacts, CCD,
   collision freedom, and foldability remain open.
 - One project-authored
+  `NEG-PATH-MUTATION-UNSUPPORTED-REPRESENTATION-KIND` source now forms a
+  separate deterministic candidate bundle outside the canonical manifest. Its
+  accepted bounded-interpolation control changes only the motion kind to the
+  unsupported `spline` value, fixing the exact one-path delta and sole
+  `invalid-enum` issue. This is only the current representation-kind
+  enumeration boundary. Representation selection and completeness, time
+  coverage, angle, bound, endpoint, derivative, and physical path semantics,
+  rigidity, face isometry, hinge geometry, certificate hashes and authenticity,
+  the remaining canonical path mutations, contacts, CCD, collision freedom,
+  and foldability remain open.
+- One project-authored
   `NEG-PATH-MUTATION-REPRESENTATION-STATUS-ESCALATION` source now forms a
   separate deterministic candidate bundle outside the canonical manifest. Its
   accepted bounded-interpolation control keeps
