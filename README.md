@@ -186,7 +186,7 @@ Worker測定は成功経路を各5回実行し、candidate-onlyのraw JSONLとha
 `.artifacts/m0f-worker-measurements/<project>/`へ保存します。これはCI trend用smokeであり、
 基準Windows環境の正式性能証拠、runtime limit、p95判定、M0F `GO`を表しません。
 
-直接依存のバージョンは `package.json` で固定し、推移依存を `package-lock.json` で再現可能にします。許可する依存ライセンスは `MIT`、`0BSD`、`BSD-2-Clause`、`BSD-3-Clause`、`Apache-2.0`、`ISC` のみです。
+直接依存のバージョンは `package.json` で固定し、推移依存を `package-lock.json` で再現可能にします。許可する依存ライセンスは `MIT`、`0BSD`、`BSD-2-Clause`、`BSD-3-Clause`、`Apache-2.0`、`ISC` のみです。ライセンス検査はlockfile-onlyの決定的inventoryと、lockfile・policy・tool・inventoryをSHA-256で結ぶcandidate manifestを生成しますが、最終的な法的・NOTICE・出典・再配布監査ではありません。
 
 この厳密な範囲を守るため、build/lint系の版と`argparse`の推移依存を固定しています。理由、制約、更新手順は[ADR-0002](docs/decisions/ADR-0002_M0ツールチェーンとライセンス固定.md)を参照してください。
 

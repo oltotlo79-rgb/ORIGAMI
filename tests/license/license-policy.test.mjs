@@ -35,6 +35,16 @@ describe('dependency license policy', () => {
     });
   });
 
+  it('uses a closed reason code and separate rejected identifier list', () => {
+    expect(evaluateLicense('MIT OR BlueOak-1.0.0')).toEqual({
+      allowed: false,
+      identifiers: ['MIT', 'BlueOak-1.0.0'],
+      rejectedIdentifiers: ['BlueOak-1.0.0'],
+      reasonCode: 'license-not-allowlisted',
+      reason: 'license-not-allowlisted',
+    });
+  });
+
   it.each(['MIT OR () ISC', 'MIT Apache-2.0', '(MIT OR ISC', 'MIT OR', '()'])(
     'rejects malformed SPDX expression %s',
     (license) => {
