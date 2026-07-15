@@ -29,12 +29,28 @@ export const FIXTURE_COVERAGE_TAGS = [
 ] as const;
 export type FixtureCoverageTag = (typeof FIXTURE_COVERAGE_TAGS)[number];
 
-export type CanonicalFixtureRule = Readonly<{
+type CanonicalFixtureRuleBase = Readonly<{
   pattern: string;
   description: string;
-  cardinality: 'exactly-one' | 'one-or-more';
   requiredCoverageTags: readonly FixtureCoverageTag[];
 }>;
+
+export type CanonicalFixtureRule = CanonicalFixtureRuleBase &
+  (
+    | Readonly<{ cardinality: 'exactly-one' }>
+    | Readonly<{
+        cardinality: 'one-or-more';
+        familyCoverageContract: Readonly<{
+          status: 'unfrozen';
+          normativeSource: 'docs/05 section 9.3';
+        }>;
+      }>
+  );
+
+const UNFROZEN_NEGATIVE_FAMILY_COVERAGE = Object.freeze({
+  status: 'unfrozen' as const,
+  normativeSource: 'docs/05 section 9.3' as const,
+});
 
 /** The normative fixture IDs and families from docs/05 section 9. */
 export const CANONICAL_FIXTURE_RULES: readonly CanonicalFixtureRule[] = Object.freeze([
@@ -148,30 +164,35 @@ export const CANONICAL_FIXTURE_RULES: readonly CanonicalFixtureRule[] = Object.f
     pattern: 'NEG-TREE-*',
     description: 'invalid tree family',
     cardinality: 'one-or-more',
+    familyCoverageContract: UNFROZEN_NEGATIVE_FAMILY_COVERAGE,
     requiredCoverageTags: ['generation:tree', 'topology:invalid'],
   },
   {
     pattern: 'NEG-SUPPORT-BOUNDARY-*',
     description: 'support boundary family',
     cardinality: 'one-or-more',
+    familyCoverageContract: UNFROZEN_NEGATIVE_FAMILY_COVERAGE,
     requiredCoverageTags: ['support:boundary'],
   },
   {
     pattern: 'NEG-GRID-ERROR-*',
     description: 'grid error family',
     cardinality: 'one-or-more',
+    familyCoverageContract: UNFROZEN_NEGATIVE_FAMILY_COVERAGE,
     requiredCoverageTags: ['generation:box-pleating', 'support:boundary'],
   },
   {
     pattern: 'NEG-NO-SOLUTION-*',
     description: 'certified no-solution family',
     cardinality: 'one-or-more',
+    familyCoverageContract: UNFROZEN_NEGATIVE_FAMILY_COVERAGE,
     requiredCoverageTags: ['no-solution:certificate'],
   },
   {
     pattern: 'NEG-UM-RIGID-*',
     description: 'rigid universal-molecule family',
     cardinality: 'one-or-more',
+    familyCoverageContract: UNFROZEN_NEGATIVE_FAMILY_COVERAGE,
     requiredCoverageTags: ['rigidity:um-negative'],
   },
   {
@@ -196,25 +217,32 @@ export const CANONICAL_FIXTURE_RULES: readonly CanonicalFixtureRule[] = Object.f
     pattern: 'NEG-TOPOLOGY-*',
     description: 'invalid topology family',
     cardinality: 'one-or-more',
+    familyCoverageContract: UNFROZEN_NEGATIVE_FAMILY_COVERAGE,
     requiredCoverageTags: ['topology:invalid'],
   },
   {
     pattern: 'NEG-PATH-MUTATION-*',
     description: 'path mutation family',
     cardinality: 'one-or-more',
+    familyCoverageContract: UNFROZEN_NEGATIVE_FAMILY_COVERAGE,
     requiredCoverageTags: ['path:mutation', 'path:rigid-continuous'],
   },
   {
     pattern: 'NEG-FOLD-UNSUPPORTED-*',
     description: 'unsupported FOLD family',
     cardinality: 'one-or-more',
+    familyCoverageContract: UNFROZEN_NEGATIVE_FAMILY_COVERAGE,
     requiredCoverageTags: ['fold:unsupported'],
   },
 ]);
 
 export type FixtureIdIssue = Readonly<{
   severity: 'error' | 'warning';
-  code: 'duplicate-id' | 'unknown-id' | 'missing-canonical-fixture';
+  code:
+    | 'duplicate-id'
+    | 'unknown-id'
+    | 'missing-canonical-fixture'
+    | 'canonical-family-coverage-not-frozen';
   fixtureId?: string;
   canonicalPattern?: string;
   message: string;
@@ -270,12 +298,20 @@ export function auditCanonicalFixtureIds(
   }
 
   for (const rule of CANONICAL_FIXTURE_RULES) {
-    if (!fixtureIds.some((fixtureId) => matchesRule(fixtureId, rule))) {
+    const populated = fixtureIds.some((fixtureId) => matchesRule(fixtureId, rule));
+    if (!populated) {
       issues.push({
         severity: completeness === 'm0f' ? 'error' : 'warning',
         code: 'missing-canonical-fixture',
         canonicalPattern: rule.pattern,
         message: `canonical fixture is not populated yet: ${rule.pattern}`,
+      });
+    } else if (rule.cardinality === 'one-or-more') {
+      issues.push({
+        severity: completeness === 'm0f' ? 'error' : 'warning',
+        code: 'canonical-family-coverage-not-frozen',
+        canonicalPattern: rule.pattern,
+        message: `canonical family cannot be complete until its required subcase coverage contract is frozen from ${rule.familyCoverageContract.normativeSource}: ${rule.pattern}`,
       });
     }
   }

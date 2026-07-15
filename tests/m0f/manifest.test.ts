@@ -351,4 +351,26 @@ describe('canonical ID audit', () => {
     expect(issues.some((issue) => issue.code === 'duplicate-id')).toBe(true);
     expect(issues.some((issue) => issue.code === 'unknown-id')).toBe(true);
   });
+
+  it('does not let one placeholder member falsely complete an unfrozen canonical family', () => {
+    const fixtureIds = CANONICAL_FIXTURE_RULES.map((rule) =>
+      rule.pattern.endsWith('*') ? `${rule.pattern.slice(0, -1)}PLACEHOLDER` : rule.pattern,
+    );
+    const familyRules = CANONICAL_FIXTURE_RULES.filter(
+      (rule) => rule.cardinality === 'one-or-more',
+    );
+    const issues = auditCanonicalFixtureIds(fixtureIds, 'm0f');
+
+    expect(issues.filter((issue) => issue.code === 'missing-canonical-fixture')).toEqual([]);
+    expect(
+      issues
+        .filter((issue) => issue.code === 'canonical-family-coverage-not-frozen')
+        .map((issue) => issue.canonicalPattern),
+    ).toEqual(familyRules.map((rule) => rule.pattern));
+    expect(
+      issues
+        .filter((issue) => issue.code === 'canonical-family-coverage-not-frozen')
+        .every((issue) => issue.severity === 'error'),
+    ).toBe(true);
+  });
 });

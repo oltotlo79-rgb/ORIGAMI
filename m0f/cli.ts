@@ -137,6 +137,8 @@ async function runList(parsed: ParsedArgs, io: CliIo): Promise<number> {
     const entries = CANONICAL_FIXTURE_RULES.map((rule) => ({
       pattern: rule.pattern,
       cardinality: rule.cardinality,
+      familyCoverageStatus:
+        rule.cardinality === 'one-or-more' ? rule.familyCoverageContract.status : null,
       description: rule.description,
     }));
     if (parsed.json) writeJson(io, { command: 'list', kind: 'canonical', entries });

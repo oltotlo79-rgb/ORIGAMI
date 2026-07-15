@@ -33,9 +33,15 @@ describe('M0F CLI', () => {
   it('lists normative canonical patterns without treating smoke as evidence', async () => {
     const capture = captureIo();
     expect(await runCli(['list', '--canonical', '--json'], capture.io)).toBe(0);
-    const payload = JSON.parse(capture.stdout.join('')) as { entries: { pattern: string }[] };
+    const payload = JSON.parse(capture.stdout.join('')) as {
+      entries: { pattern: string; familyCoverageStatus: string | null }[];
+    };
     expect(payload.entries.some((entry) => entry.pattern === 'GEN-BP-BIRD-4')).toBe(true);
     expect(payload.entries.some((entry) => entry.pattern === '_harness-smoke')).toBe(false);
+    expect(
+      payload.entries.find((entry) => entry.pattern === 'NEG-PATH-MUTATION-*')
+        ?.familyCoverageStatus,
+    ).toBe('unfrozen');
   });
 
   it('passes smoke with an explicit no-scientific-claim message', async () => {
