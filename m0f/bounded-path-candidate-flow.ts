@@ -27,17 +27,17 @@ export type BoundedPathCandidateFlowResultV1 = Readonly<{
   scientificClaim: false;
   outputKind: 'declared-bounded-path-parser-diagnostic-not-physical-continuity';
   scope: 'caller-supplied-artifact-contract-two-or-more-bounded-interpolation-segments-only';
-  artifactContractAccepted: true;
+  artifactContractStructuralParseAccepted: true;
   boundedRepresentationAccepted: true;
   candidateRepresentationBoundaryAccepted: true;
-  uniformRepresentationAccepted: true;
-  declaredTimeCoverageAccepted: true;
+  declaredUniformRepresentationAccepted: true;
+  declaredSegmentTimeCoverageAccepted: true;
   declaredKnotCoverageAccepted: true;
   declaredFiniteNumbersAccepted: true;
   declaredMotionMapAccepted: true;
   declaredAngleBoundsAccepted: true;
-  declaredEndpointMapAccepted: true;
-  declaredEndpointEqualityAccepted: true;
+  declaredAdjacentEndpointMapEqualityAccepted: true;
+  declaredAdjacentEndpointAngleEqualityAccepted: true;
   currentParserReplayAccepted: true;
   segmentCount: number;
   adjacentEndpointCount: number;
@@ -45,15 +45,30 @@ export type BoundedPathCandidateFlowResultV1 = Readonly<{
   declaredKnotCount: number;
   declaredKnotIntervalCount: number;
   piecewisePolynomialIncluded: false;
+  representationSelectionIncluded: false;
   independentPathVerifierIncluded: false;
+  artifactHashIncluded: false;
+  pathCertificateIncluded: false;
   physicalAngleSemanticsEstablished: false;
   physicalPathContinuityEstablished: false;
+  startStateBindingVerified: false;
+  goalStateBindingVerified: false;
   endpointTargetStateVerified: false;
+  intervalProofIncluded: false;
+  conservativeBoundsVerified: false;
   creaseMapCompletenessEstablished: false;
   rigidMotionEstablished: false;
   faceIsometryEstablished: false;
   hingeGeometryEstablished: false;
+  singularityHandlingIncluded: false;
+  branchHandlingIncluded: false;
+  closedLoopHandlingIncluded: false;
+  progressReportingIncluded: false;
+  seededSearchIncluded: false;
+  cancellationIncluded: false;
+  resumeIncluded: false;
   contactAnalysisIncluded: false;
+  legalContactVerified: false;
   continuousCollisionDetectionIncluded: false;
   collisionFreedomEstablished: false;
   layerOrderEstablished: false;
@@ -149,17 +164,17 @@ export function evaluateBoundedPathCandidateFlowV1(
       outputKind: 'declared-bounded-path-parser-diagnostic-not-physical-continuity' as const,
       scope:
         'caller-supplied-artifact-contract-two-or-more-bounded-interpolation-segments-only' as const,
-      artifactContractAccepted: true as const,
+      artifactContractStructuralParseAccepted: true as const,
       boundedRepresentationAccepted: true as const,
       candidateRepresentationBoundaryAccepted: true as const,
-      uniformRepresentationAccepted: true as const,
-      declaredTimeCoverageAccepted: true as const,
+      declaredUniformRepresentationAccepted: true as const,
+      declaredSegmentTimeCoverageAccepted: true as const,
       declaredKnotCoverageAccepted: true as const,
       declaredFiniteNumbersAccepted: true as const,
       declaredMotionMapAccepted: true as const,
       declaredAngleBoundsAccepted: true as const,
-      declaredEndpointMapAccepted: true as const,
-      declaredEndpointEqualityAccepted: true as const,
+      declaredAdjacentEndpointMapEqualityAccepted: true as const,
+      declaredAdjacentEndpointAngleEqualityAccepted: true as const,
       currentParserReplayAccepted: true as const,
       segmentCount: boundedSegments.length,
       adjacentEndpointCount: boundedSegments.length - 1,
@@ -173,15 +188,30 @@ export function evaluateBoundedPathCandidateFlowV1(
         0,
       ),
       piecewisePolynomialIncluded: false as const,
+      representationSelectionIncluded: false as const,
       independentPathVerifierIncluded: false as const,
+      artifactHashIncluded: false as const,
+      pathCertificateIncluded: false as const,
       physicalAngleSemanticsEstablished: false as const,
       physicalPathContinuityEstablished: false as const,
+      startStateBindingVerified: false as const,
+      goalStateBindingVerified: false as const,
       endpointTargetStateVerified: false as const,
+      intervalProofIncluded: false as const,
+      conservativeBoundsVerified: false as const,
       creaseMapCompletenessEstablished: false as const,
       rigidMotionEstablished: false as const,
       faceIsometryEstablished: false as const,
       hingeGeometryEstablished: false as const,
+      singularityHandlingIncluded: false as const,
+      branchHandlingIncluded: false as const,
+      closedLoopHandlingIncluded: false as const,
+      progressReportingIncluded: false as const,
+      seededSearchIncluded: false as const,
+      cancellationIncluded: false as const,
+      resumeIncluded: false as const,
       contactAnalysisIncluded: false as const,
+      legalContactVerified: false as const,
       continuousCollisionDetectionIncluded: false as const,
       collisionFreedomEstablished: false as const,
       layerOrderEstablished: false as const,
