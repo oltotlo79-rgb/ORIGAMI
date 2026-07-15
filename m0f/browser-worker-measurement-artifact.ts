@@ -35,15 +35,27 @@ export type BrowserWorkerRawMeasurementCandidateV1 = Readonly<{
   finalPerformanceEvidence: false;
   runtimeLimitEvidence: false;
   globalM0fGo: false;
+  harnessVersion: 'm0f-browser-worker-measurement-harness-v1';
+  runGroupId: string;
+  runId: string;
   project: BrowserWorkerProjectV1;
   workerFlow: BrowserWorkerFlowV1;
   scenario: BrowserWorkerScenarioV1;
   repetition: number;
   startedAt: string;
+  durationMs: number;
   seed: null;
-  inputIdentity: string;
-  outcome: string;
-  resultJsonSha256: string | null;
+  inputBinding: Readonly<{
+    identity: string;
+    hashBasis: 'sha256-of-utf8-harness-input-json-candidate-encoding-not-semantic-hash';
+    json: string;
+    sha256: string;
+  }>;
+  outcome: 'completed' | 'cancelled';
+  resultBinding: Readonly<{
+    hashBasis: 'sha256-of-utf8-result-json-not-certificate-or-semantic-hash';
+    sha256: string | null;
+  }>;
   measurement: Readonly<Record<string, JsonValue>>;
 }>;
 
@@ -62,12 +74,24 @@ export type BrowserWorkerMeasurementEnvironmentV1 = Readonly<{
   navigatorPlatform: string;
   hardwareConcurrency: number;
   deviceMemoryGiB: number | null;
+  screen: Readonly<{
+    width: number;
+    height: number;
+    colorDepth: number;
+    devicePixelRatio: number;
+  }>;
+  webGlVendor: string | null;
+  webGlRenderer: string | null;
 }>;
 
 export type BrowserWorkerMeasurementBuildIdentityV1 = Readonly<{
   sourceRevision: string;
   sourceTreeState: 'clean' | 'dirty' | 'unknown';
   ciRunId: string | null;
+  harnessVersion: 'm0f-browser-worker-measurement-harness-v1';
+  harnessSourceHashBasis: 'sha256-of-path-nul-raw-bytes-nul-in-declared-order';
+  harnessSourceSha256: string;
+  harnessSourcePaths: readonly string[];
 }>;
 
 export type BrowserWorkerRepeatabilitySummaryV1 = Readonly<{
@@ -108,6 +132,8 @@ type BrowserWorkerMeasurementManifestPayloadV1 = Readonly<{
     performanceThresholdDecisionIncluded: false;
     percentileSummaryIncluded: false;
     memoryMeasurementIncluded: false;
+    environmentMetadataComplete: false;
+    buildArtifactHashIncluded: false;
     supportProfileIncluded: false;
     toleranceProfileIncluded: false;
     scientificEvidenceIncluded: false;
@@ -135,6 +161,112 @@ export type BrowserWorkerMeasurementArtifactIssueV1 = Readonly<{
 const SHA256_PATTERN = /^sha256:[0-9a-f]{64}$/;
 const UTC_TIMESTAMP_PATTERN = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;
 const MANIFEST_HASH_DOMAIN = 'oridesign:m0f-browser-worker-measurement-manifest:v1\0';
+const HARNESS_VERSION = 'm0f-browser-worker-measurement-harness-v1' as const;
+const INPUT_HASH_BASIS =
+  'sha256-of-utf8-harness-input-json-candidate-encoding-not-semantic-hash' as const;
+const RESULT_HASH_BASIS = 'sha256-of-utf8-result-json-not-certificate-or-semantic-hash' as const;
+
+const EXPECTED_MODES: Readonly<
+  Record<BrowserWorkerFlowV1, Readonly<Record<BrowserWorkerScenarioV1, string>>>
+> = {
+  'fold-document-face-reconstruction': {
+    'success-repeatability': 'success',
+    'in-progress-cancellation': 'cancel',
+    'pre-abort': 'pre-abort',
+  },
+  'square-grid-quantization': {
+    'success-repeatability': 'grid-success',
+    'in-progress-cancellation': 'grid-cancel',
+    'pre-abort': 'grid-pre-abort',
+  },
+  'polygon-river-packing-problem': {
+    'success-repeatability': 'packing-success',
+    'in-progress-cancellation': 'packing-cancel',
+    'pre-abort': 'packing-pre-abort',
+  },
+  'euclidean-necessary-witness-two-stage': {
+    'success-repeatability': 'witness-success',
+    'in-progress-cancellation': 'witness-cancel',
+    'pre-abort': 'witness-pre-abort',
+  },
+  'affine-origin-rotation-swept-aabb-census': {
+    'success-repeatability': 'swept-census-success',
+    'in-progress-cancellation': 'swept-census-cancel',
+    'pre-abort': 'swept-census-pre-abort',
+  },
+};
+
+const COMMON_MEASUREMENT_KEYS = [
+  'mode',
+  'inputJson',
+  'elapsedMs',
+  'contractStatus',
+  'scientificClaim',
+  'outcome',
+  'reason',
+  'resultJson',
+] as const;
+const FLOW_MEASUREMENT_KEYS: Readonly<Record<BrowserWorkerFlowV1, readonly string[]>> = {
+  'fold-document-face-reconstruction': [
+    ...COMMON_MEASUREMENT_KEYS,
+    'beforeByteLength',
+    'afterByteLength',
+    'boundedFaceCount',
+  ],
+  'square-grid-quantization': [...COMMON_MEASUREMENT_KEYS, 'candidateCount'],
+  'polygon-river-packing-problem': [
+    ...COMMON_MEASUREMENT_KEYS,
+    'workerFactoryCallCount',
+    'resultContractStatus',
+    'resultScientificClaim',
+    'candidateId',
+    'treeEdgeCount',
+    'riverDimensionInputCount',
+    'leafCount',
+    'leafVariableCount',
+    'leafPairCount',
+    'separationConstraintInputCount',
+    'interpretation',
+    'constraintEvaluable',
+    'solverIncluded',
+    'packingIncluded',
+    'polygonRiverPackingIncluded',
+    'feasibilityDecisionIncluded',
+    'globalM0fGo',
+  ],
+  'euclidean-necessary-witness-two-stage': [
+    ...COMMON_MEASUREMENT_KEYS,
+    'searchWorkerFactoryCallCount',
+    'validationWorkerFactoryCallCount',
+    'generalPolygonRiverPackingSolverIncluded',
+    'packingIncluded',
+    'feasibilityDecisionIncluded',
+    'globalM0fGo',
+    'resultContractStatus',
+    'resultScientificClaim',
+    'searchStatus',
+    'searchComplete',
+    'witnessCount',
+    'filterOnlySearch',
+    'necessaryFilterWitnessSearchIncluded',
+    'geometryIncluded',
+    'placementIncluded',
+    'globalPackingIncluded',
+    'polygonRiverPackingIncluded',
+  ],
+  'affine-origin-rotation-swept-aabb-census': [
+    ...COMMON_MEASUREMENT_KEYS,
+    'workerFactoryCallCount',
+    'collisionFreeClaim',
+    'selfIntersectionClassificationIncluded',
+    'globalM0fGo',
+    'primitiveCount',
+    'unorderedPairCount',
+    'separatedPairCount',
+    'candidatePairCount',
+    'indeterminatePairCount',
+  ],
+};
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
@@ -222,8 +354,8 @@ function compareRecords(
   const leftKey = recordSortKey(left);
   const rightKey = recordSortKey(right);
   for (let index = 0; index < leftKey.length; index += 1) {
-    const leftPart = leftKey[index];
-    const rightPart = rightKey[index];
+    const leftPart = String(leftKey[index]);
+    const rightPart = String(rightKey[index]);
     if (leftPart === rightPart) continue;
     return leftPart < rightPart ? -1 : 1;
   }
