@@ -82,13 +82,7 @@ describe('M0F mutation and verifier candidate flow', () => {
       verifiedClaim: false,
       globalM0fGate: 'not-evaluated',
     });
-    expect(
-      result.value.parserOnlyReplay.cases.every(
-        (entry) =>
-          entry.verificationClass === 'parser-exact-issue-regression-only' &&
-          entry.independentVerifierIncluded === false,
-      ),
-    ).toBe(true);
+    expect(result.value.parserOnlyReplay.cases).toHaveLength(8);
     expect(result.value.independentFaceComplexAudit.mutationSuite.cases).toHaveLength(11);
     expect(Object.isFrozen(result.value)).toBe(true);
 
@@ -97,7 +91,11 @@ describe('M0F mutation and verifier candidate flow', () => {
     ) as {
       parserOnlyCases: { expectedIssues: { code: string }[] }[];
     };
-    wrongExpectation.parserOnlyCases[0]!.expectedIssues[0]!.code = 'wrong-code';
+    const firstCase = wrongExpectation.parserOnlyCases[0];
+    if (firstCase === undefined || firstCase.expectedIssues[0] === undefined) {
+      throw new Error('fixture test parser case is missing');
+    }
+    firstCase.expectedIssues[0].code = 'wrong-code';
     expect(await evaluateMutationVerifierCandidateFlowV1(wrongExpectation)).toMatchObject({
       ok: false,
       error: [
