@@ -856,6 +856,23 @@ contacts, perform CCD, or establish collision freedom or foldability. No
 canonical, SupportProfile, ToleranceProfile, scientific, or global-gate claim
 is made. See `docs/neg-path-time-coverage-candidate-bundle-v1.md`.
 
+`npm run m0f:neg-path-bounded-finite-knot-times-candidate` verifies one
+project-authored exact-negative artifact-contract source outside the canonical
+manifest. Its accepted single-segment bounded-interpolation control declares
+knot times `[0,0.5,1]` with matching angle and interval-bound cardinalities.
+The negative appends JSON `null` only at knot index 3, fixing one exact path and
+the sole leaf `non-finite-number` issue. The three valid knots remain, so no
+cardinality, ordering, or endpoint-coverage secondary issue is emitted. This is
+only the current parser's finite-binary64 boundary for saved knot-time values.
+It does not establish time units, parameterization, sampling, cardinality,
+strict ordering, coverage, physical angle or path semantics, representation
+selection, crease-map completeness, polynomial semantics, rigidity, face
+isometry, hinge geometry, certificate hashes or authenticity, contacts, CCD,
+collision freedom, foldability, or completeness of the canonical path-mutation
+family. No canonical, SupportProfile, ToleranceProfile, scientific, or
+global-gate claim is made. See
+`docs/neg-path-bounded-finite-knot-times-candidate-bundle-v1.md`.
+
 `npm run m0f:neg-path-non-monotonic-knot-time-candidate` verifies one
 project-authored exact-negative artifact-contract source outside the canonical
 manifest. Its accepted single-segment bounded-interpolation control declares

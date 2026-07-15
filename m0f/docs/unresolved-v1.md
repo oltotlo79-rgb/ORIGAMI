@@ -294,6 +294,20 @@ and M0F `GO` is impossible while any required value remains unresolved.
   authenticity, the remaining canonical path mutations, contacts, CCD,
   collision freedom, and foldability remain open.
 - One project-authored
+  `NEG-PATH-MUTATION-BOUNDED-FINITE-KNOT-TIMES` source now forms a separate
+  deterministic candidate bundle outside the canonical manifest. Its accepted
+  single-segment bounded-interpolation control declares knot times
+  `[0,0.5,1]`; the negative appends JSON `null` only at index 3, fixes the exact
+  one-path addition, and replays the sole leaf `non-finite-number` issue. The
+  three valid knots remain, so angle/knot and bound/knot-interval cardinality,
+  strict monotonicity, and endpoint coverage produce no secondary issue. This
+  is only the current parser's finite-binary64 boundary for saved declared knot
+  times. Time units, parameterization, sampling, cardinality, ordering,
+  coverage, representation selection and completeness, angle, bound, endpoint,
+  derivative and physical path semantics, rigidity, face isometry, hinge
+  geometry, certificate hashes and authenticity, the remaining canonical path
+  mutations, contacts, CCD, collision freedom, and foldability remain open.
+- One project-authored
   `NEG-PATH-MUTATION-REPRESENTATION-STATUS-ESCALATION` source now forms a
   separate deterministic candidate bundle outside the canonical manifest. Its
   accepted bounded-interpolation control keeps
@@ -773,6 +787,9 @@ and M0F `GO` is impossible while any required value remains unresolved.
   external compute service.
 - Any fixture whose provenance cannot be redistributed and cannot be replaced
   by a project-authored equivalent.
+- The bounded-interpolation finite knot-time parser boundary remains a
+  candidate-only negative-artifact regression case; it is not a canonical
+  promotion or scientific claim.
 
 These decisions are not pre-approved. A failed experiment must produce a
 minimal counterexample and ADR before asking the product owner to change scope.

@@ -1,0 +1,285 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oridesign.local/schemas/m0f/neg-path-bounded-finite-knot-times-candidate-bundle-ledger-v1.schema.json",
+  "title": "NEG-PATH-MUTATION-BOUNDED-FINITE-KNOT-TIMES exact-negative candidate bundle ledger v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "schemaId",
+    "recordType",
+    "contractStatus",
+    "scientificClaim",
+    "vectorSetId",
+    "scope",
+    "declaredBoundedInterpolationFiniteKnotTimesParserOnly",
+    "declaredPathCandidateRepresentationVersionParserOnly",
+    "declaredPathCandidateRepresentationStatusParserOnly",
+    "declaredPathCandidateSupportedRepresentationKindParserOnly",
+    "declaredBoundedInterpolationUniqueAngleCreaseRowsParserOnly",
+    "declaredBoundedInterpolationUniqueIntervalBoundCreaseRowsParserOnly",
+    "declaredBoundedInterpolationAngleKnotCardinalityParserOnly",
+    "declaredBoundedInterpolationBoundKnotIntervalCardinalityParserOnly",
+    "declaredBoundedInterpolationAngleContainmentParserOnly",
+    "declaredBoundedInterpolationKnotTimeStrictMonotonicityParserOnly",
+    "canonicalManifestPath",
+    "canonicalManifestRegistration",
+    "canonicalPromotionClaimed",
+    "canonicalPathMutationFamilyComplete",
+    "representationSelectionEstablished",
+    "pathTimeCoverageEstablished",
+    "motionMapCompletenessEstablished",
+    "creaseMapCompletenessEstablished",
+    "pathRepresentationCompletenessEstablished",
+    "piecewisePolynomialCardinalityIncluded",
+    "piecewisePolynomialSemanticsEstablished",
+    "piecewisePolynomialEndpointInferenceIncluded",
+    "physicalAngleScheduleEstablished",
+    "radianConventionEstablished",
+    "physicalAngleBoundsEstablished",
+    "conservativeAngleBoundsEstablished",
+    "kinematicFeasibilityEstablished",
+    "physicalPathContinuityEstablished",
+    "endpointContinuityEstablished",
+    "rigidityEstablished",
+    "faceIsometryEstablished",
+    "hingeGeometryEstablished",
+    "certificateHashVerificationIncluded",
+    "cryptographicAuthenticityEstablished",
+    "contactAnalysisIncluded",
+    "continuousCollisionDetectionIncluded",
+    "collisionDetectionIncluded",
+    "collisionFreedomEstablished",
+    "foldabilityEstablished",
+    "supportProfileIncluded",
+    "toleranceProfileIncluded",
+    "scientificVerificationClaimed",
+    "globalM0fGate",
+    "caseCount",
+    "artifactCount",
+    "generator",
+    "provenance",
+    "cases",
+    "artifacts"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "schemaId": {
+      "const": "https://oridesign.local/schemas/m0f/neg-path-bounded-finite-knot-times-candidate-bundle-ledger-v1.schema.json"
+    },
+    "recordType": {
+      "const": "m0f-neg-path-bounded-finite-knot-times-candidate-bundle-ledger"
+    },
+    "contractStatus": { "const": "candidate" },
+    "scientificClaim": { "const": false },
+    "vectorSetId": { "const": "NEG-PATH-MUTATION-BOUNDED-FINITE-KNOT-TIMES-V1" },
+    "scope": {
+      "const": "project-authored-exact-negative-artifact-contract-bounded-interpolation-finite-knot-times-parser-replay-only"
+    },
+    "declaredBoundedInterpolationFiniteKnotTimesParserOnly": { "const": true },
+    "declaredPathCandidateRepresentationVersionParserOnly": { "const": false },
+    "declaredPathCandidateRepresentationStatusParserOnly": { "const": false },
+    "declaredPathCandidateSupportedRepresentationKindParserOnly": { "const": false },
+    "declaredBoundedInterpolationUniqueAngleCreaseRowsParserOnly": { "const": false },
+    "declaredBoundedInterpolationUniqueIntervalBoundCreaseRowsParserOnly": {
+      "const": false
+    },
+    "declaredBoundedInterpolationAngleKnotCardinalityParserOnly": { "const": false },
+    "declaredBoundedInterpolationBoundKnotIntervalCardinalityParserOnly": {
+      "const": false
+    },
+    "declaredBoundedInterpolationAngleContainmentParserOnly": { "const": false },
+    "declaredBoundedInterpolationKnotTimeStrictMonotonicityParserOnly": {
+      "const": false
+    },
+    "canonicalManifestPath": { "const": "tests/fixtures/manifest.json" },
+    "canonicalManifestRegistration": { "const": "not-registered" },
+    "canonicalPromotionClaimed": { "const": false },
+    "canonicalPathMutationFamilyComplete": { "const": false },
+    "representationSelectionEstablished": { "const": false },
+    "pathTimeCoverageEstablished": { "const": false },
+    "motionMapCompletenessEstablished": { "const": false },
+    "creaseMapCompletenessEstablished": { "const": false },
+    "pathRepresentationCompletenessEstablished": { "const": false },
+    "piecewisePolynomialCardinalityIncluded": { "const": false },
+
+    "piecewisePolynomialSemanticsEstablished": { "const": false },
+    "piecewisePolynomialEndpointInferenceIncluded": { "const": false },
+    "physicalAngleScheduleEstablished": { "const": false },
+    "radianConventionEstablished": { "const": false },
+    "physicalAngleBoundsEstablished": { "const": false },
+    "conservativeAngleBoundsEstablished": { "const": false },
+    "kinematicFeasibilityEstablished": { "const": false },
+    "physicalPathContinuityEstablished": { "const": false },
+    "endpointContinuityEstablished": { "const": false },
+    "rigidityEstablished": { "const": false },
+    "faceIsometryEstablished": { "const": false },
+    "hingeGeometryEstablished": { "const": false },
+    "certificateHashVerificationIncluded": { "const": false },
+    "cryptographicAuthenticityEstablished": { "const": false },
+    "contactAnalysisIncluded": { "const": false },
+    "continuousCollisionDetectionIncluded": { "const": false },
+    "collisionDetectionIncluded": { "const": false },
+    "collisionFreedomEstablished": { "const": false },
+    "foldabilityEstablished": { "const": false },
+    "supportProfileIncluded": { "const": false },
+    "toleranceProfileIncluded": { "const": false },
+    "scientificVerificationClaimed": { "const": false },
+    "globalM0fGate": { "const": "not-evaluated" },
+    "caseCount": { "const": 1 },
+    "artifactCount": { "const": 3 },
+    "generator": {
+      "const": {
+        "generatorId": "oridesign-neg-path-bounded-finite-knot-times-candidate-bundle",
+        "generatorVersion": "1.0.0-candidate",
+        "serialization": "stable-json-utf8-lf-v1",
+        "detector": "parseArtifactContractV1",
+        "detectorSourcePath": "m0f/artifacts/contract.ts"
+      }
+    },
+    "provenance": {
+      "const": {
+        "sourceReferenceId": "oridesign-neg-path-bounded-finite-knot-times-candidate-v1",
+        "sourceKind": "project-authored",
+        "title": "NEG-PATH-MUTATION-BOUNDED-FINITE-KNOT-TIMES project-authored bounded-interpolation finite-knot-times parser vector",
+        "authors": ["OriDesign contributors"],
+        "redistribution": "allowed",
+        "licenseSpdx": "MIT"
+      }
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1,
+      "prefixItems": [
+        {
+          "const": {
+            "caseIndex": 0,
+            "caseId": "NEG-PATH-MUTATION-BOUNDED-FINITE-KNOT-TIMES",
+            "controlArtifactId": "control-fold",
+            "mutationKind": "append-json-null-to-bounded-interpolation-knot-times",
+            "changedPaths": ["$.pathCandidate.segments[0].motion.knotTimes[3]"],
+            "sourceArtifactId": "source-path-bounded-finite-knot-times",
+            "sourcePath": "path-bounded-finite-knot-times.json",
+            "expectedOutcome": "rejected",
+            "expectedIssues": [
+              {
+                "path": "$.pathCandidate.segments[0].motion.knotTimes[3]",
+                "code": "non-finite-number"
+              }
+            ]
+          }
+        }
+      ],
+      "items": false
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "prefixItems": [
+        { "$ref": "#/$defs/readmeArtifact" },
+        { "$ref": "#/$defs/controlArtifact" },
+        { "$ref": "#/$defs/sourceArtifact" }
+      ],
+      "items": false
+    }
+  },
+  "$defs": {
+    "artifactBase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifactId",
+        "role",
+        "path",
+        "mediaType",
+        "sha256",
+        "licenseSpdx",
+        "provenance"
+      ],
+      "properties": {
+        "artifactId": {},
+        "role": {},
+        "path": {},
+        "mediaType": {},
+
+        "sha256": {},
+        "licenseSpdx": {},
+        "provenance": {}
+      }
+    },
+    "readmeArtifact": {
+      "allOf": [
+        { "$ref": "#/$defs/artifactBase" },
+        {
+          "type": "object",
+          "properties": {
+            "artifactId": { "const": "bundle-readme" },
+            "role": { "const": "readme" },
+            "path": { "const": "README.md" },
+            "mediaType": { "const": "text/markdown; charset=utf-8" },
+            "sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+            "licenseSpdx": { "const": "MIT" },
+            "provenance": {
+              "const": {
+                "sourceReferenceId": "oridesign-neg-path-bounded-finite-knot-times-candidate-v1",
+                "sourceUse": "project-authored",
+                "derivation": "authored",
+                "dependsOnArtifactIds": []
+              }
+            }
+          }
+        }
+      ]
+    },
+    "controlArtifact": {
+      "allOf": [
+        { "$ref": "#/$defs/artifactBase" },
+        {
+          "type": "object",
+          "properties": {
+            "artifactId": { "const": "control-fold" },
+            "role": { "const": "accepted-control" },
+            "path": { "const": "control-fold.json" },
+            "mediaType": { "const": "application/json" },
+            "sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+            "licenseSpdx": { "const": "MIT" },
+            "provenance": {
+              "const": {
+                "sourceReferenceId": "oridesign-neg-path-bounded-finite-knot-times-candidate-v1",
+                "sourceUse": "project-authored",
+                "derivation": "authored",
+                "dependsOnArtifactIds": []
+              }
+            }
+          }
+        }
+      ]
+    },
+    "sourceArtifact": {
+      "allOf": [
+        { "$ref": "#/$defs/artifactBase" },
+        {
+          "type": "object",
+          "properties": {
+            "artifactId": { "const": "source-path-bounded-finite-knot-times" },
+            "role": { "const": "negative-source" },
+            "path": { "const": "path-bounded-finite-knot-times.json" },
+            "mediaType": { "const": "application/json" },
+            "sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+            "licenseSpdx": { "const": "MIT" },
+            "provenance": {
+              "const": {
+                "sourceReferenceId": "oridesign-neg-path-bounded-finite-knot-times-candidate-v1",
+                "sourceUse": "project-authored",
+                "derivation": "mutated-from-control",
+                "dependsOnArtifactIds": ["control-fold"]
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
