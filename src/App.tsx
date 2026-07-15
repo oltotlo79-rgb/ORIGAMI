@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 
+import { M0fDiagnosticPanel } from './M0fDiagnosticPanel';
 import { ja } from './strings/ja';
 
 export function App() {
@@ -44,6 +45,8 @@ export function App() {
             <p>{ja.shell.gateDescription}</p>
           </div>
         </section>
+
+        <M0fDiagnosticPanel />
 
         <aside className="notice" aria-labelledby="notice-title">
           <h2 id="notice-title">{ja.shell.noticeTitle}</h2>
