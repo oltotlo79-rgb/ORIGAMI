@@ -104,6 +104,7 @@ export * from './geometry/static-rational-triangle-intersection-strata-census.js
 export * from './geometry/triangulate-face.js';
 export * from './geometry/triangulate-rational-face.js';
 export * from './manifest.js';
+export * from './mutation-verifier-candidate-flow.js';
 export * from './model/conventions.js';
 export * from './model/exact-rational.js';
 export * from './model/exact-rational-json.js';

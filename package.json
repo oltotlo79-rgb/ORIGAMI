@@ -49,6 +49,7 @@
     "m0f:bounded-path-candidate-flow": "tsx m0f/bounded-path-candidate-flow-cli.ts",
     "m0f:fold-face-candidate-flow": "tsx m0f/fold-face-candidate-flow-cli.ts",
     "m0f:static-exact-3d-candidate-flow": "tsx m0f/static-exact-3d-candidate-flow-cli.ts",
+    "m0f:mutation-verifier-candidate-flow": "tsx m0f/mutation-verifier-candidate-flow-cli.ts",
     "m0f:experiment": "tsx m0f/experiment-cli.ts",
     "m0f:faces": "tsx m0f/experiment-cli.ts --face-reconstruction",
     "m0f:face-audit": "tsx m0f/experiment-cli.ts --face-complex-audit",
