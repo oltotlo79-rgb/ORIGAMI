@@ -51,12 +51,19 @@ describe('M0F mutation and verifier candidate flow', () => {
         caseCount: 8,
         everyExpectedIssueSignatureMatched: true,
         independentVerifierIncluded: false,
+        acceptedControlsReplayed: false,
+        changedPathsCompared: false,
+        bundleLedgersVerified: false,
+        artifactHashesVerified: false,
+        deterministicBundleRegenerationVerified: false,
       },
       independentFaceComplexAudit: {
         verificationClass: 'separate-projective-kernel-current-source-set-audit',
         auditScope: 'face-complex-only',
         evidenceCreated: true,
         currentSourceSetReauditPassed: true,
+        savedEvidenceReplayed: false,
+        sourceProvenanceVerified: false,
         mutationSuiteExpectationsMet: true,
         mutationCaseCount: 11,
         mutationSuiteVerificationClass: 'semantic-mutation-regression-not-full-reference-verifier',
@@ -73,6 +80,8 @@ describe('M0F mutation and verifier candidate flow', () => {
       independentLayerVerifierIncluded: false,
       fullIndependentReferenceVerifierIncluded: false,
       sourceDocumentBytesBound: false,
+      sourceArtifactProvenanceVerified: false,
+      savedEvidenceProvenanceVerified: false,
       supportProfileIncluded: false,
       toleranceProfileIncluded: false,
       physicalPathContinuityVerified: false,
@@ -91,11 +100,11 @@ describe('M0F mutation and verifier candidate flow', () => {
     ) as {
       parserOnlyCases: { expectedIssues: { code: string }[] }[];
     };
-    const firstCase = wrongExpectation.parserOnlyCases[0];
-    if (firstCase === undefined || firstCase.expectedIssues[0] === undefined) {
+    const firstIssue = wrongExpectation.parserOnlyCases[0]?.expectedIssues[0];
+    if (firstIssue === undefined) {
       throw new Error('fixture test parser case is missing');
     }
-    firstCase.expectedIssues[0].code = 'wrong-code';
+    firstIssue.code = 'wrong-code';
     expect(await evaluateMutationVerifierCandidateFlowV1(wrongExpectation)).toMatchObject({
       ok: false,
       error: [

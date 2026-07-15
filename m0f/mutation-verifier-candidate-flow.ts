@@ -64,6 +64,11 @@ export type MutationVerifierCandidateFlowResultV1 = Readonly<{
     caseCount: number;
     everyExpectedIssueSignatureMatched: true;
     independentVerifierIncluded: false;
+    acceptedControlsReplayed: false;
+    changedPathsCompared: false;
+    bundleLedgersVerified: false;
+    artifactHashesVerified: false;
+    deterministicBundleRegenerationVerified: false;
     cases: readonly ParserOnlyMutationReplayV1[];
   }>;
   independentFaceComplexAudit: Readonly<{
@@ -71,6 +76,8 @@ export type MutationVerifierCandidateFlowResultV1 = Readonly<{
     auditScope: 'face-complex-only';
     evidenceCreated: true;
     currentSourceSetReauditPassed: true;
+    savedEvidenceReplayed: false;
+    sourceProvenanceVerified: false;
     mutationSuiteExpectationsMet: true;
     mutationCaseCount: number;
     mutationSuiteVerificationClass: 'semantic-mutation-regression-not-full-reference-verifier';
@@ -90,6 +97,8 @@ export type MutationVerifierCandidateFlowResultV1 = Readonly<{
   independentLayerVerifierIncluded: false;
   fullIndependentReferenceVerifierIncluded: false;
   sourceDocumentBytesBound: false;
+  sourceArtifactProvenanceVerified: false;
+  savedEvidenceProvenanceVerified: false;
   supportProfileIncluded: false;
   toleranceProfileIncluded: false;
   physicalPathContinuityVerified: false;
@@ -363,6 +372,11 @@ export async function evaluateMutationVerifierCandidateFlowV1(
         caseCount: parserOnlyCases.length,
         everyExpectedIssueSignatureMatched: true as const,
         independentVerifierIncluded: false as const,
+        acceptedControlsReplayed: false as const,
+        changedPathsCompared: false as const,
+        bundleLedgersVerified: false as const,
+        artifactHashesVerified: false as const,
+        deterministicBundleRegenerationVerified: false as const,
         cases: parserOnlyCases,
       },
       independentFaceComplexAudit: {
@@ -370,6 +384,8 @@ export async function evaluateMutationVerifierCandidateFlowV1(
         auditScope: 'face-complex-only' as const,
         evidenceCreated: true as const,
         currentSourceSetReauditPassed: true as const,
+        savedEvidenceReplayed: false as const,
+        sourceProvenanceVerified: false as const,
         mutationSuiteExpectationsMet: true as const,
         mutationCaseCount: mutationSuite.value.cases.length,
         mutationSuiteVerificationClass:
@@ -390,6 +406,8 @@ export async function evaluateMutationVerifierCandidateFlowV1(
       independentLayerVerifierIncluded: false as const,
       fullIndependentReferenceVerifierIncluded: false as const,
       sourceDocumentBytesBound: false as const,
+      sourceArtifactProvenanceVerified: false as const,
+      savedEvidenceProvenanceVerified: false as const,
       supportProfileIncluded: false as const,
       toleranceProfileIncluded: false as const,
       physicalPathContinuityVerified: false as const,
