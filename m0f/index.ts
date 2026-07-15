@@ -21,6 +21,7 @@ export * from './box-pleating/square-grid-paper-partition.js';
 export * from './box-pleating/square-grid-selected-candidate-validation.js';
 export * from './box-pleating/square-grid-source-binding.js';
 export * from './canonical-fixtures.js';
+export * from './candidate-fold-projection-preview.js';
 export * from './artifacts/contract.js';
 export * from './face-complex-candidate-evidence.js';
 export * from './face-complex-candidate-subgate.js';
