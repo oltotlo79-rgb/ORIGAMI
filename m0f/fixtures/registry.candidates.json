@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "registryStatus": "candidate-only",
+  "fixtures": [
+    { "id": "REF-RABBIT-EAR", "title": "うさぎの耳", "description": "正式承認待ちの参照例", "status": "pending-approval", "source": "待機中", "inputPath": "未登録", "expectedPath": "未登録", "approvedBy": null, "approvedAt": null },
+    { "id": "REF-WATERBOMB", "title": "水風船", "description": "正式承認待ちの参照例", "status": "pending-approval", "source": "待機中", "inputPath": "未登録", "expectedPath": "未登録", "approvedBy": null, "approvedAt": null },
+    { "id": "GEN-BP-BIRD-4", "title": "4枚構成の鳥", "description": "正式承認待ちの生成例", "status": "pending-approval", "source": "待機中", "inputPath": "未登録", "expectedPath": "未登録", "approvedBy": null, "approvedAt": null },
+    { "id": "GEN-BP-RECT", "title": "長方形の箱ひだ", "description": "正式承認待ちの生成例", "status": "pending-approval", "source": "待機中", "inputPath": "未登録", "expectedPath": "未登録", "approvedBy": null, "approvedAt": null },
+    { "id": "REF-FOLD-FLAT-VERIFIABLE", "title": "平らに折りたためる簡単な形", "description": "正式承認待ちの参照例", "status": "pending-approval", "source": "待機中", "inputPath": "未登録", "expectedPath": "未登録", "approvedBy": null, "approvedAt": null }
+  ]
+}

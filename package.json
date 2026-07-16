@@ -33,6 +33,7 @@
     "m0f:smoke": "tsx m0f/cli.ts smoke",
     "m0f:catalog-gate": "tsx m0f/cli.ts validate --complete",
     "m0f:gate": "tsx m0f/cli.ts gate",
+    "m0f:fixtures": "tsx m0f/fixture-registry-cli.ts",
     "m0f:bench": "npm run test:perf",
     "m0f:box-grid-candidates": "tsx m0f/box-grid-candidate-cli.ts",
     "m0f:box-grid-lattice": "tsx m0f/box-grid-lattice-cli.ts",
