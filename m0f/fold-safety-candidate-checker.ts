@@ -15,7 +15,7 @@ export type FoldSafetyCandidateCheckerResultV1 = Readonly<{
   continuousMotionChecked: false;
   layerOrderPhysicallyVerified: false;
   safeToUseAsProductResult: false;
-  issues: ReadonlyArray<Readonly<{ path: string; code: string; message: string }>>;
+  issues: readonly Readonly<{ path: string; code: string; message: string }>[];
 }>;
 
 export type FoldSafetyCandidateCheckerEvaluationV1 =
