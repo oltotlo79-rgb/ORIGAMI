@@ -31,14 +31,29 @@ export function parseFixtureRegistry(raw: unknown): FixtureRegistry {
   const fixtures = value.fixtures.map((item, index) => {
     if (!item || typeof item !== 'object') throw new Error(`fixtures[${index}] must be an object`);
     const record = item as Record<string, unknown>;
-    const required = ['id', 'title', 'description', 'status', 'source', 'inputPath', 'expectedPath'];
-    for (const key of required) if (typeof record[key] !== 'string' || record[key] === '') throw new Error(`fixtures[${index}].${key} is required`);
-    if (record.status !== 'pending-approval') throw new Error(`fixtures[${index}].status must be pending-approval`);
-    if (record.approvedBy !== null || record.approvedAt !== null) throw new Error(`fixtures[${index}] cannot contain approval metadata`);
+    const required = [
+      'id',
+      'title',
+      'description',
+      'status',
+      'source',
+      'inputPath',
+      'expectedPath',
+    ];
+    for (const key of required)
+      if (typeof record[key] !== 'string' || record[key] === '')
+        throw new Error(`fixtures[${index}].${key} is required`);
+    if (record.status !== 'pending-approval')
+      throw new Error(`fixtures[${index}].status must be pending-approval`);
+    if (record.approvedBy !== null || record.approvedAt !== null)
+      throw new Error(`fixtures[${index}] cannot contain approval metadata`);
     return record as unknown as FixtureRecord;
   });
   const ids = new Set<string>();
-  for (const fixture of fixtures) { if (ids.has(fixture.id)) throw new Error(`duplicate fixture id: ${fixture.id}`); ids.add(fixture.id); }
+  for (const fixture of fixtures) {
+    if (ids.has(fixture.id)) throw new Error(`duplicate fixture id: ${fixture.id}`);
+    ids.add(fixture.id);
+  }
   return { schemaVersion: 1, registryStatus: 'candidate-only', fixtures };
 }
 
@@ -47,5 +62,7 @@ export function loadFixtureRegistry(path = REGISTRY_PATH): FixtureRegistry {
 }
 
 export function formatFixtureRegistry(registry: FixtureRegistry): string {
-  return registry.fixtures.map((fixture) => `${fixture.id}\t${fixture.title}\tpending-approval`).join('\n');
+  return registry.fixtures
+    .map((fixture) => `${fixture.id}\t${fixture.title}\tpending-approval`)
+    .join('\n');
 }
