@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { CONSERVATIVE_V1_PROFILE, isConservativeProfileReady } from '../../m0f/profiles/conservative-v1.js';
+import {
+  CONSERVATIVE_V1_PROFILE,
+  isConservativeProfileReady,
+} from '../../m0f/profiles/conservative-v1.js';
 
 describe('conservative v1 profile', () => {
   it('is immutable and fail-closed', () => {
