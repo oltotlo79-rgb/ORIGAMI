@@ -36,8 +36,11 @@ export function evaluateBoundedExhaustiveCandidate(
   input: BoundedExhaustiveNoSolutionInputV1,
 ): BoundedExhaustiveNoSolutionResultV1 {
   const issues: string[] = [];
-  const boundedDomainClosed = Number.isSafeInteger(input.domain.cardinality) && input.domain.cardinality > 0;
-  const exhaustiveCoverage = boundedDomainClosed && input.explored.count === input.domain.cardinality &&
+  const boundedDomainClosed =
+    Number.isSafeInteger(input.domain.cardinality) && input.domain.cardinality > 0;
+  const exhaustiveCoverage =
+    boundedDomainClosed &&
+    input.explored.count === input.domain.cardinality &&
     input.explored.branchIds.length === input.domain.cardinality;
   const branchDigestValid = input.explored.branchDigest === digest(input.explored.branchIds);
   const allBranchesRejected = input.terminal.allRejected;
@@ -47,10 +50,21 @@ export function evaluateBoundedExhaustiveCandidate(
   if (!branchDigestValid) issues.push('branch-digest-mismatch');
   if (!allBranchesRejected) issues.push('not-all-branches-rejected');
   if (!rejectionDigestValid) issues.push('rejection-digest-must-be-sha256');
-  return deepFreezeOwned({ schemaVersion: 1, recordType: NO_SOLUTION_EXHAUSTIVE_CANDIDATE_RECORD_TYPE,
-    contractStatus: 'candidate', scientificClaim: false, noSolutionCertified: false,
-    boundedDomainClosed, exhaustiveCoverage, allBranchesRejected, branchDigestValid,
-    rejectionDigestValid, accepted: issues.length === 0, globalM0fGate: 'not-evaluated', issues });
+  return deepFreezeOwned({
+    schemaVersion: 1,
+    recordType: NO_SOLUTION_EXHAUSTIVE_CANDIDATE_RECORD_TYPE,
+    contractStatus: 'candidate',
+    scientificClaim: false,
+    noSolutionCertified: false,
+    boundedDomainClosed,
+    exhaustiveCoverage,
+    allBranchesRejected,
+    branchDigestValid,
+    rejectionDigestValid,
+    accepted: issues.length === 0,
+    globalM0fGate: 'not-evaluated',
+    issues,
+  });
 }
 
 export { digest as candidateBranchDigest };

@@ -22,7 +22,7 @@ export type ConservativeProfile = Readonly<{
     decision: 'reject-until-measurement-bound';
   }>;
   canonicalFixtures: Readonly<{
-    promotedIds: readonly [];
+    promotedIds: readonly string[];
     decision: 'no-existing-candidate-eligible';
   }>;
 }>;
