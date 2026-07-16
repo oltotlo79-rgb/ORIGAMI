@@ -75,6 +75,39 @@ npm run m0f:fixtures -- --json
 3. `http://127.0.0.1:5173/` を開く。
 4. 「ポートが使用中」と表示された場合は、別のPowerShellで実行中の開発サーバーを閉じてから再実行する。
 
+### E-1. `npm ci` が `EPERM` や `esbuild.exe` で止まるとき
+
+これは権限不足というより、古い開発サーバーやNodeプロセスがファイルを使用中である場合に起きます。次の順番で復旧します。
+
+1. OriDesignを開いているブラウザを閉じる。
+2. `npm run dev` や `npm run preview` を実行しているPowerShellで `Ctrl+C` を押す。
+3. すべてのPowerShellで、次を実行してNodeプロセスを終了する。
+
+   ```powershell
+   Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force
+   ```
+
+4. ORIGAMIフォルダーで、壊れた依存部品だけを削除する。
+
+   ```powershell
+   Remove-Item -LiteralPath .\node_modules -Recurse -Force
+   ```
+
+5. もう一度依存部品を入れる。
+
+   ```powershell
+   npm ci
+   ```
+
+6. それでも同じエラーが出る場合は、ウイルス対策ソフトの検査が終わるまで数分待ち、PowerShellを再起動して手順3〜5を繰り返す。
+7. 復旧後、画面を起動する。
+
+   ```powershell
+   npm run dev
+   ```
+
+`Remove-Item` はプロジェクト内の `node_modules` だけを削除します。`src`、`m0f`、`tests`、設定ファイルは削除しません。
+
 ### F. 現在できない操作
 
 現在は次の操作はできません。
